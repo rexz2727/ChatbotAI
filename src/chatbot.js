@@ -182,7 +182,7 @@ async function processUserMessage(userId, messageText, buttonPayload = null) {
     if (payload === 'SHOW_MAIN_MENU') {
       await db.setSession(userId, 'MAIN_MENU');
       return {
-        text: "[Chatbot Auto] Chào bạn! Đây là trang Facebook chính thức của Công an phường Bình Dương.\nCảm ơn bạn đã liên hệ. Để được hỗ trợ nhanh nhất, vui lòng chọn lĩnh vực cần tư vấn bên dưới, hoặc gõ tên lĩnh vực (vd: cư trú, giao thông, căn cước...).\n\nTrong trường hợp khẩn cấp, vui lòng gọi số trực ban: ***REMOVED***.\nTrân trọng!",
+        text: "[Chatbot Auto] Chào bạn! Đây là trang Facebook chính thức của Công an phường Bình Dương.\nCảm ơn bạn đã liên hệ. Để được hỗ trợ nhanh nhất, vui lòng để lại nội dung cần tư vấn hoặc chọn từ danh mục bên dưới (nếu không thấy nút bấm, vui lòng gõ từ khóa: cư trú, giao thông, căn cước, an ninh, ngoại kiều, khiếu nại).\nTrong trường hợp khẩn cấp, vui lòng gọi số trực ban: ***REMOVED***. Trân trọng!",
         showMenu: true
       };
     }
@@ -258,14 +258,14 @@ async function processUserMessage(userId, messageText, buttonPayload = null) {
     if (!state || isGreeting) {
       await db.setSession(userId, 'MAIN_MENU');
       return {
-        text: "[Chatbot Auto] Chào bạn! Đây là trang Facebook chính thức của Công an phường Bình Dương.\nCảm ơn bạn đã liên hệ. Để được hỗ trợ nhanh nhất, vui lòng chọn lĩnh vực cần tư vấn bên dưới, hoặc gõ tên lĩnh vực (vd: cư trú, giao thông, căn cước...).\n\nTrong trường hợp khẩn cấp, vui lòng gọi số trực ban: ***REMOVED***.\nTrân trọng!",
+        text: "[Chatbot Auto] Chào bạn! Đây là trang Facebook chính thức của Công an phường Bình Dương.\nCảm ơn bạn đã liên hệ. Để được hỗ trợ nhanh nhất, vui lòng để lại nội dung cần tư vấn hoặc chọn từ danh mục bên dưới (nếu không thấy nút bấm, vui lòng gõ từ khóa: cư trú, giao thông, căn cước, an ninh, ngoại kiều, khiếu nại).\nTrong trường hợp khẩn cấp, vui lòng gọi số trực ban: ***REMOVED***. Trân trọng!",
         showMenu: true
       };
     }
 
     if (state === 'MAIN_MENU') {
       return {
-        text: "[Chatbot Auto] Anh/chị vui lòng bấm chọn một lĩnh vực từ danh sách bên dưới để được hỗ trợ (hoặc gõ tên lĩnh vực nếu không thấy nút bấm):",
+        text: "[Chatbot Auto] Anh/chị vui lòng bấm chọn một lĩnh vực từ danh sách bên dưới để được hỗ trợ (hoặc gõ từ khóa: cư trú, giao thông, căn cước... nếu không thấy nút bấm):",
         showMenu: true
       };
     }

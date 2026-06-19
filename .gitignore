@@ -45,3 +45,15 @@ cloudflared
 
 # Scratch files
 scratch/
+
+# AI configs and Agent directories
+.claude/
+.serena/
+.agents/
+.antigravity/
+CLAUDE.md
+GEMINI.md
+
+# Unnecessary media and docs
+Image/
+docs/superpowers/

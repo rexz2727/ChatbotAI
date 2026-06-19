@@ -279,8 +279,8 @@ Hỗ trợ thêm: Liên hệ trực tiếp Công an Phường (trực ban 24/7) 
     text: `[Chatbot Auto] Báo cáo mất an ninh trật tự:
 
 Liên hệ ngay:
-- Trực tiếp Công an Phường (trực ban 24/7)
 - Đường dây khẩn: 113
+- Trực tiếp Công an Phường (trực ban 24/7)
 
 Thông tin cần cung cấp:
 - Thời gian và địa điểm xảy ra sự việc

@@ -204,8 +204,8 @@ async function sendFacebookResponse(recipientId, result) {
         payload: r.payload
       }))
     };
-    messageData.text += '\n_(Không thấy nút? Gõ số: ' +
-      result.quickReplies.map((r, i) => `${i + 1}. ${r.title}`).join(' · ') + ')_';
+    messageData.text += '\n(Không thấy nút? Gõ: ' +
+      result.quickReplies.map(r => r.title).join(' · ') + ')';
   } else if (result.showMenu) {
     messageData = {
       text: result.text,
@@ -218,7 +218,6 @@ async function sendFacebookResponse(recipientId, result) {
         { content_type: "text", title: "Khiếu nại",      payload: "MENU_KHIEU_NAI" }
       ]
     };
-    messageData.text += '\n_(Không thấy nút? Gõ: 1. Cư trú · 2. Căn cước · 3. Giao thông · 4. An ninh & PCCC · 5. Ngoại kiều · 6. Khiếu nại)_';
   } else {
     messageData = { text: result.text };
   }

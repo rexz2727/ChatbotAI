@@ -9,16 +9,16 @@ const subMenus = {
     { title: "Danh bạ cán bộ",     payload: "FLOW_DANH_BA_CU_TRU" }
   ],
   AGENT_CAN_CUOC: [
-    { title: "Làm CCCD lần đầu",   payload: "FLOW_CAN_CUOC_LAN_DAU" },
-    { title: "CCCD cho trẻ em",    payload: "FLOW_CAN_CUOC_TRE_EM" },
-    { title: "Đổi/cấp lại CCCD",  payload: "FLOW_CAN_CUOC_DOI_CAP" },
-    { title: "Câu hỏi khác...",    payload: "FLOW_CAN_CUOC_KHAC" },
-    { title: "Danh bạ cán bộ",     payload: "FLOW_DANH_BA_CAN_CUOC" }
+    { title: "Cấp Căn cước lần đầu", payload: "FLOW_CAN_CUOC_LAN_DAU" },
+    { title: "Cấp đổi/lại căn cước", payload: "FLOW_CAN_CUOC_DOI_CAP" },
+    { title: "Căn cước trẻ 6-14T",   payload: "FLOW_CAN_CUOC_TRE_EM" },
+    { title: "Hỗ trợ đặc biệt",      payload: "FLOW_CAN_CUOC_DAC_BIET" },
+    { title: "Câu hỏi khác...",      payload: "FLOW_CAN_CUOC_KHAC" }
   ],
   AGENT_GIAO_THONG: [
-    { title: "Báo tai nạn GT",       payload: "FLOW_GIAO_THONG_TAI_NAN" },
-    { title: "Tra cứu phạt nguội",   payload: "FLOW_GIAO_THONG_PHAT_NGUOI" },
-    { title: "Thủ tục sau tai nạn",  payload: "FLOW_GIAO_THONG_SAU_TAI_NAN" },
+    { title: "Đổi/cấp lại GPLX",     payload: "FLOW_GIAO_THONG_DOI_GPLX" },
+    { title: "Đăng ký xe máy/điện",  payload: "FLOW_GIAO_THONG_DANG_KY_XE" },
+    { title: "Báo tai nạn/Phạt nguội",payload: "FLOW_GIAO_THONG_TAI_NAN" },
     { title: "Câu hỏi khác...",      payload: "FLOW_GIAO_THONG_KHAC" },
     { title: "Danh bạ cán bộ",       payload: "FLOW_DANH_BA_GIAO_THONG" }
   ],
@@ -42,6 +42,13 @@ const subMenus = {
     { title: "Phản ánh vi phạm",   payload: "FLOW_KHIEU_NAI_PHAN_ANH" },
     { title: "Câu hỏi khác...",    payload: "FLOW_KHIEU_NAI_KHAC" },
     { title: "Danh bạ cán bộ",     payload: "FLOW_DANH_BA_KHIEU_NAI" }
+  ],
+  AGENT_TTHC: [
+    { title: "Kiểm soát TTHC", payload: "FLOW_TTHC_KIEM_SOAT" },
+    { title: "Cổng Dịch vụ công", payload: "FLOW_TTHC_DICH_VU_CONG" },
+    { title: "Quy trình cấp xã", payload: "FLOW_TTHC_QUY_TRINH" },
+    { title: "Câu hỏi khác...", payload: "FLOW_TTHC_KHAC" },
+    { title: "Danh bạ chung", payload: "FLOW_TTHC_DANH_BA" }
   ]
 };
 
@@ -170,6 +177,33 @@ Lệ phí:
     ]
   },
 
+  FLOW_CAN_CUOC_VNEID: {
+    agentState: 'AGENT_CAN_CUOC',
+    text: `[Chatbot Auto] Đăng ký Định danh điện tử (VNeID) mức độ 2:
+
+Theo luật mới 2026, công dân có thể làm thủ tục kích hoạt VNeID mức độ 2 tại BẤT KỲ trụ sở Công an Phường/Xã nào trong cùng Tỉnh/Thành phố.
+
+Thủ tục: Mang theo Thẻ Căn cước có gắn chip và điện thoại thông minh (đã cài app VNeID).
+Lệ phí: Miễn phí.`,
+    afterReplies: [
+      { title: "Quay lại Menu",       payload: "SHOW_MAIN_MENU" },
+      { title: "Hỏi thêm về CC&ĐD",   payload: "FLOW_CAN_CUOC_KHAC" }
+    ]
+  },
+
+  FLOW_CAN_CUOC_DAC_BIET: {
+    agentState: 'AGENT_CAN_CUOC',
+    text: `[Chatbot Auto] Hỗ trợ cấp Căn cước & VNeID cho trường hợp đặc biệt:
+
+Đối với các công dân Lớn tuổi, Bệnh tật, Đau ốm không thể đi lại, Công an Phường sẽ hỗ trợ cử cán bộ đến tận nơi (tại nhà hoặc bệnh viện) để thu nhận hồ sơ cấp mới/đổi/lại Căn cước và tích hợp Định danh mức 2.
+
+Anh/chị vui lòng để lại số điện thoại hoặc nhắn tin trực tiếp để cán bộ CSKV liên hệ xếp lịch hỗ trợ!`,
+    afterReplies: [
+      { title: "Quay lại Menu",       payload: "SHOW_MAIN_MENU" },
+      { title: "Hỏi thêm về CC&ĐD",   payload: "FLOW_CAN_CUOC_KHAC" }
+    ]
+  },
+
   FLOW_CAN_CUOC_KHAC: {
     agentState: 'AGENT_CAN_CUOC',
     openChat: true,
@@ -177,6 +211,38 @@ Lệ phí:
   },
 
   // ── GIAO THÔNG ───────────────────────────────────────────────────────────────
+  FLOW_GIAO_THONG_DOI_GPLX: {
+    agentState: 'AGENT_GIAO_THONG',
+    text: `[Chatbot Auto] Cấp đổi/Cấp lại Giấy phép lái xe (GPLX):
+
+Theo quy định liên thông mới năm 2026, công dân có thể cấp đổi, cấp lại GPLX tại BẤT KỲ Công an cấp xã/phường nào cùng tỉnh.
+
+Hồ sơ: 
+- Đơn đề nghị đổi/cấp lại GPLX.
+- Giấy khám sức khỏe (nếu yêu cầu).
+- Bản sao CCCD và GPLX cũ (nếu còn).`,
+    afterReplies: [
+      { title: "Quay lại Menu",        payload: "SHOW_MAIN_MENU" },
+      { title: "Hỏi thêm giao thông", payload: "FLOW_GIAO_THONG_KHAC" }
+    ]
+  },
+
+  FLOW_GIAO_THONG_DANG_KY_XE: {
+    agentState: 'AGENT_GIAO_THONG',
+    text: `[Chatbot Auto] Đăng ký xe mô tô, xe gắn máy, xe điện:
+
+Theo quy định liên thông 2026, thủ tục cấp Giấy chứng nhận đăng ký xe và biển số được thực hiện ngay tại trụ sở Công an Phường/Xã.
+
+Hồ sơ: 
+- Giấy tờ nguồn gốc xe (Hóa đơn mua bán).
+- Biên lai đóng lệ phí trước bạ.
+- CCCD chủ xe.`,
+    afterReplies: [
+      { title: "Quay lại Menu",        payload: "SHOW_MAIN_MENU" },
+      { title: "Hỏi thêm giao thông", payload: "FLOW_GIAO_THONG_KHAC" }
+    ]
+  },
+
   FLOW_GIAO_THONG_TAI_NAN: {
     agentState: 'AGENT_GIAO_THONG',
     text: `[Chatbot Auto] Xử lý khi xảy ra tai nạn giao thông:
@@ -351,20 +417,16 @@ Cần mang: Hộ chiếu của người nước ngoài (hoặc ảnh chụp tran
 
   FLOW_NGOAI_KIEU_GIA_HAN: {
     agentState: 'AGENT_NGOAI_KIEU',
-    text: `[Chatbot Auto] Gia hạn thị thực (visa) cho người nước ngoài:
+    text: `[Chatbot Auto] Thủ tục gia hạn thị thực (Visa):
 
-Lưu ý: Thủ tục gia hạn thị thực KHÔNG thuộc thẩm quyền của Công an Phường
+Hồ sơ cần chuẩn bị:
+- Hộ chiếu của người nước ngoài (còn thời hạn)
+- Tờ khai đề nghị cấp, gia hạn tạm trú, thị thực (Mẫu NA5)
+- Giấy chứng minh mục đích xin gia hạn (Giấy phép lao động, Giấy chứng nhận đầu tư, Giấy chứng nhận quan hệ gia đình...)
 
-Nơi thực hiện: Cục Quản lý xuất nhập cảnh (Bộ Công an)
-
-Hồ sơ thông thường:
-- Tờ khai xin gia hạn
-- Hộ chiếu còn hạn ít nhất 6 tháng
-- Ảnh 4×6
-- Lý do gia hạn và tài liệu chứng minh
-- Phí theo quy định hiện hành
-
-Nộp trước khi visa hết hạn ít nhất 3 ngày làm việc`,
+Lưu ý quan trọng: Thủ tục này vượt thẩm quyền của Công an Phường. Vui lòng nộp hồ sơ tại:
+- Cục Quản lý xuất nhập cảnh - Bộ Công an, hoặc
+- Phòng Quản lý xuất nhập cảnh - Công an Tỉnh/Thành phố.`,
     afterReplies: [
       { title: "Quay lại Menu",       payload: "SHOW_MAIN_MENU" },
       { title: "Hỏi thêm ngoại kiều", payload: "FLOW_NGOAI_KIEU_KHAC" }
@@ -554,6 +616,59 @@ Phụ trách trực tiếp:
 
 Giờ làm việc: T2–T6, 7h30–17h00 | Trực ban: 24/7
 Khẩn cấp: 113`,
+    afterReplies: [ { title: "Quay lại Menu", payload: "SHOW_MAIN_MENU" } ]
+  },
+
+  // ── THỦ TỤC HÀNH CHÍNH ────────────────────────────────────────────────────────────
+  FLOW_TTHC_KIEM_SOAT: {
+    agentState: 'AGENT_TTHC',
+    text: `[Chatbot Auto] Thông tin Kiểm soát Thủ tục hành chính:
+
+Đang cập nhật nội dung chi tiết. Vui lòng đặt câu hỏi cụ thể để Công an Phường giải đáp.`,
+    afterReplies: [
+      { title: "Quay lại Menu",      payload: "SHOW_MAIN_MENU" },
+      { title: "Hỏi thêm về TTHC", payload: "FLOW_TTHC_KHAC" }
+    ]
+  },
+
+  FLOW_TTHC_DICH_VU_CONG: {
+    agentState: 'AGENT_TTHC',
+    text: `[Chatbot Auto] Cổng Dịch vụ công:
+
+Đang cập nhật nội dung chi tiết. Vui lòng đặt câu hỏi cụ thể để Công an Phường giải đáp.`,
+    afterReplies: [
+      { title: "Quay lại Menu",      payload: "SHOW_MAIN_MENU" },
+      { title: "Hỏi thêm về TTHC", payload: "FLOW_TTHC_KHAC" }
+    ]
+  },
+
+  FLOW_TTHC_QUY_TRINH: {
+    agentState: 'AGENT_TTHC',
+    text: `[Chatbot Auto] Quy trình cấp xã:
+
+Đang cập nhật nội dung chi tiết. Vui lòng đặt câu hỏi cụ thể để Công an Phường giải đáp.`,
+    afterReplies: [
+      { title: "Quay lại Menu",      payload: "SHOW_MAIN_MENU" },
+      { title: "Hỏi thêm về TTHC", payload: "FLOW_TTHC_KHAC" }
+    ]
+  },
+
+  FLOW_TTHC_KHAC: {
+    agentState: 'AGENT_TTHC',
+    openChat: true,
+    text: '[Chatbot Auto] Anh/chị vui lòng nhập câu hỏi chi tiết về lĩnh vực Thủ tục Hành chính để Công an Phường giải đáp:'
+  },
+
+  FLOW_TTHC_DANH_BA: {
+    agentState: 'AGENT_TTHC',
+    text: `[Chatbot Auto] Danh bạ cán bộ phụ trách Thủ tục hành chính:
+
+Lãnh đạo:
+• Trưởng CAP Nguyễn Thành Tâm (Trung tá): ***REMOVED***
+
+Vui lòng liên hệ trực ban Công an Phường theo số khẩn cấp 113 để được hỗ trợ thủ tục hành chính.
+
+Giờ làm việc: T2–T6, 7h30–17h00 | Trực ban: 24/7`,
     afterReplies: [ { title: "Quay lại Menu", payload: "SHOW_MAIN_MENU" } ]
   }
 };

@@ -5,37 +5,43 @@ const subMenus = {
     { title: "Đăng ký thường trú", payload: "FLOW_CU_TRU_THUONG_TRU" },
     { title: "Đăng ký tạm trú",    payload: "FLOW_CU_TRU_TAM_TRU" },
     { title: "Khai báo tạm vắng",  payload: "FLOW_CU_TRU_TAM_VANG" },
-    { title: "Câu hỏi khác...",    payload: "FLOW_CU_TRU_KHAC" }
+    { title: "Câu hỏi khác...",    payload: "FLOW_CU_TRU_KHAC" },
+    { title: "Danh bạ cán bộ",     payload: "FLOW_DANH_BA_CU_TRU" }
   ],
   AGENT_CAN_CUOC: [
     { title: "Làm CCCD lần đầu",   payload: "FLOW_CAN_CUOC_LAN_DAU" },
     { title: "CCCD cho trẻ em",    payload: "FLOW_CAN_CUOC_TRE_EM" },
     { title: "Đổi/cấp lại CCCD",  payload: "FLOW_CAN_CUOC_DOI_CAP" },
-    { title: "Câu hỏi khác...",    payload: "FLOW_CAN_CUOC_KHAC" }
+    { title: "Câu hỏi khác...",    payload: "FLOW_CAN_CUOC_KHAC" },
+    { title: "Danh bạ cán bộ",     payload: "FLOW_DANH_BA_CAN_CUOC" }
   ],
   AGENT_GIAO_THONG: [
     { title: "Báo tai nạn GT",       payload: "FLOW_GIAO_THONG_TAI_NAN" },
     { title: "Tra cứu phạt nguội",   payload: "FLOW_GIAO_THONG_PHAT_NGUOI" },
     { title: "Thủ tục sau tai nạn",  payload: "FLOW_GIAO_THONG_SAU_TAI_NAN" },
-    { title: "Câu hỏi khác...",      payload: "FLOW_GIAO_THONG_KHAC" }
+    { title: "Câu hỏi khác...",      payload: "FLOW_GIAO_THONG_KHAC" },
+    { title: "Danh bạ cán bộ",       payload: "FLOW_DANH_BA_GIAO_THONG" }
   ],
   AGENT_AN_NINH: [
     { title: "Báo trộm/mất TS",   payload: "FLOW_AN_NINH_TROM_CAP" },
     { title: "Phòng cháy (PCCC)", payload: "FLOW_AN_NINH_PCCC" },
     { title: "Báo mất an ninh",   payload: "FLOW_AN_NINH_MAT_AN_NINH" },
-    { title: "Câu hỏi khác...",   payload: "FLOW_AN_NINH_KHAC" }
+    { title: "Câu hỏi khác...",   payload: "FLOW_AN_NINH_KHAC" },
+    { title: "Danh bạ cán bộ",    payload: "FLOW_DANH_BA_AN_NINH" }
   ],
   AGENT_NGOAI_KIEU: [
     { title: "Đăng ký người NN",  payload: "FLOW_NGOAI_KIEU_TAM_TRU_NN" },
     { title: "Khai báo lưu trú",  payload: "FLOW_NGOAI_KIEU_KHAI_BAO" },
     { title: "Gia hạn thị thực",  payload: "FLOW_NGOAI_KIEU_GIA_HAN" },
-    { title: "Câu hỏi khác...",   payload: "FLOW_NGOAI_KIEU_KHAC" }
+    { title: "Câu hỏi khác...",   payload: "FLOW_NGOAI_KIEU_KHAC" },
+    { title: "Danh bạ cán bộ",    payload: "FLOW_DANH_BA_NGOAI_KIEU" }
   ],
   AGENT_KHIEU_NAI: [
     { title: "Nộp đơn khiếu nại", payload: "FLOW_KHIEU_NAI_KHIEU_NAI" },
     { title: "Nộp đơn tố cáo",    payload: "FLOW_KHIEU_NAI_TO_CAO" },
     { title: "Phản ánh vi phạm",   payload: "FLOW_KHIEU_NAI_PHAN_ANH" },
-    { title: "Câu hỏi khác...",    payload: "FLOW_KHIEU_NAI_KHAC" }
+    { title: "Câu hỏi khác...",    payload: "FLOW_KHIEU_NAI_KHAC" },
+    { title: "Danh bạ cán bộ",     payload: "FLOW_DANH_BA_KHIEU_NAI" }
   ]
 };
 
@@ -248,7 +254,8 @@ Hồ sơ trình báo:
 - CCCD của người trình báo`,
     afterReplies: [
       { title: "Quay lại Menu",     payload: "SHOW_MAIN_MENU" },
-      { title: "Hỏi thêm an ninh", payload: "FLOW_AN_NINH_KHAC" }
+      { title: "Hỏi thêm an ninh", payload: "FLOW_AN_NINH_KHAC" },
+      { title: "Danh bạ cán bộ",   payload: "FLOW_DANH_BA_AN_NINH" }
     ]
   },
 
@@ -290,7 +297,8 @@ Thông tin cần cung cấp:
 Đảm bảo an toàn cá nhân trước khi tiếp cận hiện trường`,
     afterReplies: [
       { title: "Quay lại Menu",     payload: "SHOW_MAIN_MENU" },
-      { title: "Hỏi thêm an ninh", payload: "FLOW_AN_NINH_KHAC" }
+      { title: "Hỏi thêm an ninh", payload: "FLOW_AN_NINH_KHAC" },
+      { title: "Danh bạ cán bộ",   payload: "FLOW_DANH_BA_AN_NINH" }
     ]
   },
 
@@ -424,7 +432,8 @@ Các kênh tiếp nhận:
 Lưu ý: Cung cấp thông tin chính xác — phản ánh sai sự thật có thể bị xử lý theo pháp luật`,
     afterReplies: [
       { title: "Quay lại Menu",      payload: "SHOW_MAIN_MENU" },
-      { title: "Hỏi thêm khiếu nại", payload: "FLOW_KHIEU_NAI_KHAC" }
+      { title: "Hỏi thêm khiếu nại", payload: "FLOW_KHIEU_NAI_KHAC" },
+      { title: "Danh bạ cán bộ",     payload: "FLOW_DANH_BA_KHIEU_NAI" }
     ]
   },
 
@@ -432,6 +441,120 @@ Lưu ý: Cung cấp thông tin chính xác — phản ánh sai sự thật có t
     agentState: 'AGENT_KHIEU_NAI',
     openChat: true,
     text: '[Chatbot Auto] Anh/chị vui lòng nhập câu hỏi chi tiết về lĩnh vực Khiếu nại & Vi phạm để Công an Phường giải đáp:'
+  },
+
+  FLOW_DANH_BA_CU_TRU: {
+    agentState: 'AGENT_CU_TRU',
+    text: `[Chatbot Auto] Danh bạ cán bộ phụ trách Cư trú / Hộ khẩu:
+
+Lãnh đạo:
+• Trưởng CAP Nguyễn Thành Tâm (Trung tá): ***REMOVED***
+
+Phụ trách trực tiếp:
+• Phó Huỳnh Thanh Sơn (Thiếu tá): ***REMOVED***
+• CB Vũ Tuấn Linh (Đại uý): ***REMOVED***
+• CB Trương Thị Hương Quỳnh (Trung tá): ***REMOVED***
+• BV Lê Thị Phương Mai: ***REMOVED***
+• BV Lê Hà Vũ Nhân: ***REMOVED***
+• BV Nguyễn Tấn Khoa: ***REMOVED***
+
+Giờ làm việc: T2–T6, 7h30–17h00 | Trực ban: 24/7
+Khẩn cấp: 113`,
+    afterReplies: [ { title: "Quay lại Menu", payload: "SHOW_MAIN_MENU" } ]
+  },
+
+  FLOW_DANH_BA_CAN_CUOC: {
+    agentState: 'AGENT_CAN_CUOC',
+    text: `[Chatbot Auto] Danh bạ cán bộ phụ trách Căn cước / Định danh:
+
+Lãnh đạo:
+• Trưởng CAP Nguyễn Thành Tâm (Trung tá): ***REMOVED***
+
+Phụ trách trực tiếp:
+• Phó Hà Văn Long (Trung tá): ***REMOVED***
+• CB Phạm Hồng Linh (Đại uý): ***REMOVED***
+• CB Nguyễn Kiên Trung (Thượng uý): ***REMOVED***
+• BV Lê Văn Hiếu: ***REMOVED***
+• BV Lê Nguyễn Thanh Trí: ***REMOVED***
+• BV Nguyễn Văn Thanh: ***REMOVED***
+• BV Phạm Thanh Đức: ***REMOVED***
+• BV Trương Văn Linh: ***REMOVED***
+• BV Nguyễn Công Giang: ***REMOVED***
+• BV Lương Quốc Huy: ***REMOVED***
+
+Giờ làm việc: T2–T6, 7h30–17h00 | Trực ban: 24/7
+Khẩn cấp: 113`,
+    afterReplies: [ { title: "Quay lại Menu", payload: "SHOW_MAIN_MENU" } ]
+  },
+
+  FLOW_DANH_BA_GIAO_THONG: {
+    agentState: 'AGENT_GIAO_THONG',
+    text: `[Chatbot Auto] Danh bạ cán bộ phụ trách Giao thông:
+
+Lãnh đạo:
+• Trưởng CAP Nguyễn Thành Tâm (Trung tá): ***REMOVED***
+
+Phụ trách trực tiếp:
+• Phó Huỳnh Nhật Tân (Trung tá): ***REMOVED***
+• CB Võ Thành Lợi — tai nạn (Đại uý): ***REMOVED***
+• CB Tống Sơn Ca — vi phạm (Thiếu tá): ***REMOVED***
+
+Giờ làm việc: T2–T6, 7h30–17h00 | Trực ban: 24/7
+Khẩn cấp: 113`,
+    afterReplies: [ { title: "Quay lại Menu", payload: "SHOW_MAIN_MENU" } ]
+  },
+
+  FLOW_DANH_BA_AN_NINH: {
+    agentState: 'AGENT_AN_NINH',
+    text: `[Chatbot Auto] Danh bạ cán bộ phụ trách An ninh / PCCC:
+
+Lãnh đạo:
+• Trưởng CAP Nguyễn Thành Tâm (Trung tá): ***REMOVED***
+
+Phụ trách trực tiếp:
+• Phó Trần Quốc Dũng (Trung tá): ***REMOVED***
+• CB Phạm Minh Nghĩa (Trung tá): ***REMOVED***
+• CB Võ Thành Đô (Trung tá): ***REMOVED***
+• CB Tống Kiều Ngọc Nam (Thượng uý): ***REMOVED***
+
+Giờ làm việc: T2–T6, 7h30–17h00 | Trực ban: 24/7
+Khẩn cấp: 113`,
+    afterReplies: [ { title: "Quay lại Menu", payload: "SHOW_MAIN_MENU" } ]
+  },
+
+  FLOW_DANH_BA_NGOAI_KIEU: {
+    agentState: 'AGENT_NGOAI_KIEU',
+    text: `[Chatbot Auto] Danh bạ cán bộ phụ trách Ngoại kiều:
+
+Lãnh đạo:
+• Trưởng CAP Nguyễn Thành Tâm (Trung tá): ***REMOVED***
+
+Phụ trách trực tiếp:
+• Phó Trần Quốc Dũng (Trung tá): ***REMOVED***
+• CB Phạm Minh Nghĩa (Trung tá): ***REMOVED***
+• CB Võ Thành Đô (Trung tá): ***REMOVED***
+• CB Tống Kiều Ngọc Nam (Thượng uý): ***REMOVED***
+
+Giờ làm việc: T2–T6, 7h30–17h00 | Trực ban: 24/7
+Khẩn cấp: 113`,
+    afterReplies: [ { title: "Quay lại Menu", payload: "SHOW_MAIN_MENU" } ]
+  },
+
+  FLOW_DANH_BA_KHIEU_NAI: {
+    agentState: 'AGENT_KHIEU_NAI',
+    text: `[Chatbot Auto] Danh bạ cán bộ phụ trách Tố giác / Khiếu nại:
+
+Lãnh đạo:
+• Trưởng CAP Nguyễn Thành Tâm (Trung tá): ***REMOVED***
+
+Phụ trách trực tiếp:
+• Phó Lê Duy Bảo (Trung tá): ***REMOVED***
+• CB Thái Thanh Tuấn (Trung tá): ***REMOVED***
+• CB Đoàn Lập Trường (Thiếu tá): ***REMOVED***
+
+Giờ làm việc: T2–T6, 7h30–17h00 | Trực ban: 24/7
+Khẩn cấp: 113`,
+    afterReplies: [ { title: "Quay lại Menu", payload: "SHOW_MAIN_MENU" } ]
   }
 };
 

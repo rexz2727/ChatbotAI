@@ -37,3 +37,11 @@ __pycache__/
 
 # Executables
 cloudflared
+
+# Databases
+*.db
+*.db-shm
+*.db-wal
+
+# Scratch files
+scratch/

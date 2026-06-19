@@ -182,7 +182,9 @@ Cần làm ngay:
 
 Sau đó:
 - Chờ CSGT lập biên bản
-- Thông báo công ty bảo hiểm trong vòng 5 ngày làm việc`,
+- Thông báo công ty bảo hiểm trong vòng 5 ngày làm việc
+
+Hỗ trợ thêm: Liên hệ Công an Phường (trực ban 24/7) nếu cần hướng dẫn tại hiện trường`,
     afterReplies: [
       { title: "Quay lại Menu",        payload: "SHOW_MAIN_MENU" },
       { title: "Hỏi thêm giao thông", payload: "FLOW_GIAO_THONG_KHAC" }
@@ -263,7 +265,9 @@ Phòng ngừa tại nhà / cơ sở:
 
 Kiểm tra định kỳ:
 - Hộ gia đình: Cán bộ Công an Phường kiểm tra theo kế hoạch
-- Cơ sở kinh doanh: Liên hệ Phòng PC07 để được hướng dẫn cấp phép PCCC`,
+- Cơ sở kinh doanh: Liên hệ Phòng PC07 để được hướng dẫn cấp phép PCCC
+
+Hỗ trợ thêm: Liên hệ trực tiếp Công an Phường (trực ban 24/7) để được hướng dẫn PCCC`,
     afterReplies: [
       { title: "Quay lại Menu",     payload: "SHOW_MAIN_MENU" },
       { title: "Hỏi thêm an ninh", payload: "FLOW_AN_NINH_KHAC" }
@@ -275,8 +279,8 @@ Kiểm tra định kỳ:
     text: `[Chatbot Auto] Báo cáo mất an ninh trật tự:
 
 Liên hệ ngay:
-- Đường dây khẩn: 113
 - Trực tiếp Công an Phường (trực ban 24/7)
+- Đường dây khẩn: 113
 
 Thông tin cần cung cấp:
 - Thời gian và địa điểm xảy ra sự việc
@@ -412,8 +416,8 @@ Bảo vệ người tố cáo: Danh tính được giữ bí mật theo quy đ�
     text: `[Chatbot Auto] Phản ánh vi phạm:
 
 Các kênh tiếp nhận:
-- Đường dây khẩn: 113
 - Trực tiếp tại Công an Phường (trực ban 24/7)
+- Đường dây khẩn: 113
 - App VNeID → Phản ánh hiện trường
 - Cổng thông tin điện tử của UBND Phường
 

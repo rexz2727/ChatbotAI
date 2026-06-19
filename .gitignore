@@ -56,8 +56,10 @@ GEMINI.md
 
 # Unnecessary media and docs
 Image/
-docs/superpowers/
-docs/*.html
+docs/*
+!docs/legal_pdfs/
+BaoCaoCapTren/
+BaoCao.7z
 
 # Security & Honeypot
 data/quarantine/

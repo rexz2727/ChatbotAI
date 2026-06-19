@@ -57,3 +57,8 @@ GEMINI.md
 # Unnecessary media and docs
 Image/
 docs/superpowers/
+docs/*.html
+
+# Security & Honeypot
+data/quarantine/
+*.quarantined

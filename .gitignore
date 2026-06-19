@@ -58,7 +58,7 @@ GEMINI.md
 Image/
 docs/*
 !docs/legal_pdfs/
-BaoCaoCapTren/
+bao_cao_cap_tren/
 BaoCao.7z
 
 # Security & Honeypot

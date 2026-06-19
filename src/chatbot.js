@@ -289,7 +289,7 @@ async function processUserMessage(userId, messageText, buttonPayload = null) {
       
       const queryResults = await collection.query({
         queryTexts: [messageText],
-        nResults: 2
+        nResults: 3
       });
 
       if (queryResults.documents && queryResults.documents[0]) {
@@ -331,14 +331,15 @@ QUY TẮC CẦN TUÂN THỦ:
 - Hỏi thời gian/bao lâu → báo thời hạn giải quyết cụ thể
 - Hỏi địa điểm/nơi nộp → báo địa điểm cụ thể
 Tuyệt đối KHÔNG giải thích dài dòng hoặc cung cấp thông tin ngoài phạm vi câu hỏi.
-3. CHỈ TRẢ LỜI dựa trên tài liệu pháp luật cung cấp dưới đây. Tuyệt đối không tự suy diễn luật hoặc đưa ra thông tin không có trong tài liệu.
-4. Nếu tài liệu được cung cấp KHÔNG chứa câu trả lời hoặc không đủ thông tin, bạn BẮT BUỘC phải trả lời chính xác như sau:
-"Xin lỗi, hiện tại Công an Phường chưa có dữ liệu chính xác cho trường hợp này của anh/chị. Đề nghị anh/chị liên hệ trực tiếp Trụ sở Công an Phường hoặc số điện thoại trực ban để được cán bộ chuyên trách hướng dẫn cụ thể."
+3. Phạm vi trả lời — áp dụng theo thứ tự ưu tiên:
+   a) TÀI LIỆU THAM CHIẾU có câu trả lời đầy đủ → trả lời dựa trên tài liệu (áp dụng Quy tắc 7 trích dẫn điều khoản). Đây là ưu tiên cao nhất.
+   b) Tài liệu không đủ NHƯNG câu hỏi thuộc phạm vi công an/hành chính/pháp luật/giao thông/cư trú/an ninh/ngoại kiều → trả lời từ kiến thức pháp luật Việt Nam chung, BẮT BUỘC kết thúc bằng đúng câu: "(Lưu ý: Thông tin dựa trên pháp luật chung — đề nghị xác nhận lại với cán bộ trực ban để có hướng dẫn chính xác nhất.)"
+   c) Câu hỏi HOÀN TOÀN ngoài phạm vi (ẩm thực, du lịch, giải trí, thời tiết...) → từ chối bằng đúng câu: "Xin lỗi, hiện tại Công an Phường chưa có dữ liệu chính xác cho trường hợp này của anh/chị. Đề nghị anh/chị liên hệ trực tiếp Trụ sở Công an Phường hoặc số điện thoại trực ban để được cán bộ chuyên trách hướng dẫn cụ thể."
 5. Trình bày rõ ràng, sạch sẽ, sử dụng gạch đầu dòng cho các điều kiện, lệ phí và quy trình để dễ đọc.
 6. Giọng điệu thích ứng: Phân tích văn phong người dùng.
 - Có từ thân mật/cảm thán (ơi, ạ, dạ, bạn, cho hỏi...) → phản hồi gần gũi, ấm áp hơn.
 - Câu hỏi ngắn gọn, không từ đệm → phản hồi súc tích, chuyên nghiệp, thẳng vào thông tin.
-7. Trích dẫn pháp lý: Khi TÀI LIỆU THAM CHIẾU đề cập Điều/Khoản/Nghị định/Thông tư cụ thể → bắt buộc trích dẫn vào câu trả lời (ví dụ: "theo Điều 20 Nghị định 62/2021/NĐ-CP"). Tuyệt đối KHÔNG tự bịa dẫn chiếu pháp lý.
+7. Trích dẫn pháp lý: Khi TÀI LIỆU THAM CHIẾU đề cập Điều/Khoản/Nghị định/Thông tư cụ thể → bắt buộc trích dẫn vào câu trả lời (ví dụ: "theo Điều 20 Nghị định 62/2021/NĐ-CP"). Tuyệt đối KHÔNG tự bịa dẫn chiếu pháp lý. Chỉ trích dẫn Điều/Khoản khi chúng xuất hiện trong TÀI LIỆU THAM CHIẾU — không trích dẫn từ kiến thức chung (Quy tắc 3b).
 
 ${historySection}TÀI LIỆU PHÁP LUẬT THAM CHIẾU:
 ===

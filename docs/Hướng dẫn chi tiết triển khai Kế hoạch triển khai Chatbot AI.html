@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng dẫn Kỹ thuật Chatbot Công an Phường</title>
+    <style>
+        body { font-family: 'Segoe UI', Consolas, Arial, sans-serif; line-height: 1.6; color: #e0e0e0; background-color: #121212; max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .container { background-color: #1e1e1e; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        h1 { color: #4dabf7; border-bottom: 2px solid #333; padding-bottom: 10px; text-align: center; }
+        h2 { color: #69db7c; margin-top: 40px; border-bottom: 1px solid #333; padding-bottom: 5px; }
+        h3 { color: #ffd43b; margin-top: 25px; }
+        p { margin-bottom: 15px; }
+        code { background-color: #2d2d2d; color: #ff8787; padding: 3px 6px; border-radius: 4px; font-family: 'Courier New', Courier, monospace; }
+        pre { background-color: #000000; color: #a9b7c6; padding: 20px; border-radius: 6px; overflow-x: auto; border: 1px solid #333; }
+        pre code { background-color: transparent; color: inherit; padding: 0; }
+        .highlight { background-color: #2b2210; border-left: 5px solid #f59f00; padding: 15px; margin: 20px 0; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HƯỚNG DẪN CHI TIẾT TRIỂN KHAI CHATBOT AI (BẢN KỸ THUẬT)</h1>
+        <p>Tài liệu này dành cho Kỹ sư / Cán bộ IT phụ trách cấu hình hệ thống OpenClaw + Gemini chạy hoàn toàn trên máy chủ Local (0 VND), hỗ trợ đầy đủ bộ kịch bản thủ tục hành chính mô hình 2 cấp (Từ tháng 7/2025).</p>
+
+        <h2>BƯỚC 1: CHUẨN BỊ MÔI TRƯỜNG MÁY CHỦ (LOCAL HOSTING)</h2>
+        <p>Do sử dụng máy tính cơ quan, chúng ta cần cài đặt các nền tảng để chạy được AI và Framework.</p>
+        <ol>
+            <li>Tải và cài đặt <strong>Node.js (Bản LTS)</strong>: Đây là lõi để chạy OpenClaw.</li>
+            <li>Tải và cài đặt <strong>Python 3.10+</strong>: Đảm bảo tick chọn "Add to PATH" lúc cài đặt. Cần thiết để khởi chạy lõi Vector DB (ChromaDB).</li>
+            <li>Cài đặt PM2 (Công cụ giữ cho phần mềm không bị tắt khi tắt màn hình đen):
+                <pre><code>npm install pm2 -g</code></pre>
+            </li>
+        </ol>
+
+        <h2>BƯỚC 2: MỞ ĐƯỜNG HẦM BẢO MẬT BẰNG CLOUDFLARE TUNNEL</h2>
+        <p>Máy tính ở cơ quan không có IP tĩnh trên mạng Internet. Ta dùng Cloudflare để giải quyết.</p>
+        <ol>
+            <li>Tải file <code>cloudflared.exe</code> từ trang chủ Cloudflare.</li>
+            <li>Chạy lệnh để cấp một đường link HTTPS miễn phí nối thẳng vào cổng 3000 của máy tính (Nơi OpenClaw đang chạy):
+                <pre><code>cloudflared tunnel --url http://localhost:3000</code></pre>
+            </li>
+            <li>Lưu lại đoạn URL được sinh ra (Ví dụ: <code>https://congan-abc.trycloudflare.com</code>). <strong>Không tắt cửa sổ này.</strong></li>
+        </ol>
+
+        <h2>BƯỚC 3: CẤU HÌNH KẾT NỐI MẠNG XÃ HỘI (WEBHOOK)</h2>
+        <p>Bạn truy cập vào trang quản trị lập trình viên của Facebook (Meta for Developers) và Zalo (Zalo for Developers).</p>
+        <ul>
+            <li>Lấy <strong>Page Access Token</strong> (Facebook) và <strong>Access Token</strong> (Zalo OA).</li>
+            <li>Tại phần thiết lập Webhook của hai nền tảng, dán đường link Cloudflare vừa có được. (Ví dụ Facebook: <code>https://congan-abc.trycloudflare.com/webhook/facebook</code>).</li>
+            <li>Lưu lại toàn bộ Token vào một file <code>.env</code> trong thư mục mã nguồn OpenClaw.</li>
+        </ul>
+
+        <h2>BƯỚC 4: THIẾT LẬP CƠ SỞ DỮ LIỆU LUẬT (RAG PIPELINE)</h2>
+        <div class="highlight">
+            <strong>BƯỚC QUAN TRỌNG NHẤT BẢO ĐẢM TÍNH PHÁP LÝ:</strong> Với mô hình 2 cấp sau 2025, ta phải tách bạch cơ sở dữ liệu để chống lỗi "Râu ông nọ cắm cằm bà kia". Không nạp chung luật giao thông với luật cư trú.
+        </div>
+        <p>Trong thư mục chứa ChromaDB, bạn tạo ra 6 tập dữ liệu (Collections) độc lập tương ứng với 6 lĩnh vực:</p>
+        <pre><code>// Đoạn mã khởi tạo 6 kho dữ liệu Vector độc lập
+const chroma = require('chromadb');
+const client = new chroma.ChromaClient();
+
+async function initDatabases() {
+    await client.createCollection({ name: "db_cu_tru" }); // Luật cư trú
+    await client.createCollection({ name: "db_can_cuoc" }); // CCCD, Định danh
+    await client.createCollection({ name: "db_giao_thong" }); // Đăng ký xe, GPLX, Vi phạm
+    await client.createCollection({ name: "db_an_ninh" }); // PCCC, Cơ sở ANTT
+    await client.createCollection({ name: "db_ngoai_kieu" }); // Khai báo người nước ngoài
+    await client.createCollection({ name: "db_khieu_nai" }); // Khiếu nại, tố giác
+}</code></pre>
+        <p>Sau đó, sử dụng mã nguồn chuẩn hóa (Parse) để nạp các tệp `.txt` chứa văn bản pháp luật tương ứng vào từng kho.</p>
+
+        <h2>BƯỚC 5: LẬP TRÌNH KỊCH BẢN ĐỊNH TUYẾN (MULTI-AGENT ROUTING)</h2>
+        <p>Trong file điều hướng của OpenClaw, chúng ta sẽ bắt sự kiện người dân bấm nút trên Menu và điều phối họ đến "Cán bộ ảo" (Agent) phù hợp.</p>
+        
+        <pre><code>// HÀM TIẾP NHẬN VÀ PHÂN LUỒNG TIN NHẮN
+async function handleUserMessage(userId, message, buttonPayload) {
+    // 1. CHUYỂN LUỒNG NẾU NGƯỜI DÙNG BẤM NÚT MENU
+    if (buttonPayload === "MENU_GIAO_THONG") {
+        db.setSession(userId, "AGENT_GIAO_THONG");
+        return "Bạn đang ở Cổng thông tin Giao thông (Đăng ký xe, GPLX, Nộp phạt). Mời đặt câu hỏi.";
+    } 
+    if (buttonPayload === "MENU_CU_TRU") {
+        db.setSession(userId, "AGENT_CU_TRU");
+        return "Bạn đang ở Cổng thông tin Cư trú. Mời đặt câu hỏi về thường trú, tạm trú.";
+    }
+    // ... Tương tự cho 4 nút còn lại
+
+    // 2. LẤY TRẠNG THÁI HIỆN TẠI VÀ CHUẨN BỊ GỌI AI
+    let userState = db.getSession(userId);
+    let taiLieuThamKhao = "";
+
+    // 3. ĐỊNH TUYẾN VÀO CÁC KHO LUẬT CHUYÊN BIỆT
+    if (userState === "AGENT_GIAO_THONG") {
+        taiLieuThamKhao = await queryChromaDB("db_giao_thong", message);
+    } 
+    else if (userState === "AGENT_CU_TRU") {
+        taiLieuThamKhao = await queryChromaDB("db_cu_tru", message);
+    }
+    else {
+        return sendMainMenu(); // Ép người dùng chọn lĩnh vực
+    }
+
+    // 4. ÉP KHUÔN VĂN PHONG VÀ GỌI GEMINI 1.5 FLASH
+    const systemPrompt = `
+        Bạn là cán bộ Trực ban Công an Phường.
+        1. Xưng hô: "Công an Phường" và "anh/chị/cô/bác".
+        2. CHỈ TRẢ LỜI ĐÚNG VỚI TÀI LIỆU SAU: [${taiLieuThamKhao}].
+        3. Tuyệt đối không tự suy diễn luật. Nếu tài liệu không có câu trả lời, hãy nói: "Xin lỗi, hiện tại tôi chưa có dữ liệu cho câu hỏi này. Đề nghị anh/chị ra trực tiếp Trụ sở trong giờ hành chính để được hướng dẫn."
+        Câu hỏi của người dân: ${message}
+    `;
+
+    return callGeminiAPIWithBackoff(systemPrompt);
+}</code></pre>
+
+        <h2>BƯỚC 6: XỬ LÝ CHỐNG SẬP (CONCURRENCY & EXPONENTIAL BACKOFF)</h2>
+        <p>Để đảm bảo 10 người hỏi cùng lúc không làm sập gói Gemini API Free (giới hạn 15 req/phút), bắt buộc phải lập trình hàm gọi API theo cơ chế thử lại (Backoff):</p>
+
+        <pre><code>// THUẬT TOÁN BẢO VỆ API KHỎI QUÁ TẢI (RATE LIMIT)
+async function callGeminiAPIWithBackoff(prompt, retries = 3) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            // Gọi API Gemini 1.5 Flash
+            const response = await geminiAPI.generate(prompt);
+            return response.text;
+        } catch (error) {
+            // Nếu lỗi 429 là lỗi Quá tải do bị bấm cùng lúc
+            if (error.status === 429) {
+                console.warn(`Hệ thống đang nghẽn. Chờ ${2 * (i + 1)} giây để thử lại...`);
+                // Người thứ 10 sẽ phải chờ 2s, nếu vẫn lỗi chờ tiếp 4s, 6s... ngầm bên dưới
+                await sleep(2000 * (i + 1)); 
+                continue;
+            }
+            throw error; // Các lỗi khác thì báo lỗi bình thường
+        }
+    }
+    return "Hệ thống tra cứu hiện đang có quá nhiều người truy cập. Xin vui lòng nhắn lại sau 1-2 phút.";
+}</code></pre>
+
+        <h2>BƯỚC 7: VẬN HÀNH 24/7</h2>
+        <p>Sau khi hoàn tất cấu hình, mở Terminal và dùng PM2 để khởi động hệ thống. Lệnh này đảm bảo dù máy có bị reset, phần mềm vẫn tự động bật lên:</p>
+        <pre><code>pm2 start index.js --name "CA_Phuong_Chatbot"
+pm2 save
+pm2 startup</code></pre>
+        <p><strong>Lưu ý Bảo trì:</strong> Mỗi khi có văn bản pháp luật mới (Đặc biệt sau 01/07/2025 có nhiều thay đổi), cán bộ IT chỉ cần xóa tệp <code>.txt</code> cũ, dán nội dung luật mới vào, và chạy lại lệnh <code>initDatabases()</code> để ChromaDB cập nhật dữ liệu Vector mới nhất.</p>
+    </div>
+</body>
+</html>

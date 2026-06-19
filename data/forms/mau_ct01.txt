@@ -1,0 +1,71 @@
+CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+Độc lập - Tự do - Hạnh phúc
+----------------
+
+HƯỚNG DẪN CHI TIẾT KÊ KHAI TỜ KHAI THAY ĐỔI THÔNG TIN CƯ TRÚ (MẪU CT01)
+(Ban hành kèm theo Thông tư số 66/2023/TT-BCA ngày 18/12/2023 của Bộ Công an)
+
+Mẫu CT01 được sử dụng khi công dân thực hiện các thủ tục: Đăng ký thường trú, đăng ký tạm trú, gia hạn tạm trú, xóa đăng ký thường trú, xóa đăng ký tạm trú, tách hộ, điều chỉnh thông tin về cư trú trong Cơ sở dữ liệu về cư trú.
+
+========================================================================
+
+CÁC TRƯỜNG THÔNG TIN CẦN KÊ KHAI VÀ HƯỚNG DẪN CHI TIẾT:
+
+1. Kính gửi: 
+Ghi tên cơ quan Công an nơi tiếp nhận hồ sơ giải quyết thủ tục cư trú.
+Ví dụ: "Kính gửi: Công an phường Trung Tâm, quận Hoàn Kiếm, TP. Hà Nội".
+
+2. Họ, chữ đệm và tên của người viết tờ khai:
+Ghi đầy đủ họ tên bằng chữ in hoa, có dấu.
+Ví dụ: "NGUYỄN VĂN A".
+
+3. Số định danh cá nhân/Số CCCD/Số Căn cước:
+Ghi đầy đủ 12 chữ số định danh cá nhân của người viết tờ khai.
+
+4. Số điện thoại liên hệ:
+Ghi số điện thoại di động chính chủ đang sử dụng để cơ quan Công an liên hệ khi cần thiết.
+
+5. Email:
+Ghi địa chỉ thư điện tử cá nhân (nếu có).
+
+6. Địa chỉ thường trú:
+Ghi địa chỉ nơi đang đăng ký thường trú hiện tại theo Cơ sở dữ liệu quốc gia về dân cư.
+Ghi rõ: Số nhà, đường/phố, tổ/dân phố, phường/xã/thị trấn, quận/huyện/thị xã, tỉnh/thành phố trực thuộc trung ương.
+
+7. Địa chỉ tạm trú:
+Ghi địa chỉ nơi đang tạm trú hiện tại (nếu có).
+
+8. Địa chỉ nơi ở hiện tại:
+Ghi địa chỉ nơi đang sinh sống thực tế hiện nay (có thể trùng với thường trú hoặc tạm trú).
+
+9. Họ, chữ đệm và tên của người có thay đổi thông tin cư trú:
+Trường hợp người viết tờ khai cũng là người có thay đổi thông tin cư trú thì ghi thông tin của mình. Trường hợp viết hộ cho người khác (như con dưới 14 tuổi, người được giám hộ) thì ghi họ tên của người đó bằng chữ in hoa có dấu.
+
+10. Quan hệ với người viết tờ khai:
+Ghi rõ quan hệ nhân thân (ví dụ: Bản thân, Cha, Mẹ, Con, Vợ, Chồng, Người giám hộ...).
+
+11. Số định danh cá nhân của người có thay đổi thông tin cư trú:
+Ghi 12 số định danh cá nhân của người có thay đổi cư trú.
+
+12. Nội dung đề nghị:
+Ghi rõ ràng thủ tục hành chính muốn giải quyết.
+Ví dụ:
+- "Đăng ký thường trú vào chỗ ở hợp pháp của bản thân tại số 12 Lý Tự Trọng, phường Trung Tâm."
+- "Đăng ký tạm trú tại phòng trọ số 3, ngõ 45 đường Lê Lợi, phường Trung Tâm."
+- "Gia hạn tạm trú."
+- "Khai báo tạm vắng."
+
+13. Ý kiến của chủ hộ và chủ sở hữu chỗ ở hợp pháp:
+- Chủ hộ: Ghi rõ "Đồng ý cho đăng ký thường trú/tạm trú vào hộ gia đình", ký tên và ghi rõ họ tên.
+- Chủ sở hữu chỗ ở hợp pháp (Chủ nhà): Ghi rõ "Đồng ý cho đăng ký thường trú/tạm trú tại căn nhà thuộc quyền sở hữu hợp pháp", ký tên và ghi rõ họ tên.
+* Lưu ý: Ý kiến này có thể được miễn nếu chủ hộ và chủ sở hữu đã xác thực đồng ý trực tuyến qua tài khoản định danh điện tử VNeID Mức 2.
+
+14. Người viết tờ khai ký tên:
+Người viết tờ khai ký và ghi rõ họ tên ở cuối tờ khai, cam đoan các thông tin kê khai là đúng sự thật.
+
+========================================================================
+
+CÂU HỎI THƯỜNG GẶP KHI ĐIỀN MẪU CT01:
+
+Câu hỏi: Tôi thuê nhà và muốn đăng ký thường trú, phần ý kiến của chủ sở hữu chỗ ở hợp pháp có bắt buộc phải ký trực tiếp vào mẫu CT01 không?
+Trả lời: Theo Nghị định 58/2026/NĐ-CP, nếu chủ nhà của anh/chị đã có tài khoản định danh điện tử VNeID Mức 2, họ có thể thực hiện xác nhận đồng ý trực tuyến thông qua ứng dụng VNeID sau khi anh/chị gửi hồ sơ dịch vụ công trực tuyến. Khi đó, anh/chị không cần xin chữ ký giấy trực tiếp của chủ nhà lên mẫu CT01. Trường hợp chủ nhà không sử dụng VNeID, họ bắt buộc phải ký trực tiếp và ghi rõ họ tên vào mục "Ý kiến của chủ sở hữu chỗ ở hợp pháp" trên tờ khai CT01 giấy hoặc ký vào hợp đồng thuê nhà có công chứng/chứng thực.

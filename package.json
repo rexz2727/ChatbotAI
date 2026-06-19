@@ -1,0 +1,35 @@
+{
+  "name": "ca-phuong-chatbot",
+  "version": "1.0.0",
+  "description": "Chatbot AI Cong an Phuong Ho tro Thu tuc Hanh chinh",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "init-db": "node src/init_db.js",
+    "test": "jest --testPathPatterns=tests/",
+    "test:coverage": "jest --testPathPatterns=tests/ --coverage"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "src/db.js",
+      "src/chatbot.js",
+      "src/honeypot.js"
+    ]
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "axios": "^1.6.8",
+    "chromadb": "^3.0.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^8.5.2",
+    "p-limit": "^4.0.0",
+    "pdf-parse": "^2.4.5",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2"
+  }
+}

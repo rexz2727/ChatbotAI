@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+database.db
+chromadb_data
+.env
+.git
+.agents
+docs/
+scratch/
+*.md
+PLAN.html

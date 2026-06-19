@@ -1,0 +1,43 @@
+services:
+  chromadb:
+    image: docker.io/chromadb/chroma:latest
+    container_name: chatbot-chromadb
+    ports:
+      - "${CHROMA_BIND_IP:-127.0.0.1}:${CHROMA_PORT:-8000}:8000"
+    environment:
+      - ANONYMIZED_TELEMETRY=False
+      - IS_PERSISTENT=TRUE
+      - PERSIST_DIRECTORY=/data
+    volumes:
+      - chroma-data:/data
+    healthcheck:
+      test: bash -c "exec 3<>/dev/tcp/localhost/8000"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: always
+
+  chatbot:
+    build: .
+    container_name: chatbot-app
+    ports:
+      - "${CHATBOT_BIND_IP:-127.0.0.1}:${PORT:-3000}:3000"
+    environment:
+      # Overrides .env: inside Docker the app must bind to 0.0.0.0, not 127.0.0.1
+      - HOST=0.0.0.0
+      - CHROMA_HOST=chromadb
+      - CHROMA_PORT=8000
+      - SQLITE_DB_PATH=/app/data/database.db
+    env_file:
+      - .env
+    volumes:
+      - sqlite-data:/app/data
+    depends_on:
+      chromadb:
+        condition: service_healthy
+    restart: always
+
+volumes:
+  chroma-data:
+  sqlite-data:

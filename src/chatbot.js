@@ -110,7 +110,8 @@ const menuMapping = {
   'MENU_GIAO_THONG': { state: 'AGENT_GIAO_THONG', title: 'Cổng thông tin Giao thông', db: 'db_giao_thong' },
   'MENU_AN_NINH': { state: 'AGENT_AN_NINH', title: 'Cổng thông tin An ninh Trật tự & PCCC', db: 'db_an_ninh' },
   'MENU_NGOAI_KIEU': { state: 'AGENT_NGOAI_KIEU', title: 'Cổng thông tin Ngoại kiều', db: 'db_ngoai_kieu' },
-  'MENU_KHIEU_NAI': { state: 'AGENT_KHIEU_NAI', title: 'Cổng thông tin Khiếu nại & Vi phạm', db: 'db_khieu_nai' }
+  'MENU_KHIEU_NAI': { state: 'AGENT_KHIEU_NAI', title: 'Cổng thông tin Khiếu nại & Vi phạm', db: 'db_khieu_nai' },
+  'MENU_TTHC': { state: 'AGENT_TTHC', title: 'Cổng thông tin Thủ tục Hành chính', db: 'db_thu_tuc_hanh_chinh' }
 };
 
 // Helper function for sleeping
@@ -213,7 +214,8 @@ async function processUserMessage(userId, messageText, buttonPayload = null) {
         'AGENT_GIAO_THONG': ['giao thông', 'xe máy', 'ô tô', 'phạt nguội', 'tai nạn', 'bằng lái'],
         'AGENT_AN_NINH': ['an ninh', 'pccc', 'cháy', 'trật tự', 'đánh nhau', 'trộm cắp', 'báo công an'],
         'AGENT_NGOAI_KIEU': ['ngoại kiều', 'nước ngoài', 'người nước ngoài', 'visa', 'hộ chiếu'],
-        'AGENT_KHIEU_NAI': ['khiếu nại', 'tố cáo', 'vi phạm', 'phản ánh']
+        'AGENT_KHIEU_NAI': ['khiếu nại', 'tố cáo', 'vi phạm', 'phản ánh'],
+        'AGENT_TTHC': ['thủ tục hành chính', 'tthc', 'thủ tục', 'dịch vụ công', 'hành chính']
       };
 
       for (const [stateKey, words] of Object.entries(keywords)) {
@@ -340,6 +342,12 @@ Tuyệt đối KHÔNG giải thích dài dòng hoặc cung cấp thông tin ngo�
 - Có từ thân mật/cảm thán (ơi, ạ, dạ, bạn, cho hỏi...) → phản hồi gần gũi, ấm áp hơn.
 - Câu hỏi ngắn gọn, không từ đệm → phản hồi súc tích, chuyên nghiệp, thẳng vào thông tin.
 7. Trích dẫn pháp lý: Khi TÀI LIỆU THAM CHIẾU đề cập Điều/Khoản/Nghị định/Thông tư cụ thể → bắt buộc trích dẫn vào câu trả lời (ví dụ: "theo Điều 20 Nghị định 62/2021/NĐ-CP"). Tuyệt đối KHÔNG tự bịa dẫn chiếu pháp lý. Chỉ trích dẫn Điều/Khoản khi chúng xuất hiện trong TÀI LIỆU THAM CHIẾU — không trích dẫn từ kiến thức chung (Quy tắc 3b).
+
+### TỪ ĐIỂN VIẾT TẮT & TEEN CODE
+Để hiểu đúng ý đồ người dân, bạn cần dịch các từ viết tắt, tiếng lóng, tiếng địa phương sau đây:
+- Hành chính: cccd (Căn cước công dân), gplx (Giấy phép lái xe), đktt (Đăng ký thường trú/tạm trú), xnc (Xuất nhập cảnh), bhyt (Bảo hiểm y tế), bhxh (Bảo hiểm xã hội), hk (Hộ khẩu), vneid (Ứng dụng định danh điện tử).
+- Tiếng lóng/Teen code: rớt cái bóp/rớt ví (mất ví/giấy tờ), dính chưởng/bị cá vàng lụm (bị CSGT phạt), phốt/tag/rep (các từ khóa mxh).
+- Từ địa phương/người già: CMND (Chứng minh nhân dân), cớ mất (trình báo mất), mộc (con dấu), sổ đỏ/sổ hồng (giấy chứng nhận quyền sở hữu nhà/đất).
 
 ${historySection}TÀI LIỆU PHÁP LUẬT THAM CHIẾU:
 ===

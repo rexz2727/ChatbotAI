@@ -91,7 +91,8 @@ const collectionsConfig = [
   { name: "db_giao_thong", file: "giao_thong.txt" },
   { name: "db_an_ninh", file: "an_ninh.txt" },
   { name: "db_ngoai_kieu", file: "ngoai_kieu.txt" },
-  { name: "db_khieu_nai", file: "khieu_nai.txt" }
+  { name: "db_khieu_nai", file: "khieu_nai.txt" },
+  { name: "db_thu_tuc_hanh_chinh", file: "thu_tuc_hanh_chinh.txt" }
 ];
 
 async function seed() {

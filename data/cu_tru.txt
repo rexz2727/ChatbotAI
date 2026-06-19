@@ -1,3 +1,4 @@
+[ƯU TIÊN ÁP DỤNG - VĂN BẢN MỚI 2026]
 CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
 Độc lập - Tự do - Hạnh phúc
 ----------------
@@ -434,55 +435,7 @@ MỤC IX. CÁC CÂU HỎI THƯỜNG GẶP (FAQ) VỀ THỦ TỤC CƯ TRÚ
 Trực ban Công an Phường hoạt động 24/7 giải quyết các phản ánh của công dân.
 
 
-=== NGUỒN: luat_cu_tru_2020.pdf ===
-
--- 1 of 23 --
-
--- 2 of 23 --
-
--- 3 of 23 --
-
--- 4 of 23 --
-
--- 5 of 23 --
-
--- 6 of 23 --
-
--- 7 of 23 --
-
--- 8 of 23 --
-
--- 9 of 23 --
-
--- 10 of 23 --
-
--- 11 of 23 --
-
--- 12 of 23 --
-
--- 13 of 23 --
-
--- 14 of 23 --
-
--- 15 of 23 --
-
--- 16 of 23 --
-
--- 17 of 23 --
-
--- 18 of 23 --
-
--- 19 of 23 --
-
--- 20 of 23 --
-
--- 21 of 23 --
-
--- 22 of 23 --
-
--- 23 of 23 --
-
-
+[ƯU TIÊN ÁP DỤNG - VĂN BẢN MỚI 2023]
 === NGUỒN: nghi_dinh_56_2023.pdf ===
 
 -- 1 of 32 --
@@ -550,6 +503,7 @@ Trực ban Công an Phường hoạt động 24/7 giải quyết các phản án
 -- 32 of 32 --
 
 
+[ƯU TIÊN ÁP DỤNG - VĂN BẢN MỚI 2023]
 === NGUỒN: thong_tu_66_2023.pdf ===
 
 THÔNG TƯ
@@ -1574,3 +1528,63 @@ Chú thích:
 bằng hình thức xác thực khác.
 
 -- 29 of 29 --
+Nghị định 154/2024/NĐ-CP (hiệu lực 10/01/2025):
+- Đẩy mạnh khai thác dữ liệu điện tử: Không bắt buộc nộp bản giấy khi làm thủ tục cư trú nếu thông tin có thể khai thác từ CSDL quốc gia về dân cư.
+- Xác nhận trực tuyến: Xác nhận ý kiến đồng ý qua ứng dụng VNeID hoặc dịch vụ công.
+- Cư trú cho người chưa thành niên: Đăng ký thường trú cho trẻ trong vòng 60 ngày kể từ ngày đăng ký khai sinh; không cần xác minh tính hợp pháp của chỗ ở khi đăng ký lần đầu.
+- Đồng sở hữu chỗ ở hợp pháp: Không cần ý kiến của người đồng sở hữu khác khi đăng ký thường trú vào nơi mình đồng sở hữu.
+
+Thông tư 53/2025/TT-BCA (hiệu lực 01/07/2025):
+- Bổ sung trách nhiệm của Công an cấp xã: Kiểm tra cư trú định kỳ/đột xuất; cập nhật CSDL quốc gia; phối hợp rà soát người điều khiển phương tiện.
+- Cập nhật biểu mẫu mới (như CT01) cho đăng ký cư trú. Nộp hồ sơ trực tiếp, trực tuyến qua Cổng dịch vụ công hoặc VNeID.
+- Người nước ngoài nhập quốc tịch VN đăng ký cư trú lần đầu phải có Quyết định của Chủ tịch nước.
+
+
+[ƯU TIÊN ÁP DỤNG - VĂN BẢN MỚI 2020]
+=== NGUỒN: luat_cu_tru_2020.pdf ===
+
+-- 1 of 23 --
+
+-- 2 of 23 --
+
+-- 3 of 23 --
+
+-- 4 of 23 --
+
+-- 5 of 23 --
+
+-- 6 of 23 --
+
+-- 7 of 23 --
+
+-- 8 of 23 --
+
+-- 9 of 23 --
+
+-- 10 of 23 --
+
+-- 11 of 23 --
+
+-- 12 of 23 --
+
+-- 13 of 23 --
+
+-- 14 of 23 --
+
+-- 15 of 23 --
+
+-- 16 of 23 --
+
+-- 17 of 23 --
+
+-- 18 of 23 --
+
+-- 19 of 23 --
+
+-- 20 of 23 --
+
+-- 21 of 23 --
+
+-- 22 of 23 --
+
+-- 23 of 23 --

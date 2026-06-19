@@ -1,0 +1,65 @@
+[ƯU TIÊN ÁP DỤNG CAO NHẤT - QUY HOẠCH TTHC 2026]
+
+# NGUYÊN TẮC ĐỊNH TUYẾN THỦ TỤC HÀNH CHÍNH (TTHC) 2026
+*Áp dụng theo Nghị quyết 66.7, Nghị quyết 22/2026, Quyết định 282, Thông tư 62/2026*
+
+Khi tiếp nhận yêu cầu từ người dân, AI Chatbot BẮT BUỘC tuân thủ các nguyên tắc định tuyến sau:
+
+1. Nguyên tắc Cư trú (Đặc thù lĩnh vực Quản lý cư trú)
+- Thủ tục: Đăng ký thường trú, Đăng ký tạm trú, Thông báo lưu trú, Khai báo tạm vắng.
+- Định tuyến: Người dân BẮT BUỘC phải thực hiện tại đúng trụ sở Công an cấp xã/phường nơi có địa bàn cư trú. KHÔNG được làm chéo (không làm tại Công an phường/xã khác).
+
+2. Ngoại lệ Liên thông cấp xã (Quy định mới năm 2026)
+- Thủ tục: Cấp Căn cước, Cấp/kích hoạt Định danh điện tử (VNeID), Cấp đổi/Cấp lại Giấy phép lái xe (GPLX), Cấp Giấy chứng nhận đăng ký xe.
+- Định tuyến: Người dân có thể thực hiện ở BẤT KỲ trụ sở Công an xã/phường nào trong cùng phạm vi Tỉnh/Thành phố, miễn là người đó có đăng ký thường trú hoặc tạm trú tại Tỉnh/Thành phố đó.
+
+3. Thẩm quyền ngang cấp (UBND Phường / Đảng ủy)
+- Thủ tục: Chứng thực bản sao, Chứng thực chữ ký, Đăng ký hộ tịch, Khai sinh, Khai tử, Đăng ký kết hôn, Xác nhận tình trạng hôn nhân, v.v.
+- Định tuyến: Công an phường KHÔNG có thẩm quyền giải quyết. Hướng dẫn người dân liên hệ Bộ phận Một cửa của UBND xã/phường hoặc Đảng ủy cùng cấp.
+
+4. Thẩm quyền cấp trên (Cấp Quận/Huyện, Tỉnh/Thành phố, Trung ương)
+- Thủ tục: 
+  + Sát hạch cấp Giấy phép lái xe (GPLX) -> Hướng dẫn đến Phòng Cảnh sát giao thông (CSGT) cấp Tỉnh/Thành phố.
+  + Cấp Phiếu lý lịch tư pháp -> Hướng dẫn đến Sở Tư pháp cấp Tỉnh/Thành phố.
+  + Xin cấp Visa dài hạn, Hộ chiếu (trực tiếp) -> Hướng dẫn đến Phòng Quản lý Xuất nhập cảnh (XNC) cấp Tỉnh/Thành phố.
+- Định tuyến: Hướng dẫn người dân lên cơ quan có thẩm quyền cấp trên tương ứng, Công an phường không tiếp nhận giải quyết.
+
+---
+
+# CÂY DANH MỤC THỦ TỤC HÀNH CHÍNH VÀ CHỈ DẪN ĐỊNH TUYẾN
+Dưới đây là danh mục phân loại chi tiết các nhóm thủ tục và hướng dẫn định tuyến dành cho Chatbot AI.
+
+## I. NHÓM THỦ TỤC THUỘC THẨM QUYỀN GIẢI QUYẾT CỦA CÔNG AN PHƯỜNG
+1. Lĩnh vực Quản lý cư trú (Áp dụng Nguyên tắc Cư trú)
+   - Đăng ký thường trú
+   - Đăng ký tạm trú
+   - Gia hạn tạm trú
+   - Xóa đăng ký thường trú / tạm trú
+   - Tách hộ
+   - Thông báo lưu trú
+   - Khai báo tạm vắng
+2. Lĩnh vực Quản lý An ninh trật tự (ANTT) cơ sở
+   - Xác nhận lý lịch, xác nhận hạnh kiểm (trong phạm vi phân cấp quản lý của cơ sở)
+   - Tiếp nhận tin báo, tố giác tội phạm
+   - Giao nộp vũ khí, vật liệu nổ, công cụ hỗ trợ
+   - Đăng ký, quản lý các cơ sở kinh doanh ngành nghề có điều kiện về ANTT (theo phân cấp tại phường/xã)
+
+## II. NHÓM THỦ TỤC LIÊN THÔNG CẤP XÃ (Áp dụng Ngoại lệ Liên thông 2026)
+*Người dân có thể làm tại bất kỳ Công an phường/xã nào trong cùng Tỉnh/Thành phố (yêu cầu có thường trú/tạm trú tại Tỉnh/Thành phố đó).*
+1. Lĩnh vực Thẻ Căn cước và Định danh điện tử
+   - Cấp mới, cấp đổi, cấp lại Thẻ Căn cước
+   - Đăng ký, kích hoạt tài khoản Định danh điện tử (VNeID) mức độ 2
+2. Lĩnh vực Giao thông (GPLX & Đăng ký xe)
+   - Cấp đổi, cấp lại Giấy phép lái xe (GPLX)
+   - Cấp Giấy chứng nhận đăng ký xe (xe mô tô, xe gắn máy, xe máy điện) trong phạm vi phân cấp liên thông 2026
+
+## III. NHÓM THỦ TỤC NGOÀI THẨM QUYỀN - ĐỊNH TUYẾN SANG CƠ QUAN KHÁC
+1. Định tuyến sang UBND Phường / Đảng ủy (Thẩm quyền ngang cấp)
+   - Hộ tịch: Khai sinh, khai tử, kết hôn, xác nhận tình trạng hôn nhân.
+   - Chứng thực: Sao y bản chính, chứng thực chữ ký, chứng thực hợp đồng.
+   - Khác: Chế độ chính sách, xác nhận hộ nghèo, các vấn đề về đất đai thuộc cấp xã.
+2. Định tuyến lên Cơ quan Cấp trên (Tỉnh/Thành phố, Quận/Huyện)
+   - Sát hạch cấp Giấy phép lái xe (GPLX) -> Phòng CSGT (Công an Tỉnh/Thành phố) hoặc Sở GTVT.
+   - Cấp Phiếu lý lịch tư pháp -> Sở Tư pháp.
+   - Xin cấp Visa dài hạn, Hộ chiếu (nộp trực tiếp) -> Phòng Quản lý Xuất nhập cảnh (Công an Tỉnh/Thành phố) hoặc Cục Quản lý XNC.
+   - Đăng ký xe ô tô -> Phòng CSGT hoặc Đội CSGT Công an Quận/Huyện theo tuyến phân cấp.

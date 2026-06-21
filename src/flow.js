@@ -1,5 +1,9 @@
 'use strict';
 
+// Dữ liệu định danh + danh bạ của đơn vị nằm trong config/donvi.js (không commit).
+// Đơn vị khác: copy config/donvi.example.js -> config/donvi.js và điền thông tin.
+const donvi = require('../config/donvi');
+
 const subMenus = {
   AGENT_CU_TRU: [
     { title: "Đăng ký thường trú", payload: "FLOW_CU_TRU_THUONG_TRU" },
@@ -53,7 +57,7 @@ const subMenus = {
     { title: "Danh bạ chung", payload: "FLOW_TTHC_DANH_BA" }
   ],
   AGENT_LIEN_HE: [
-    { title: "CA phường Bình Dương",  payload: "FLOW_LIEN_HE_CA_PHUONG" },
+    { title: "Công an phường/xã",      payload: "FLOW_LIEN_HE_CA_PHUONG" },
     { title: "UBND & Đảng ủy phường", payload: "FLOW_LIEN_HE_UBND" },
     { title: "Công an thành phố",      payload: "FLOW_LIEN_HE_CA_TP" }
   ]
@@ -477,120 +481,6 @@ Lưu ý: Cung cấp thông tin chính xác — phản ánh sai sự thật có t
     text: '[Chatbot Auto] Anh/chị vui lòng nhập câu hỏi chi tiết về lĩnh vực Khiếu nại & Vi phạm để Công an Phường giải đáp:'
   },
 
-  FLOW_DANH_BA_CU_TRU: {
-    agentState: 'AGENT_CU_TRU',
-    text: `[Chatbot Auto] Danh bạ cán bộ phụ trách Cư trú / Hộ khẩu:
-
-Lãnh đạo:
-• Trưởng CAP Nguyễn Thành Tâm (Trung tá): ***REMOVED***
-
-Phụ trách trực tiếp:
-• Phó Huỳnh Thanh Sơn (Thiếu tá): ***REMOVED***
-• CB Vũ Tuấn Linh (Đại uý): ***REMOVED***
-• CB Trương Thị Hương Quỳnh (Trung tá): ***REMOVED***
-• BV Lê Thị Phương Mai: ***REMOVED***
-• BV Lê Hà Vũ Nhân: ***REMOVED***
-• BV Nguyễn Tấn Khoa: ***REMOVED***
-
-Giờ làm việc: T2–T6, 7h30–17h00 | Trực ban: 24/7
-Khẩn cấp: 113`,
-    afterReplies: [ { title: "Quay lại Menu", payload: "SHOW_MAIN_MENU" } ]
-  },
-
-  FLOW_DANH_BA_CAN_CUOC: {
-    agentState: 'AGENT_CAN_CUOC',
-    text: `[Chatbot Auto] Danh bạ cán bộ phụ trách Căn cước / Định danh:
-
-Lãnh đạo:
-• Trưởng CAP Nguyễn Thành Tâm (Trung tá): ***REMOVED***
-
-Phụ trách trực tiếp:
-• Phó Hà Văn Long (Trung tá): ***REMOVED***
-• CB Phạm Hồng Linh (Đại uý): ***REMOVED***
-• CB Nguyễn Kiên Trung (Thượng uý): ***REMOVED***
-• BV Lê Văn Hiếu: ***REMOVED***
-• BV Lê Nguyễn Thanh Trí: ***REMOVED***
-• BV Nguyễn Văn Thanh: ***REMOVED***
-• BV Phạm Thanh Đức: ***REMOVED***
-• BV Trương Văn Linh: ***REMOVED***
-• BV Nguyễn Công Giang: ***REMOVED***
-• BV Lương Quốc Huy: ***REMOVED***
-
-Giờ làm việc: T2–T6, 7h30–17h00 | Trực ban: 24/7
-Khẩn cấp: 113`,
-    afterReplies: [ { title: "Quay lại Menu", payload: "SHOW_MAIN_MENU" } ]
-  },
-
-  FLOW_DANH_BA_GIAO_THONG: {
-    agentState: 'AGENT_GIAO_THONG',
-    text: `[Chatbot Auto] Danh bạ cán bộ phụ trách Giao thông:
-
-Lãnh đạo:
-• Trưởng CAP Nguyễn Thành Tâm (Trung tá): ***REMOVED***
-
-Phụ trách trực tiếp:
-• Phó Huỳnh Nhật Tân (Trung tá): ***REMOVED***
-• CB Võ Thành Lợi — tai nạn (Đại uý): ***REMOVED***
-• CB Tống Sơn Ca — vi phạm (Thiếu tá): ***REMOVED***
-
-Giờ làm việc: T2–T6, 7h30–17h00 | Trực ban: 24/7
-Khẩn cấp: 113`,
-    afterReplies: [ { title: "Quay lại Menu", payload: "SHOW_MAIN_MENU" } ]
-  },
-
-  FLOW_DANH_BA_AN_NINH: {
-    agentState: 'AGENT_AN_NINH',
-    text: `[Chatbot Auto] Danh bạ cán bộ phụ trách An ninh / PCCC:
-
-Lãnh đạo:
-• Trưởng CAP Nguyễn Thành Tâm (Trung tá): ***REMOVED***
-
-Phụ trách trực tiếp:
-• Phó Trần Quốc Dũng (Trung tá): ***REMOVED***
-• CB Phạm Minh Nghĩa (Trung tá): ***REMOVED***
-• CB Võ Thành Đô (Trung tá): ***REMOVED***
-• CB Tống Kiều Ngọc Nam (Thượng uý): ***REMOVED***
-
-Giờ làm việc: T2–T6, 7h30–17h00 | Trực ban: 24/7
-Khẩn cấp: 113`,
-    afterReplies: [ { title: "Quay lại Menu", payload: "SHOW_MAIN_MENU" } ]
-  },
-
-  FLOW_DANH_BA_NGOAI_KIEU: {
-    agentState: 'AGENT_NGOAI_KIEU',
-    text: `[Chatbot Auto] Danh bạ cán bộ phụ trách Ngoại kiều:
-
-Lãnh đạo:
-• Trưởng CAP Nguyễn Thành Tâm (Trung tá): ***REMOVED***
-
-Phụ trách trực tiếp:
-• Phó Trần Quốc Dũng (Trung tá): ***REMOVED***
-• CB Phạm Minh Nghĩa (Trung tá): ***REMOVED***
-• CB Võ Thành Đô (Trung tá): ***REMOVED***
-• CB Tống Kiều Ngọc Nam (Thượng uý): ***REMOVED***
-
-Giờ làm việc: T2–T6, 7h30–17h00 | Trực ban: 24/7
-Khẩn cấp: 113`,
-    afterReplies: [ { title: "Quay lại Menu", payload: "SHOW_MAIN_MENU" } ]
-  },
-
-  FLOW_DANH_BA_KHIEU_NAI: {
-    agentState: 'AGENT_KHIEU_NAI',
-    text: `[Chatbot Auto] Danh bạ cán bộ phụ trách Tố giác / Khiếu nại:
-
-Lãnh đạo:
-• Trưởng CAP Nguyễn Thành Tâm (Trung tá): ***REMOVED***
-
-Phụ trách trực tiếp:
-• Phó Lê Duy Bảo (Trung tá): ***REMOVED***
-• CB Thái Thanh Tuấn (Trung tá): ***REMOVED***
-• CB Đoàn Lập Trường (Thiếu tá): ***REMOVED***
-
-Giờ làm việc: T2–T6, 7h30–17h00 | Trực ban: 24/7
-Khẩn cấp: 113`,
-    afterReplies: [ { title: "Quay lại Menu", payload: "SHOW_MAIN_MENU" } ]
-  },
-
   // ── THỦ TỤC HÀNH CHÍNH ────────────────────────────────────────────────────────────
   FLOW_TTHC_KIEM_SOAT: {
     agentState: 'AGENT_TTHC',
@@ -631,108 +521,9 @@ Khẩn cấp: 113`,
     text: '[Chatbot Auto] Anh/chị vui lòng nhập câu hỏi chi tiết về lĩnh vực Thủ tục Hành chính để Công an Phường giải đáp:'
   },
 
-  FLOW_TTHC_DANH_BA: {
-    agentState: 'AGENT_TTHC',
-    text: `[Chatbot Auto] Danh bạ cán bộ phụ trách Thủ tục hành chính:
-
-Lãnh đạo:
-• Trưởng CAP Nguyễn Thành Tâm (Trung tá): ***REMOVED***
-
-Vui lòng liên hệ trực ban Công an Phường theo số khẩn cấp 113 để được hỗ trợ thủ tục hành chính.
-
-Giờ làm việc: T2–T6, 7h30–17h00 | Trực ban: 24/7`,
-    afterReplies: [ { title: "Quay lại Menu", payload: "SHOW_MAIN_MENU" } ]
-  },
-
-  // ── LIÊN HỆ CƠ QUAN ───────────────────────────────────────────────────────────────
-  FLOW_LIEN_HE: {
-    agentState: 'AGENT_LIEN_HE',
-    text: `[Chatbot Auto] Thông tin liên hệ các cơ quan. Anh/chị chọn cơ quan cần liên hệ:
-
-• Công an phường Bình Dương — đơn vị tiếp nhận trực tiếp (cư trú, căn cước, ANTT, tố giác tội phạm...).
-• UBND & Đảng ủy phường — thủ tục ngoài ngành công an (hộ tịch, chứng thực, đất đai cấp xã...).
-• Công an thành phố — việc vượt thẩm quyền phường (CSGT, xuất nhập cảnh, an ninh mạng...).
-
-Lưu ý: Ưu tiên liên hệ cơ quan cấp phường/xã trước (Công an phường, UBND, Đảng ủy phường). Chỉ liên hệ cấp trên — Công an thành phố, cao nhất là Bộ Công an — khi việc vượt thẩm quyền của phường hoặc không liên hệ được với cấp phường.
-
-Khẩn cấp: Công an 113 · Cứu hỏa 114 · Cấp cứu 115`,
-    afterReplies: [
-      { title: "CA phường Bình Dương",  payload: "FLOW_LIEN_HE_CA_PHUONG" },
-      { title: "UBND & Đảng ủy phường", payload: "FLOW_LIEN_HE_UBND" },
-      { title: "Công an thành phố",      payload: "FLOW_LIEN_HE_CA_TP" },
-      { title: "Quay lại Menu",          payload: "SHOW_MAIN_MENU" }
-    ]
-  },
-
-  FLOW_LIEN_HE_CA_PHUONG: {
-    agentState: 'AGENT_LIEN_HE',
-    text: `[Chatbot Auto] CÔNG AN PHƯỜNG BÌNH DƯƠNG (đơn vị tiếp nhận trực tiếp)
-
-1) Trụ sở chính:
-• Địa chỉ: ***REMOVED***, phường Bình Dương, TP.HCM
-• Trực ban 24/7: ***REMOVED***
-• Bản đồ: ***REMOVED***
-
-2) Trụ sở phụ trách an ninh:
-• Địa chỉ: ***REMOVED***, phường Bình Dương, TP.HCM
-• Điện thoại: ***REMOVED***
-• Bản đồ: ***REMOVED***
-
-3) Trụ sở phụ trách điều tra tội phạm:
-• Địa chỉ: ***REMOVED***, phường Bình Dương, TP.HCM
-• Điện thoại: ***REMOVED***
-• Bản đồ: ***REMOVED***
-
-Khẩn cấp: Công an 113 · Cứu hỏa 114 · Cấp cứu 115`,
-    afterReplies: [
-      { title: "Liên hệ cơ quan khác", payload: "FLOW_LIEN_HE" },
-      { title: "Quay lại Menu",        payload: "SHOW_MAIN_MENU" }
-    ]
-  },
-
-  FLOW_LIEN_HE_UBND: {
-    agentState: 'AGENT_LIEN_HE',
-    text: `[Chatbot Auto] UBND & ĐẢNG ỦY PHƯỜNG BÌNH DƯƠNG
-
-1) UBND phường Bình Dương (hộ tịch, chứng thực, đất đai cấp xã, chính sách xã hội...):
-• Địa chỉ: ***REMOVED***, phường Bình Dương, TP.HCM
-• Điện thoại: ***REMOVED***
-• Bản đồ: ***REMOVED***
-
-2) Đảng ủy phường Bình Dương:
-• Địa chỉ: ***REMOVED***, phường Bình Dương, TP.HCM
-• Bản đồ: ***REMOVED***`,
-    afterReplies: [
-      { title: "Liên hệ cơ quan khác", payload: "FLOW_LIEN_HE" },
-      { title: "Quay lại Menu",        payload: "SHOW_MAIN_MENU" }
-    ]
-  },
-
-  FLOW_LIEN_HE_CA_TP: {
-    agentState: 'AGENT_LIEN_HE',
-    text: `[Chatbot Auto] CÔNG AN THÀNH PHỐ HỒ CHÍ MINH (việc vượt thẩm quyền phường)
-
-Lưu ý: Chỉ liên hệ khi việc vượt thẩm quyền Công an phường hoặc không liên hệ được với cấp phường. Cấp cao nhất là Bộ Công an.
-
-Trụ sở:
-• Địa chỉ: Số 268, đường Trần Hưng Đạo, phường Cầu Ông Lãnh, TP.HCM
-• Trực ban: 0283 920 1605
-• Bản đồ: ***REMOVED***
-
-Các đường dây nóng theo lĩnh vực:
-• Tố giác tiêu cực/tham nhũng/thái độ cán bộ (PX05): 069.318.7878
-• Cảnh sát hình sự — băng nhóm, lừa đảo, "bắt cóc online" (PC02): 0693.187.200
-• Kinh tế, tham nhũng, buôn lậu, môi trường (PC03): 0693.187.783
-• Tội phạm ma túy (PC04): 028.3923.1168
-• Cư trú & Căn cước & VNeID, 24/24 (PC06): 0693.187.111
-• An ninh mạng & tội phạm công nghệ cao (PA05): 069.219.4053
-• Cảnh sát giao thông (PC08): trực ban 0693.187.521 · phản ánh vi phạm 0326.08.08.08 hoặc 028.3920.3333
-• Xuất nhập cảnh (PA08): 028.3829.9398 (công dân) · 028.3920.0366 (hộ chiếu/thẻ tạm trú)`,
-    afterReplies: [
-      { title: "Liên hệ cơ quan khác", payload: "FLOW_LIEN_HE" },
-      { title: "Quay lại Menu",        payload: "SHOW_MAIN_MENU" }
-    ]
-  }
+  // Danh bạ cán bộ + liên hệ cơ quan: dữ liệu riêng đơn vị (config/donvi.js)
+  ...donvi.danhBaNodes,
+  ...donvi.lienHeNodes
 };
 
 /**

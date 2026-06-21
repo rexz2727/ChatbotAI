@@ -1,0 +1,35 @@
+THÔNG TIN LIÊN HỆ CÁC CƠ QUAN - (TÊN PHƯỜNG/XÃ CỦA BẠN)
+MẪU: copy file này thành data/lien_he_co_quan.txt rồi điền thông tin của đơn vị, sau đó chạy `npm run init-db`.
+Tài liệu cung cấp đầu mối liên hệ chính thức để người dân biết gọi/đến đúng cơ quan có thẩm quyền.
+
+Nguyên tắc thứ tự ưu tiên liên hệ: Luôn hướng dẫn người dân liên hệ cơ quan cấp phường/xã trước (Công an phường, UBND phường, Đảng ủy phường). Chỉ khi việc vượt thẩm quyền của cấp phường, hoặc người dân không liên hệ được với cấp phường, mới hướng dẫn liên hệ cấp trên là Công an tỉnh/thành phố. Cấp cao nhất của ngành công an là Bộ Công an. Khi trả lời, không đẩy người dân lên cấp trên nếu cấp phường/xã đã giải quyết được.
+
+Công an phường/xã là cơ quan tiếp nhận và giải quyết trực tiếp các thủ tục hành chính của người dân trên địa bàn: cư trú (đăng ký thường trú, tạm trú, khai báo tạm vắng), căn cước/định danh, an ninh trật tự, phòng cháy chữa cháy cơ sở nhỏ, tiếp nhận tố giác - tin báo tội phạm, khiếu nại - tố cáo - phản ánh. Khi người dân hỏi "số điện thoại công an phường", "địa chỉ trụ sở công an phường", "đường dây nóng công an phường", "trực ban công an phường" thì trả lời theo thông tin dưới đây.
+- Tên đầy đủ: (điền tên Công an phường/xã của bạn).
+- Địa chỉ trụ sở chính: (điền địa chỉ).
+- Bản đồ trụ sở chính (Google Maps): (điền link Google Maps).
+- Số điện thoại trực ban (24/7): (điền số điện thoại).
+
+Ủy ban nhân dân (UBND) phường/xã là cơ quan giải quyết các thủ tục ngoài ngành công an như: hộ tịch (khai sinh, khai tử, kết hôn), chứng thực - sao y, xác nhận tình trạng cư trú phục vụ hành chính, hộ nghèo - chính sách xã hội, đất đai cấp xã. Khi người dân hỏi "số điện thoại UBND phường", "địa chỉ UBND phường", "bộ phận một cửa UBND" thì trả lời theo thông tin dưới đây.
+- Tên đầy đủ: (điền tên UBND phường/xã).
+- Địa chỉ trụ sở: (điền địa chỉ).
+- Bản đồ (Google Maps): (điền link Google Maps).
+- Số điện thoại: (điền số điện thoại).
+
+Đảng ủy phường/xã là cơ quan lãnh đạo của Đảng tại phường/xã. Khi người dân hỏi "địa chỉ Đảng ủy phường", "trụ sở Đảng ủy phường" thì trả lời theo thông tin dưới đây.
+- Tên đầy đủ: (điền tên Đảng ủy phường/xã).
+- Địa chỉ trụ sở: (điền địa chỉ).
+- Bản đồ (Google Maps): (điền link Google Maps).
+
+Công an tỉnh/thành phố (cấp trên của Công an phường) là đầu mối tiếp nhận các việc vượt thẩm quyền của Công an phường. Khi người dân hỏi "số điện thoại công an tỉnh/thành phố", "địa chỉ công an tỉnh/thành phố", hoặc số trực ban thì trả lời theo thông tin dưới đây.
+- Tên đầy đủ: (điền tên Công an tỉnh/thành phố).
+- Địa chỉ trụ sở: (điền địa chỉ).
+- Bản đồ (Google Maps): (điền link Google Maps).
+- Trực ban Công an tỉnh/thành phố: (điền số điện thoại).
+
+Công an tỉnh/thành phố có các phòng nghiệp vụ chuyên trách kèm đường dây nóng. Khi người dân hỏi số điện thoại tố giác tội phạm, cảnh sát giao thông, hoặc xuất nhập cảnh thì trả lời theo thông tin dưới đây.
+- Phòng Cảnh sát QLHC về TTXH (PC06) - cư trú, căn cước, VNeID: (điền số điện thoại).
+- Phòng Cảnh sát giao thông (PC08) - GPLX, đăng ký xe, phản ánh vi phạm: (điền số điện thoại).
+- Phòng Quản lý xuất nhập cảnh (PA08) - thị thực, thẻ tạm trú/thường trú người nước ngoài: (điền số điện thoại).
+
+Số điện thoại khẩn cấp dùng chung toàn quốc: Công an phản ứng nhanh 113; Cảnh sát phòng cháy chữa cháy và cứu nạn cứu hộ 114; Cấp cứu y tế 115.

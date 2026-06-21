@@ -1,6 +1,10 @@
 require('dotenv').config();
 const db = require('./db');
 const flow = require('./flow');
+const donvi = require('../config/donvi');
+
+// Lời chào dùng tên đơn vị + số trực ban từ config/donvi.js (dữ liệu riêng đơn vị)
+const WELCOME_TEXT = `[Chatbot Auto] Chào bạn! Đây là trang Facebook chính thức của ${donvi.tenDonVi}.\nCảm ơn bạn đã liên hệ. Để được hỗ trợ nhanh nhất, vui lòng để lại nội dung cần tư vấn hoặc chọn từ danh mục bên dưới (nếu không thấy nút bấm, vui lòng gõ từ khóa: cư trú, giao thông, căn cước, an ninh, ngoại kiều, khiếu nại).\nTrong trường hợp khẩn cấp, vui lòng gọi số trực ban: ${donvi.trucBan}. Trân trọng!`;
 const _pLimit = require('p-limit');
 const pLimit = _pLimit.default || _pLimit;
 const { ChromaClient } = require('chromadb');
@@ -184,7 +188,7 @@ async function processUserMessage(userId, messageText, buttonPayload = null) {
     if (payload === 'SHOW_MAIN_MENU') {
       await db.setSession(userId, 'MAIN_MENU');
       return {
-        text: "[Chatbot Auto] Chào bạn! Đây là trang Facebook chính thức của Công an phường Bình Dương.\nCảm ơn bạn đã liên hệ. Để được hỗ trợ nhanh nhất, vui lòng để lại nội dung cần tư vấn hoặc chọn từ danh mục bên dưới (nếu không thấy nút bấm, vui lòng gõ từ khóa: cư trú, giao thông, căn cước, an ninh, ngoại kiều, khiếu nại).\nTrong trường hợp khẩn cấp, vui lòng gọi số trực ban: ***REMOVED***. Trân trọng!",
+        text: WELCOME_TEXT,
         showMenu: true
       };
     }
@@ -262,7 +266,7 @@ async function processUserMessage(userId, messageText, buttonPayload = null) {
     if (!state || isGreeting) {
       await db.setSession(userId, 'MAIN_MENU');
       return {
-        text: "[Chatbot Auto] Chào bạn! Đây là trang Facebook chính thức của Công an phường Bình Dương.\nCảm ơn bạn đã liên hệ. Để được hỗ trợ nhanh nhất, vui lòng để lại nội dung cần tư vấn hoặc chọn từ danh mục bên dưới (nếu không thấy nút bấm, vui lòng gõ từ khóa: cư trú, giao thông, căn cước, an ninh, ngoại kiều, khiếu nại).\nTrong trường hợp khẩn cấp, vui lòng gọi số trực ban: ***REMOVED***. Trân trọng!",
+        text: WELCOME_TEXT,
         showMenu: true
       };
     }

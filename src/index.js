@@ -215,7 +215,8 @@ async function sendFacebookResponse(recipientId, result) {
         { content_type: "text", title: "Giao thông",     payload: "MENU_GIAO_THONG" },
         { content_type: "text", title: "An ninh & PCCC", payload: "MENU_AN_NINH" },
         { content_type: "text", title: "Ngoại kiều",     payload: "MENU_NGOAI_KIEU" },
-        { content_type: "text", title: "Khiếu nại",      payload: "MENU_KHIEU_NAI" }
+        { content_type: "text", title: "Khiếu nại",      payload: "MENU_KHIEU_NAI" },
+        { content_type: "text", title: "Liên hệ cơ quan", payload: "FLOW_LIEN_HE" }
       ]
     };
   } else {
@@ -309,7 +310,8 @@ async function sendZaloResponse(recipientId, result) {
               buttons: [
                 { title: "An ninh", type: "oa.query.show", payload: "MENU_AN_NINH" },
                 { title: "Ngoại kiều", type: "oa.query.show", payload: "MENU_NGOAI_KIEU" },
-                { title: "Khiếu nại", type: "oa.query.show", payload: "MENU_KHIEU_NAI" }
+                { title: "Khiếu nại", type: "oa.query.show", payload: "MENU_KHIEU_NAI" },
+                { title: "Liên hệ cơ quan", type: "oa.query.show", payload: "FLOW_LIEN_HE" }
               ]
             }]
           }

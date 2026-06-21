@@ -13,12 +13,14 @@ const subMenus = {
     { title: "Cấp đổi/lại căn cước", payload: "FLOW_CAN_CUOC_DOI_CAP" },
     { title: "Căn cước trẻ 6-14T",   payload: "FLOW_CAN_CUOC_TRE_EM" },
     { title: "Hỗ trợ đặc biệt",      payload: "FLOW_CAN_CUOC_DAC_BIET" },
-    { title: "Câu hỏi khác...",      payload: "FLOW_CAN_CUOC_KHAC" }
+    { title: "Đăng ký VNeID mức 2",  payload: "FLOW_CAN_CUOC_VNEID" },
+    { title: "Câu hỏi khác...",      payload: "FLOW_CAN_CUOC_KHAC" },
+    { title: "Danh bạ cán bộ",       payload: "FLOW_DANH_BA_CAN_CUOC" }
   ],
   AGENT_GIAO_THONG: [
     { title: "Đổi/cấp lại GPLX",     payload: "FLOW_GIAO_THONG_DOI_GPLX" },
     { title: "Đăng ký xe máy/điện",  payload: "FLOW_GIAO_THONG_DANG_KY_XE" },
-    { title: "Báo tai nạn/Phạt nguội",payload: "FLOW_GIAO_THONG_TAI_NAN" },
+    { title: "Báo tai nạn giao thông",payload: "FLOW_GIAO_THONG_TAI_NAN" },
     { title: "Câu hỏi khác...",      payload: "FLOW_GIAO_THONG_KHAC" },
     { title: "Danh bạ cán bộ",       payload: "FLOW_DANH_BA_GIAO_THONG" }
   ],
@@ -49,6 +51,11 @@ const subMenus = {
     { title: "Quy trình cấp xã", payload: "FLOW_TTHC_QUY_TRINH" },
     { title: "Câu hỏi khác...", payload: "FLOW_TTHC_KHAC" },
     { title: "Danh bạ chung", payload: "FLOW_TTHC_DANH_BA" }
+  ],
+  AGENT_LIEN_HE: [
+    { title: "CA phường Bình Dương",  payload: "FLOW_LIEN_HE_CA_PHUONG" },
+    { title: "UBND & Đảng ủy phường", payload: "FLOW_LIEN_HE_UBND" },
+    { title: "Công an thành phố",      payload: "FLOW_LIEN_HE_CA_TP" }
   ]
 };
 
@@ -122,7 +129,7 @@ Lệ phí: Miễn phí`,
 
 Không cần mang theo giấy tờ — dữ liệu đã có trong Cơ sở dữ liệu quốc gia về dân cư
 
-Nơi làm: Công an Phường, Công an Huyện hoặc điểm thu nhận lưu động
+Nơi làm: Công an phường/xã hoặc điểm thu nhận lưu động
 
 Quy trình:
 1. Điền tờ khai tại chỗ
@@ -257,41 +264,6 @@ Sau đó:
 - Thông báo công ty bảo hiểm trong vòng 5 ngày làm việc
 
 Hỗ trợ thêm: Liên hệ Công an Phường (trực ban 24/7) nếu cần hướng dẫn tại hiện trường`,
-    afterReplies: [
-      { title: "Quay lại Menu",        payload: "SHOW_MAIN_MENU" },
-      { title: "Hỏi thêm giao thông", payload: "FLOW_GIAO_THONG_KHAC" }
-    ]
-  },
-
-  FLOW_GIAO_THONG_PHAT_NGUOI: {
-    agentState: 'AGENT_GIAO_THONG',
-    text: `[Chatbot Auto] Tra cứu vi phạm phạt nguội:
-
-Cách tra cứu:
-- App VNeID → Dịch vụ công → Tra cứu vi phạm giao thông
-- Website: csgt.vn hoặc dichvucong.bocongan.gov.vn
-- Đường dây hỗ trợ: 1900 6607
-
-Nộp phạt: Tại Kho bạc Nhà nước hoặc qua hình thức thanh toán điện tử theo hướng dẫn trong biên bản`,
-    afterReplies: [
-      { title: "Quay lại Menu",        payload: "SHOW_MAIN_MENU" },
-      { title: "Hỏi thêm giao thông", payload: "FLOW_GIAO_THONG_KHAC" }
-    ]
-  },
-
-  FLOW_GIAO_THONG_SAU_TAI_NAN: {
-    agentState: 'AGENT_GIAO_THONG',
-    text: `[Chatbot Auto] Thủ tục sau tai nạn giao thông:
-
-Hồ sơ bồi thường bảo hiểm cần chuẩn bị:
-- Biên bản tai nạn của CSGT
-- CCCD và giấy phép lái xe
-- Giấy đăng ký xe, giấy chứng nhận bảo hiểm xe
-- Hóa đơn sửa chữa hoặc viện phí (nếu có thương tích)
-
-Thời hạn thông báo bảo hiểm: Trong vòng 5 ngày làm việc kể từ khi xảy ra tai nạn
-
-Có tranh chấp: Liên hệ Công an Phường nơi xảy ra tai nạn`,
     afterReplies: [
       { title: "Quay lại Menu",        payload: "SHOW_MAIN_MENU" },
       { title: "Hỏi thêm giao thông", payload: "FLOW_GIAO_THONG_KHAC" }
@@ -670,6 +642,96 @@ Vui lòng liên hệ trực ban Công an Phường theo số khẩn cấp 113 đ
 
 Giờ làm việc: T2–T6, 7h30–17h00 | Trực ban: 24/7`,
     afterReplies: [ { title: "Quay lại Menu", payload: "SHOW_MAIN_MENU" } ]
+  },
+
+  // ── LIÊN HỆ CƠ QUAN ───────────────────────────────────────────────────────────────
+  FLOW_LIEN_HE: {
+    agentState: 'AGENT_LIEN_HE',
+    text: `[Chatbot Auto] Thông tin liên hệ các cơ quan. Anh/chị chọn cơ quan cần liên hệ:
+
+• Công an phường Bình Dương — đơn vị tiếp nhận trực tiếp (cư trú, căn cước, ANTT, tố giác tội phạm...).
+• UBND & Đảng ủy phường — thủ tục ngoài ngành công an (hộ tịch, chứng thực, đất đai cấp xã...).
+• Công an thành phố — việc vượt thẩm quyền phường (CSGT, xuất nhập cảnh, an ninh mạng...).
+
+Lưu ý: Ưu tiên liên hệ cơ quan cấp phường/xã trước (Công an phường, UBND, Đảng ủy phường). Chỉ liên hệ cấp trên — Công an thành phố, cao nhất là Bộ Công an — khi việc vượt thẩm quyền của phường hoặc không liên hệ được với cấp phường.
+
+Khẩn cấp: Công an 113 · Cứu hỏa 114 · Cấp cứu 115`,
+    afterReplies: [
+      { title: "CA phường Bình Dương",  payload: "FLOW_LIEN_HE_CA_PHUONG" },
+      { title: "UBND & Đảng ủy phường", payload: "FLOW_LIEN_HE_UBND" },
+      { title: "Công an thành phố",      payload: "FLOW_LIEN_HE_CA_TP" },
+      { title: "Quay lại Menu",          payload: "SHOW_MAIN_MENU" }
+    ]
+  },
+
+  FLOW_LIEN_HE_CA_PHUONG: {
+    agentState: 'AGENT_LIEN_HE',
+    text: `[Chatbot Auto] CÔNG AN PHƯỜNG BÌNH DƯƠNG (đơn vị tiếp nhận trực tiếp)
+
+1) Trụ sở chính:
+• Địa chỉ: ***REMOVED***, phường Bình Dương, TP.HCM
+• Trực ban 24/7: ***REMOVED***
+• Bản đồ: ***REMOVED***
+
+2) Trụ sở phụ trách an ninh:
+• Địa chỉ: ***REMOVED***, phường Bình Dương, TP.HCM
+• Điện thoại: ***REMOVED***
+• Bản đồ: ***REMOVED***
+
+3) Trụ sở phụ trách điều tra tội phạm:
+• Địa chỉ: ***REMOVED***, phường Bình Dương, TP.HCM
+• Điện thoại: ***REMOVED***
+• Bản đồ: ***REMOVED***
+
+Khẩn cấp: Công an 113 · Cứu hỏa 114 · Cấp cứu 115`,
+    afterReplies: [
+      { title: "Liên hệ cơ quan khác", payload: "FLOW_LIEN_HE" },
+      { title: "Quay lại Menu",        payload: "SHOW_MAIN_MENU" }
+    ]
+  },
+
+  FLOW_LIEN_HE_UBND: {
+    agentState: 'AGENT_LIEN_HE',
+    text: `[Chatbot Auto] UBND & ĐẢNG ỦY PHƯỜNG BÌNH DƯƠNG
+
+1) UBND phường Bình Dương (hộ tịch, chứng thực, đất đai cấp xã, chính sách xã hội...):
+• Địa chỉ: ***REMOVED***, phường Bình Dương, TP.HCM
+• Điện thoại: ***REMOVED***
+• Bản đồ: ***REMOVED***
+
+2) Đảng ủy phường Bình Dương:
+• Địa chỉ: ***REMOVED***, phường Bình Dương, TP.HCM
+• Bản đồ: ***REMOVED***`,
+    afterReplies: [
+      { title: "Liên hệ cơ quan khác", payload: "FLOW_LIEN_HE" },
+      { title: "Quay lại Menu",        payload: "SHOW_MAIN_MENU" }
+    ]
+  },
+
+  FLOW_LIEN_HE_CA_TP: {
+    agentState: 'AGENT_LIEN_HE',
+    text: `[Chatbot Auto] CÔNG AN THÀNH PHỐ HỒ CHÍ MINH (việc vượt thẩm quyền phường)
+
+Lưu ý: Chỉ liên hệ khi việc vượt thẩm quyền Công an phường hoặc không liên hệ được với cấp phường. Cấp cao nhất là Bộ Công an.
+
+Trụ sở:
+• Địa chỉ: Số 268, đường Trần Hưng Đạo, phường Cầu Ông Lãnh, TP.HCM
+• Trực ban: 0283 920 1605
+• Bản đồ: ***REMOVED***
+
+Các đường dây nóng theo lĩnh vực:
+• Tố giác tiêu cực/tham nhũng/thái độ cán bộ (PX05): 069.318.7878
+• Cảnh sát hình sự — băng nhóm, lừa đảo, "bắt cóc online" (PC02): 0693.187.200
+• Kinh tế, tham nhũng, buôn lậu, môi trường (PC03): 0693.187.783
+• Tội phạm ma túy (PC04): 028.3923.1168
+• Cư trú & Căn cước & VNeID, 24/24 (PC06): 0693.187.111
+• An ninh mạng & tội phạm công nghệ cao (PA05): 069.219.4053
+• Cảnh sát giao thông (PC08): trực ban 0693.187.521 · phản ánh vi phạm 0326.08.08.08 hoặc 028.3920.3333
+• Xuất nhập cảnh (PA08): 028.3829.9398 (công dân) · 028.3920.0366 (hộ chiếu/thẻ tạm trú)`,
+    afterReplies: [
+      { title: "Liên hệ cơ quan khác", payload: "FLOW_LIEN_HE" },
+      { title: "Quay lại Menu",        payload: "SHOW_MAIN_MENU" }
+    ]
   }
 };
 

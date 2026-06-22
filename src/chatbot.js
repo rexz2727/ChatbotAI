@@ -12,28 +12,7 @@ const { ChromaClient } = require('chromadb');
 // Max 3 concurrent Gemini calls per worker (4 workers × 3 = 12 total)
 const geminiLimit = pLimit(3);
 
-// In-memory response cache: reuse identical questions within 1 hour
-const responseCache = new Map();
-const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
-const CACHE_MAX_SIZE = 2000;
-
-function getCacheKey(agentState, question) {
-  return `${agentState}::${question.toLowerCase().trim()}`;
-}
-
-function getCached(key) {
-  const entry = responseCache.get(key);
-  if (!entry) return null;
-  if (Date.now() - entry.ts > CACHE_TTL_MS) { responseCache.delete(key); return null; }
-  return entry.text;
-}
-
-function setCached(key, text) {
-  if (responseCache.size >= CACHE_MAX_SIZE) {
-    responseCache.delete(responseCache.keys().next().value);
-  }
-  responseCache.set(key, { text, ts: Date.now() });
-}
+// In-memory cache is removed, using SQLite from db.js instead
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 const parsedPort = process.env.CHROMA_PORT ? parseInt(process.env.CHROMA_PORT, 10) : 8000;
@@ -431,12 +410,12 @@ Câu hỏi của người dân: ${messageText}
 
 Công an Phường trả lời:`;
 
-    const cacheKey = getCacheKey(state, messageText);
-    let replyText = getCached(cacheKey);
+    const cacheKey = `${state}::${messageText.toLowerCase().trim()}`;
+    let replyText = await db.getCachedResponse(cacheKey);
     if (!replyText) {
       const rawReply = await geminiLimit(() => callGeminiWithBackoff(systemPrompt));
       replyText = rawReply.trim().startsWith("[Chatbot Auto]") ? rawReply.trim() : "[Chatbot Auto] " + rawReply.trim();
-      setCached(cacheKey, replyText);
+      await db.setCachedResponse(cacheKey, replyText);
     } else {
       console.log(`[CACHE HIT] ${cacheKey.substring(0, 60)}`);
     }

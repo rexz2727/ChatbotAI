@@ -66,6 +66,22 @@ db.serialize(() => {
       }
     });
   });
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS response_cache (
+      cache_key TEXT PRIMARY KEY,
+      response_text TEXT NOT NULL,
+      timestamp INTEGER NOT NULL
+    )
+  `, (err) => {
+    if (err) {
+      console.error('Error creating response_cache table:', err);
+      return;
+    }
+    // Cleanup records older than 6 hours on startup
+    const cutoffCache = Date.now() - 6 * 60 * 60 * 1000;
+    db.run('DELETE FROM response_cache WHERE timestamp < ?', [cutoffCache]);
+  });
 });
 
 /**
@@ -197,6 +213,40 @@ const markMessageProcessed = (mid) => {
   });
 };
 
+/**
+ * Retrieves a cached response by key
+ */
+const getCachedResponse = (key) => {
+  return new Promise((resolve, reject) => {
+    db.get('SELECT response_text, timestamp FROM response_cache WHERE cache_key = ?', [key], (err, row) => {
+      if (err) return reject(err);
+      if (!row) return resolve(null);
+      const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
+      if (Date.now() - row.timestamp > CACHE_TTL_MS) {
+        db.run('DELETE FROM response_cache WHERE cache_key = ?', [key]);
+        return resolve(null);
+      }
+      resolve(row.response_text);
+    });
+  });
+};
+
+/**
+ * Saves a cached response
+ */
+const setCachedResponse = (key, text) => {
+  return new Promise((resolve, reject) => {
+    db.run(
+      'INSERT OR REPLACE INTO response_cache (cache_key, response_text, timestamp) VALUES (?, ?, ?)',
+      [key, text, Date.now()],
+      (err) => {
+        if (err) return reject(err);
+        resolve();
+      }
+    );
+  });
+};
+
 module.exports = {
   db,
   getSession,
@@ -204,5 +254,7 @@ module.exports = {
   saveMessage,
   getConversationHistory,
   isMessageProcessed,
-  markMessageProcessed
+  markMessageProcessed,
+  getCachedResponse,
+  setCachedResponse
 };

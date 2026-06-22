@@ -1,4 +1,4 @@
-const axios = require('axios');
+// Using native fetch instead of axios
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
@@ -16,8 +16,10 @@ async function processAttachment(url, senderId, platform) {
       fs.mkdirSync(forensicsDir, { recursive: true });
     }
 
-    const response = await axios.get(url, { responseType: 'arraybuffer' });
-    const buffer = Buffer.from(response.data);
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const arrayBuffer = await response.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
     
     const hash = crypto.createHash('sha256').update(buffer).digest('hex');
     const quarantinedFilePath = path.join(quarantineDir, `${hash}.quarantined`);
@@ -27,13 +29,16 @@ async function processAttachment(url, senderId, platform) {
     const apiKey = process.env.VIRUSTOTAL_API_KEY;
     if (apiKey && apiKey !== 'your_virustotal_api_key_here') {
       try {
-        const vtResponse = await axios.get(`https://www.virustotal.com/api/v3/files/${hash}`, {
-          headers: {
-            'x-apikey': apiKey
-          }
+        const vtResponse = await fetch(`https://www.virustotal.com/api/v3/files/${hash}`, {
+            headers: { 'x-apikey': apiKey }
         });
-
-        const stats = vtResponse.data.data.attributes.last_analysis_stats;
+        if (!vtResponse.ok) {
+            if (vtResponse.status === 404) return { status: 'safe' };
+            console.log(`[Honeypot] VirusTotal API error for hash ${hash}`);
+            return { status: 'error' };
+        }
+        const data = await vtResponse.json();
+        const stats = data.data.attributes.last_analysis_stats;
         if (stats && stats.malicious > 0) {
           const reportPath = path.join(forensicsDir, `report_${hash}.txt`);
           const reportContent = `Sender ID: ${senderId}\nPlatform: ${platform}\nTimestamp: ${new Date().toISOString()}\nHash (SHA-256): ${hash}\nStatus: Malicious (${stats.malicious} engines detected)\n`;

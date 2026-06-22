@@ -106,7 +106,7 @@ app.post('/webhook/facebook', async (req, res) => {
 
     // Audit Logging: Ghi lưu dạng raw toàn bộ webhook payload
     try {
-      const rawLogsDir = path.join(process.cwd(), 'data', 'raw_logs');
+      const rawLogsDir = path.join(process.cwd(), 'data', 'logs', 'raw_logs');
       if (!fs.existsSync(rawLogsDir)) {
         fs.mkdirSync(rawLogsDir, { recursive: true });
       }
@@ -247,7 +247,7 @@ app.post('/webhook/zalo', async (req, res) => {
     
     // Audit Logging: Ghi lưu dạng raw toàn bộ webhook payload (Zalo)
     try {
-      const rawLogsDir = path.join(process.cwd(), 'data', 'raw_logs');
+      const rawLogsDir = path.join(process.cwd(), 'data', 'logs', 'raw_logs');
       if (!fs.existsSync(rawLogsDir)) {
         fs.mkdirSync(rawLogsDir, { recursive: true });
       }

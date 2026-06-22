@@ -76,7 +76,7 @@ Hồ sơ cần chuẩn bị:
 
 Nơi nộp: Công an Phường nơi muốn đăng ký
 Thời hạn giải quyết: 3 ngày làm việc kể từ khi nhận đủ hồ sơ
-Lệ phí: Miễn phí`,
+Lệ phí: Nộp trực tiếp 20.000đ; Nộp qua Cổng Dịch vụ công/VNeID 10.000đ (theo TT 75/2022/TT-BTC)`,
     afterReplies: [
       { title: "Quay lại Menu",      payload: "SHOW_MAIN_MENU" },
       { title: "Hỏi thêm về cư trú", payload: "FLOW_CU_TRU_KHAC" }
@@ -95,7 +95,7 @@ Hồ sơ:
 
 Thời hạn giải quyết: 3 ngày làm việc
 Thời hạn tạm trú: Tối đa 2 năm, được gia hạn nhiều lần
-Lệ phí: Miễn phí`,
+Lệ phí: Nộp trực tiếp 15.000đ; Nộp qua Cổng Dịch vụ công/VNeID 7.000đ`,
     afterReplies: [
       { title: "Quay lại Menu",      payload: "SHOW_MAIN_MENU" },
       { title: "Hỏi thêm về cư trú", payload: "FLOW_CU_TRU_KHAC" }
@@ -129,11 +129,11 @@ Lệ phí: Miễn phí`,
   // ── CĂN CƯỚC ─────────────────────────────────────────────────────────────────
   FLOW_CAN_CUOC_LAN_DAU: {
     agentState: 'AGENT_CAN_CUOC',
-    text: `[Chatbot Auto] Cấp CCCD lần đầu (từ đủ 14 tuổi):
+    text: `[Chatbot Auto] Cấp Thẻ Căn cước lần đầu (từ đủ 14 tuổi):
 
 Không cần mang theo giấy tờ — dữ liệu đã có trong Cơ sở dữ liệu quốc gia về dân cư
 
-Nơi làm: Công an phường/xã hoặc điểm thu nhận lưu động
+Nơi làm: Đến hết 30/6/2026: điểm cấp căn cước hiện hành; từ 01/7/2026: Công an phường/xã (liên thông toàn tỉnh); hoặc điểm thu nhận lưu động
 
 Quy trình:
 1. Điền tờ khai tại chỗ
@@ -149,13 +149,13 @@ Lệ phí: Miễn phí`,
 
   FLOW_CAN_CUOC_TRE_EM: {
     agentState: 'AGENT_CAN_CUOC',
-    text: `[Chatbot Auto] Cấp CCCD cho người dưới 14 tuổi:
+    text: `[Chatbot Auto] Cấp Thẻ Căn cước cho người dưới 14 tuổi:
 
 Cha/mẹ hoặc người giám hộ làm thay
 
 Hồ sơ:
 - Giấy khai sinh của trẻ
-- CCCD của cha hoặc mẹ/người giám hộ
+- Thẻ Căn cước/CCCD của cha hoặc mẹ/người giám hộ
 
 Thời hạn của thẻ:
 - Dưới 6 tuổi: hết hạn khi đủ 6 tuổi
@@ -170,7 +170,7 @@ Lệ phí: Miễn phí`,
 
   FLOW_CAN_CUOC_DOI_CAP: {
     agentState: 'AGENT_CAN_CUOC',
-    text: `[Chatbot Auto] Đổi hoặc cấp lại CCCD:
+    text: `[Chatbot Auto] Đổi hoặc cấp lại Thẻ Căn cước:
 
 Các trường hợp:
 - Hết hạn sử dụng
@@ -180,8 +180,9 @@ Các trường hợp:
 Hồ sơ: Điền tờ khai tại nơi làm (không cần mang thêm giấy tờ)
 
 Lệ phí:
-- Cấp lại do mất: 70.000đ
-- Đổi thông tin hoặc hết hạn: Miễn phí`,
+- Cấp lại do bị mất thẻ: 70.000đ
+- Đổi thẻ khi hết hạn / thay đổi thông tin: 50.000đ
+(Trừ trường hợp sai sót do lỗi của cơ quan nhà nước thì được miễn phí)`,
     afterReplies: [
       { title: "Quay lại Menu",       payload: "SHOW_MAIN_MENU" },
       { title: "Hỏi thêm về CC&ĐD", payload: "FLOW_CAN_CUOC_KHAC" }
@@ -228,10 +229,10 @@ Anh/chị vui lòng để lại số điện thoại hoặc nhắn tin trực ti
 
 Theo quy định liên thông mới năm 2026, công dân có thể cấp đổi, cấp lại GPLX tại BẤT KỲ Công an cấp xã/phường nào cùng tỉnh.
 
-Hồ sơ: 
+Hồ sơ:
 - Đơn đề nghị đổi/cấp lại GPLX.
 - Giấy khám sức khỏe (nếu yêu cầu).
-- Bản sao CCCD và GPLX cũ (nếu còn).`,
+- Bản sao Thẻ Căn cước/CCCD và GPLX cũ (nếu còn).`,
     afterReplies: [
       { title: "Quay lại Menu",        payload: "SHOW_MAIN_MENU" },
       { title: "Hỏi thêm giao thông", payload: "FLOW_GIAO_THONG_KHAC" }
@@ -244,10 +245,10 @@ Hồ sơ:
 
 Theo quy định liên thông 2026, thủ tục cấp Giấy chứng nhận đăng ký xe và biển số được thực hiện ngay tại trụ sở Công an Phường/Xã.
 
-Hồ sơ: 
+Hồ sơ:
 - Giấy tờ nguồn gốc xe (Hóa đơn mua bán).
 - Biên lai đóng lệ phí trước bạ.
-- CCCD chủ xe.`,
+- Thẻ Căn cước/CCCD chủ xe.`,
     afterReplies: [
       { title: "Quay lại Menu",        payload: "SHOW_MAIN_MENU" },
       { title: "Hỏi thêm giao thông", payload: "FLOW_GIAO_THONG_KHAC" }
@@ -293,7 +294,7 @@ Cần làm ngay:
 Hồ sơ trình báo:
 - Đơn trình báo (viết tay hoặc theo mẫu tại Công an Phường)
 - Danh sách tài sản bị mất / đặc điểm nhận dạng
-- CCCD của người trình báo`,
+- Thẻ Căn cước/CCCD của người trình báo`,
     afterReplies: [
       { title: "Quay lại Menu",     payload: "SHOW_MAIN_MENU" },
       { title: "Hỏi thêm an ninh", payload: "FLOW_AN_NINH_KHAC" },

@@ -13,7 +13,7 @@ CÁC TRƯỜNG THÔNG TIN CẦN KÊ KHAI VÀ HƯỚNG DẪN CHI TIẾT:
 
 1. Kính gửi:
 Ghi Công an xã, phường, thị trấn nơi người nước ngoài lưu trú.
-Ví dụ: "Kính gửi: Công an phường Trung Tâm, quận Hoàn Kiếm, TP. Hà Nội".
+Ví dụ: "Kính gửi: Công an phường Bình Dương, quận Hoàn Kiếm, TP. Hà Nội".
 
 2. Người khai báo (Chủ cơ sở hoặc người đại diện):
 - Họ tên: Ghi rõ họ tên bằng chữ in hoa có dấu của chủ nhà hoặc người trực tiếp quản lý cơ sở lưu trú.
@@ -22,7 +22,7 @@ Ví dụ: "Kính gửi: Công an phường Trung Tâm, quận Hoàn Kiếm, TP. 
 
 3. Tên cơ sở lưu trú:
 Ghi rõ tên của khách sạn, nhà nghỉ, căn hộ cho thuê hoặc ghi "Nhà riêng của công dân" kèm theo địa chỉ cụ thể của nơi người nước ngoài lưu trú.
-Ví dụ: "Nhà riêng của công dân Nguyễn Văn A, số 12 Lý Tự Trọng, phường Trung Tâm".
+Ví dụ: "Nhà riêng của công dân Nguyễn Văn A, số 12 Lý Tự Trọng, phường Bình Dương".
 
 4. Bảng thông tin chi tiết của người nước ngoài (Kê khai theo bảng danh sách):
 - Cột 1: Họ và tên người nước ngoài: Ghi bằng chữ in hoa không dấu, đúng thứ tự trong hộ chiếu (Passport).

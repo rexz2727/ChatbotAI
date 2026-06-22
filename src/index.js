@@ -10,6 +10,7 @@ const honeypot = require('./honeypot');
 const { isMessageProcessed, markMessageProcessed } = require('./db');
 
 const app = express();
+app.use('/forms', express.static(path.join(__dirname, '../data/forms')));
 app.use(express.json({
   verify: (req, res, buf) => {
     req.rawBody = buf;
@@ -198,7 +199,14 @@ async function sendFacebookResponse(recipientId, result) {
   const url = `https://graph.facebook.com/v19.0/me/messages?access_token=${process.env.FB_PAGE_ACCESS_TOKEN}`;
   
   let messageData = {};
-  if (result.quickReplies && result.quickReplies.length > 0) {
+  if (result.isFile) {
+    messageData = {
+      attachment: {
+        type: "file",
+        payload: { url: result.fileUrl, is_reusable: true }
+      }
+    };
+  } else if (result.quickReplies && result.quickReplies.length > 0) {
     messageData = {
       text: result.text,
       quick_replies: result.quickReplies.map(r => ({

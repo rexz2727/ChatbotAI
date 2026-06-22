@@ -292,6 +292,10 @@ async function processUserMessage(userId, messageText, buttonPayload = null) {
       };
     }
 
+    if (messageText && messageText.trim().toLowerCase() === 'xin biểu mẫu ct01') {
+      return { isFile: true, fileUrl: 'https://trycloudflare.com/forms/CT01.pdf' };
+    }
+
     const matchedConfig = Object.values(menuMapping).find(item => item.state === state);
     if (!matchedConfig) {
       await db.setSession(userId, 'MAIN_MENU');

@@ -7,7 +7,8 @@ const path = require('path');
 const rateLimit = require('express-rate-limit');
 const chatbot = require('./chatbot');
 const honeypot = require('./honeypot');
-const { isMessageProcessed, markMessageProcessed } = require('./db');
+const db = require('./db');
+const { isMessageProcessed, markMessageProcessed } = db;
 
 const app = express();
 app.use('/forms', express.static(path.join(__dirname, '../data/forms')));
@@ -172,6 +173,12 @@ app.post('/webhook/facebook', async (req, res) => {
         }
 
         if (messageText || payload) {
+          const isAllowed = await db.checkRateLimit(senderId);
+          if (!isAllowed) {
+            console.log(`[Rate Limit] Blocked user ${senderId}`);
+            // return res.sendStatus(429);
+            continue;
+          }
           const result = await chatbot.handleUserMessage(senderId, messageText, payload);
           await sendFacebookResponse(senderId, result);
 
@@ -286,6 +293,13 @@ app.post('/webhook/zalo', async (req, res) => {
       const senderId = body.sender.id;
       const messageText = body.message.text;
       
+      const isAllowed = await db.checkRateLimit(senderId);
+      if (!isAllowed) {
+        console.log(`[Rate Limit] Blocked user ${senderId}`);
+        // return res.sendStatus(429);
+        return;
+      }
+      
       const result = await chatbot.handleUserMessage(senderId, messageText, null);
       await sendZaloResponse(senderId, result);
     } 
@@ -293,11 +307,24 @@ app.post('/webhook/zalo', async (req, res) => {
       const senderId = body.sender.id;
       const payload = body.message.payload;
       
+      const isAllowed = await db.checkRateLimit(senderId);
+      if (!isAllowed) {
+        console.log(`[Rate Limit] Blocked user ${senderId}`);
+        // return res.sendStatus(429);
+        return;
+      }
+      
       const result = await chatbot.handleUserMessage(senderId, null, payload);
       await sendZaloResponse(senderId, result);
     }
     else if (body.event_name === 'follow') {
       const senderId = body.sender.id || body.follower.id;
+      const isAllowed = await db.checkRateLimit(senderId);
+      if (!isAllowed) {
+        console.log(`[Rate Limit] Blocked user ${senderId}`);
+        // return res.sendStatus(429);
+        return;
+      }
       const result = await chatbot.handleUserMessage(senderId, null, 'GET_STARTED');
       await sendZaloResponse(senderId, result);
     }

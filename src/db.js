@@ -82,6 +82,14 @@ db.serialize(() => {
     const cutoffCache = Date.now() - 6 * 60 * 60 * 1000;
     db.run('DELETE FROM response_cache WHERE timestamp < ?', [cutoffCache]);
   });
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS rate_limits (
+      user_id TEXT PRIMARY KEY,
+      msg_count INTEGER NOT NULL,
+      window_start INTEGER NOT NULL
+    )
+  `);
 });
 
 /**
@@ -247,6 +255,27 @@ const setCachedResponse = (key, text) => {
   });
 };
 
+const checkRateLimit = (userId) => {
+  return new Promise((resolve, reject) => {
+    const WINDOW_MS = 60000; // 1 minute
+    const MAX_MSGS = 15;
+    const now = Date.now();
+    
+    db.get('SELECT msg_count, window_start FROM rate_limits WHERE user_id = ?', [userId], (err, row) => {
+      if (err) return reject(err);
+      if (!row || now - row.window_start > WINDOW_MS) {
+        db.run('INSERT OR REPLACE INTO rate_limits (user_id, msg_count, window_start) VALUES (?, 1, ?)', [userId, now]);
+        return resolve(true);
+      }
+      if (row.msg_count >= MAX_MSGS) {
+        return resolve(false);
+      }
+      db.run('UPDATE rate_limits SET msg_count = msg_count + 1 WHERE user_id = ?', [userId]);
+      resolve(true);
+    });
+  });
+};
+
 module.exports = {
   db,
   getSession,
@@ -256,5 +285,6 @@ module.exports = {
   isMessageProcessed,
   markMessageProcessed,
   getCachedResponse,
-  setCachedResponse
+  setCachedResponse,
+  checkRateLimit
 };

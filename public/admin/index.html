@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Công an Phường Chatbot</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="dashboard">
+    <aside class="sidebar">
+      <h2><span class="shield">🛡️</span> CA Phường</h2>
+      <nav>
+        <button class="nav-btn active" data-target="dashboard-view">Tổng quan</button>
+        <button class="nav-btn" data-target="feedback-view">Góp ý của dân</button>
+        <button class="nav-btn" data-target="forms-view">Quản lý biểu mẫu</button>
+      </nav>
+    </aside>
+    <main class="content">
+      <header>
+        <h1>Hệ thống Quản trị Nội bộ</h1>
+        <div class="status-badge">Đang hoạt động</div>
+      </header>
+      
+      <!-- Views -->
+      <section id="dashboard-view" class="view active">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>Tổng số người dùng</h3>
+            <p class="stat-value" id="stat-users">...</p>
+          </div>
+          <div class="stat-card">
+            <h3>Tổng tin nhắn AI</h3>
+            <p class="stat-value" id="stat-messages">...</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="feedback-view" class="view">
+        <div class="card">
+          <h2>Danh sách Góp ý</h2>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Thời gian</th>
+                <th>Người dùng (ID)</th>
+                <th>Nội dung</th>
+              </tr>
+            </thead>
+            <tbody id="feedback-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="forms-view" class="view">
+        <div class="card">
+          <div class="card-header">
+            <h2>Quản lý File Biểu mẫu</h2>
+            <form id="upload-form">
+              <input type="file" id="file-input" name="formFile" required>
+              <button type="submit" class="btn primary">Tải lên</button>
+            </form>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Tên file</th>
+                <th>Kích thước</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody id="forms-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -68,3 +68,4 @@ data/quarantine/
 # Dữ liệu RIÊNG của đơn vị (không public). Mỗi đơn vị tự tạo từ file *.example.
 config/donvi.js
 data/lien_he_co_quan.txt
+data/video_huong_dan.txt

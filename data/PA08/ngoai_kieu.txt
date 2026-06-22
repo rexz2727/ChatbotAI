@@ -2,18 +2,18 @@ CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
 Độc lập - Tự do - Hạnh phúc
 ----------------
 
-CÔNG AN PHƯỜNG TRUNG TÂM
+CÔNG AN PHƯỜNG BÌNH DƯƠNG
 BỘ PHẬN QUẢN LÝ XUẤT NHẬP CẢNH VÀ QUẢN LÝ NGƯỜI NƯỚC NGOÀI
 
 TÀI LIỆU HƯỚNG DẪN THỦ TỤC HÀNH CHÍNH DÀNH CHO NGƯỜI NƯỚC NGOÀI CƯ TRÚ TRÊN ĐỊA BÀN
-(Cập nhật mới nhất theo Luật số 23/2023/QH15, Luật số 118/2025/QH15, Thông tư số 53/2016/TT-BCA, Nghị định số 282/NĐ-CP và Nghị định số 144/2021/NĐ-CP của Chính phủ)
+(Cập nhật mới nhất theo Luật Nhập cảnh, xuất cảnh, quá cảnh, cư trú của người nước ngoài tại Việt Nam số 47/2014/QH13 (sửa đổi, bổ sung bởi Luật 51/2019/QH14 và Luật 23/2023/QH15), Thông tư số 53/2016/TT-BCA và Nghị định số 144/2021/NĐ-CP của Chính phủ)
 
 ========================================================================
 
 [ƯU TIÊN ÁP DỤNG - VĂN BẢN MỚI 2025]
 
 
-MỤC I. CƠ CHẾ TRỤC XUẤT NGƯỜI NƯỚC NGOÀI VI PHẠM PHÁP LUẬT (NGHỊ ĐỊNH 282/NĐ-CP)
+MỤC I. CƠ CHẾ TRỤC XUẤT NGƯỜI NƯỚC NGOÀI VI PHẠM PHÁP LUẬT
 
 1. Thẩm quyền quyết định trục xuất:
 
@@ -35,13 +35,11 @@ MỤC II. QUY TRÌNH XÁC MINH THÔNG TIN CƯ TRÚ PHỤ VỤ GIA HẠN TẠM TR
 
 1. Cơ sở pháp lý:
 
-- Luật Nhập cảnh, xuất cảnh, quá cảnh, cư trú của người nước ngoài tại Việt Nam;
-
-- Luật số 118/2025/QH15 của Quốc hội.
+- Luật Nhập cảnh, xuất cảnh, quá cảnh, cư trú của người nước ngoài tại Việt Nam số 47/2014/QH13 (sửa đổi, bổ sung bởi Luật 51/2019/QH14 và Luật 23/2023/QH15).
 
 2. Đối tượng và Mục đích xác minh:
 
-- Người nước ngoài cư trú trên địa bàn phường Trung Tâm đang làm thủ tục gia hạn tạm trú, xin gia hạn thị thực (visa) hoặc cấp mới/đổi thẻ tạm trú tại Phòng Quản lý xuất nhập cảnh.
+- Người nước ngoài cư trú trên địa bàn phường Bình Dương đang làm thủ tục gia hạn tạm trú, xin gia hạn thị thực (visa) hoặc cấp mới/đổi thẻ tạm trú tại Phòng Quản lý xuất nhập cảnh.
 
 - Mục đích xác minh: Đảm bảo người nước ngoài thực sự cư trú tại địa chỉ khai báo, tuân thủ các quy định về an ninh trật tự và hoạt động đúng mục đích nhập cảnh tại Việt Nam (lao động, học tập, thăm thân, thương mại...).
 
@@ -63,7 +61,7 @@ MỤC II. QUY TRÌNH XÁC MINH THÔNG TIN CƯ TRÚ PHỤ VỤ GIA HẠN TẠM TR
 
 6. Trình tự thực hiện (từng bước):
 
-- Bước 1: Người nước ngoài hoặc cá nhân, tổ chức bảo lãnh nộp hồ sơ đề nghị xác minh tại Công an phường Trung Tâm hoặc cơ quan xuất nhập cảnh chuyển yêu cầu xác minh điện tử về phường.
+- Bước 1: Người nước ngoài hoặc cá nhân, tổ chức bảo lãnh nộp hồ sơ đề nghị xác minh tại Công an phường Bình Dương hoặc cơ quan xuất nhập cảnh chuyển yêu cầu xác minh điện tử về phường.
 
 - Bước 2: Cảnh sát khu vực quản lý địa bàn tiến hành kiểm tra hồ sơ lưu trữ tạm trú, đối chiếu thông tin khai báo trên hệ thống mạng.
 
@@ -76,7 +74,7 @@ MỤC II. QUY TRÌNH XÁC MINH THÔNG TIN CƯ TRÚ PHỤ VỤ GIA HẠN TẠM TR
 ========================================================================
 
 === NGHIỆP VỤ NGOẠI KIỀU ===
-Văn bản: Luật 23/2023/QH15, Nghị định 282/2025/NĐ-CP
+Văn bản: Luật Nhập cảnh, xuất cảnh, quá cảnh, cư trú của người nước ngoài tại Việt Nam số 47/2014/QH13 (sửa đổi, bổ sung bởi Luật 51/2019/QH14 và Luật 23/2023/QH15)
 Điểm mới:
 - Tăng thời hạn e-visa lên 90 ngày.
 - Khai báo tạm trú cho người nước ngoài thực hiện qua ứng dụng VNeID hoặc trực tiếp tại Công an xã/phường trong vòng 12h (24h với vùng sâu xa).
@@ -90,9 +88,7 @@ MỤC III. CHÍNH SÁCH THỊ THỰC ĐIỆN TỬ (E-VISA) 90 NGÀY VÀ MIỄN T
 
 1. Cơ sở pháp lý:
 
-- Luật số 23/2023/QH15 sửa đổi, bổ sung một số điều của Luật Nhập cảnh, xuất cảnh, quá cảnh, cư trú của người nước ngoài tại Việt Nam (có hiệu lực từ ngày 15/08/2023);
-
-- Luật số 118/2025/QH15 ngày 25/11/2025 của Quốc hội.
+- Luật Nhập cảnh, xuất cảnh, quá cảnh, cư trú của người nước ngoài tại Việt Nam số 47/2014/QH13 (sửa đổi, bổ sung bởi Luật 51/2019/QH14 và Luật 23/2023/QH15).
 
 2. Chính sách Thị thực điện tử (e-Visa) thời hạn đến 90 ngày:
 
@@ -113,7 +109,7 @@ MỤC III. CHÍNH SÁCH THỊ THỰC ĐIỆN TỬ (E-VISA) 90 NGÀY VÀ MIỄN T
 
 - Thời hạn tạm trú 45 ngày được tính từ ngày nhập cảnh và không được gia hạn tự động. Người nước ngoài muốn tiếp tục ở lại Việt Nam quá 45 ngày phải làm thủ tục xin cấp thị thực phù hợp tại cơ quan quản lý xuất nhập cảnh theo đúng quy định pháp luật.
 
-- Quy định cư trú đối với diện miễn thị thực: Trong suốt thời gian tạm trú 45 ngày, người nước ngoài phải đăng ký tạm trú hợp pháp tại nơi ở của mình dưới sự hướng dẫn của chủ cơ sở lưu trú.
+- Quy định cư trú đối với diện miễn thị thực: Trong suốt thời gian tạm trú 45 ngày, người nước ngoài phải khai báo tạm trú hợp pháp tại nơi ở của mình dưới sự hướng dẫn của chủ cơ sở lưu trú.
 
 ========================================================================
 
@@ -126,7 +122,7 @@ MỤC IV. XỬ PHẠT VI PHẠM HÀNH CHÍNH VỀ XUẤT NHẬP CẢNH VÀ CƯ T
 
 - Nghị định số 144/2021/NĐ-CP ngày 31/12/2021 của Chính phủ quy định xử phạt vi phạm hành chính trong lĩnh vực an ninh, trật tự, an toàn xã hội; phòng, chống tệ nạn xã hội; phòng cháy và chữa cháy; cứu nạn, cứu hộ; phòng, chống bạo lực gia đình;
 
-- Nghị định số 282/NĐ-CP của Chính phủ (về các hành vi và quy trình cưỡng chế, trục xuất người nước ngoài vi phạm xuất nhập cảnh).
+- Luật Nhập cảnh, xuất cảnh, quá cảnh, cư trú của người nước ngoài tại Việt Nam số 47/2014/QH13 (sửa đổi, bổ sung bởi Luật 51/2019/QH14 và Luật 23/2023/QH15).
 
 2. Các hành vi vi phạm phổ biến và Mức xử phạt đối với người nước ngoài:
 
@@ -143,7 +139,7 @@ MỤC IV. XỬ PHẠT VI PHẠM HÀNH CHÍNH VỀ XUẤT NHẬP CẢNH VÀ CƯ T
   + Mức phạt tiền từ 10.000.000 đồng đến 15.000.000 đồng.
 
 - Hành vi sử dụng chứng nhận tạm trú, thẻ tạm trú, thẻ thường trú ở Việt Nam quá thời hạn từ 90 ngày trở lên hoặc hoạt động không đúng mục đích nhập cảnh (như đi làm việc bằng visa du lịch):
-  + Mức phạt tiền từ 15.000.000 đồng đến 20.000.000 đồng và có thể bị áp dụng hình thức xử phạt bổ sung là trục xuất khỏi lãnh thổ Việt Nam theo quy trình quy định tại Nghị định số 282/NĐ-CP.
+  + Mức phạt tiền từ 15.000.000 đồng đến 20.000.000 đồng và có thể bị áp dụng hình thức xử phạt bổ sung là trục xuất khỏi lãnh thổ Việt Nam theo quy trình quy định tại Luật Nhập cảnh, xuất cảnh, quá cảnh, cư trú của người nước ngoài tại Việt Nam số 47/2014/QH13 (sửa đổi, bổ sung bởi Luật 51/2019/QH14 và Luật 23/2023/QH15).
 
 3. Các hành vi vi phạm và Mức xử phạt đối với chủ cơ sở lưu trú (người bảo lãnh/chủ nhà):
 
@@ -153,13 +149,13 @@ MỤC IV. XỬ PHẠT VI PHẠM HÀNH CHÍNH VỀ XUẤT NHẬP CẢNH VÀ CƯ T
 - Hành vi giúp đỡ, chứa chấp, che giấu hoặc tạo điều kiện cho người nước ngoài vào Việt Nam, ở lại Việt Nam hoặc qua lại biên giới quốc gia trái phép:
   + Mức phạt tiền từ 15.000.000 đồng đến 25.000.000 đồng.
 
-4. Trình tự xử lý vi phạm hành chính của Công an phường Trung Tâm:
+4. Trình tự xử lý vi phạm hành chính của Công an phường Bình Dương:
 
 - Bước 1: Cảnh sát khu vực hoặc tổ tuần tra Công an phường phát hiện hành vi vi phạm về cư trú của người nước ngoài thông qua công tác kiểm tra hành chính định kỳ hoặc đột xuất.
 
 - Bước 2: Lập Biên bản vi phạm hành chính tại chỗ đối với đối tượng vi phạm (có sự tham gia của người phiên dịch hoặc sử dụng ngôn ngữ phổ thông tiếng Anh để người nước ngoài hiểu rõ nội dung biên bản). Cán bộ tiến hành tạm giữ hộ chiếu của người vi phạm để phục vụ công tác xác minh xử lý.
 
-- Bước 3: Trong thời hạn 24 giờ kể từ khi lập biên bản, Công an phường hoàn thiện hồ sơ vi phạm, báo cáo đề xuất Trưởng Công an phường ra Quyết định xử phạt vi phạm hành chính (đối với các lỗi thuộc thẩm quyền xử phạt của cấp xã/phường) hoặc chuyển hồ sơ lên Công an cấp huyện/Phòng Quản lý xuất nhập cảnh Công an tỉnh để xử lý theo thẩm quyền cấp cao hơn đối với các lỗi phạt tiền vượt quá 5.000.000 đồng hoặc có áp dụng hình thức phạt bổ sung trục xuất.
+- Bước 3: Trong thời hạn 24 giờ kể từ khi lập biên bản, Công an phường hoàn thiện hồ sơ vi phạm, báo cáo đề xuất Trưởng Công an phường ra Quyết định xử phạt vi phạm hành chính (đối với các lỗi thuộc thẩm quyền xử phạt của cấp xã/phường) hoặc chuyển hồ sơ lên Phòng Quản lý xuất nhập cảnh Công an tỉnh để xử lý theo thẩm quyền cấp cao hơn đối với các lỗi phạt tiền vượt quá 5.000.000 đồng hoặc có áp dụng hình thức phạt bổ sung trục xuất.
 
 - Bước 4: Người vi phạm thực hiện nộp tiền phạt tại Kho bạc nhà nước hoặc nộp phạt trực tuyến qua Cổng dịch vụ công quốc gia trong thời hạn 10 ngày kể từ ngày nhận được quyết định xử phạt vi phạm hành chính. Sau khi nộp phạt xong, công dân mang biên lai thu tiền phạt đến cơ quan xuất nhập cảnh để xin cấp thị thực xuất cảnh hoặc gia hạn cư trú theo quy định.
 
@@ -176,13 +172,11 @@ MỤC V. THỦ TỤC KHAI BÁO TẠM TRÚ CHO NGƯỜI NƯỚC NGOÀI TẠI VI�
 
 - Luật sửa đổi, bổ sung một số điều của Luật Nhập cảnh, xuất cảnh, quá cảnh, cư trú của người nước ngoài tại Việt Nam năm 2019 (Luật số 51/2019/QH14) và năm 2023 (Luật số 23/2023/QH15);
 
-- Thông tư số 53/2016/TT-BCA ngày 28/12/2016 của Bộ Công an quy định cách thức khai báo, tiếp nhận thông tin tạm trú của người nước ngoài tại Việt Nam;
-
-- Luật số 118/2025/QH15 ngày 25/11/2025 của Quốc hội.
+- Thông tư số 53/2016/TT-BCA ngày 28/12/2016 của Bộ Công an quy định cách thức khai báo, tiếp nhận thông tin tạm trú của người nước ngoài tại Việt Nam.
 
 2. Đối tượng áp dụng và Trách nhiệm khai báo:
 
-- Người nước ngoài đến cư trú tại các hộ gia đình, cơ sở lưu trú (nhà cho thuê, khách sạn, nhà nghỉ, căn hộ dịch vụ) trên địa bàn phường Trung Tâm phải thực hiện khai báo tạm trú.
+- Người nước ngoài đến cư trú tại các hộ gia đình, cơ sở lưu trú (nhà cho thuê, khách sạn, nhà nghỉ, căn hộ dịch vụ) trên địa bàn phường Bình Dương phải thực hiện khai báo tạm trú.
 
 - Người trực tiếp quản lý, điều hành hoạt động của cơ sở lưu trú (hoặc chủ hộ gia đình đối với trường hợp người nước ngoài lưu trú tại nhà riêng của công dân) có trách nhiệm thực hiện khai báo tạm trú cho người nước ngoài.
 
@@ -218,8 +212,8 @@ MỤC V. THỦ TỤC KHAI BÁO TẠM TRÚ CHO NGƯỜI NƯỚC NGOÀI TẠI VI�
 - Bước 3: Chọn mục "Khai báo tạm trú", nhập đầy đủ các trường thông tin bắt buộc của người nước ngoài bao gồm: Họ tên viết chữ in hoa không dấu, ngày tháng năm sinh, giới tính, quốc tịch, số hộ chiếu, loại giấy tờ cư trú (visa/thẻ tạm trú), thời hạn cư trú được phép tại Việt Nam và ngày bắt đầu cư trú, ngày dự kiến rời đi.
 - Bước 4: Nhấn nút "Gửi thông tin". Hệ thống tự động kiểm tra tính hợp lệ của thông tin và lưu trữ vào cơ sở dữ liệu quản lý cư trú của người nước ngoài. Người khai báo có thể in danh sách người nước ngoài đang tạm trú để phục vụ quản lý.
 
-6.2 Quy trình thực hiện trực tiếp tại Công an phường Trung Tâm:
-- Bước 1: Người khai báo trực tiếp đến Trụ sở Công an phường Trung Tâm tại Bộ phận tiếp dân để nhận Mẫu Phiếu khai báo tạm trú (NA17) hoặc tự tải và điền trước thông tin.
+6.2 Quy trình thực hiện trực tiếp tại Công an phường Bình Dương:
+- Bước 1: Người khai báo trực tiếp đến Trụ sở Công an phường Bình Dương tại Bộ phận tiếp dân để nhận Mẫu Phiếu khai báo tạm trú (NA17) hoặc tự tải và điền trước thông tin.
 - Bước 2: Người khai báo tự tay điền đầy đủ thông tin vào Phiếu NA17 và ký tên xác nhận. Xuất trình hộ chiếu của người nước ngoài cho cán bộ trực ban kiểm tra đối chiếu.
 - Bước 3: Cán bộ tiếp nhận kiểm tra nội dung ghi trên Phiếu NA17, đối chiếu thông tin thời hạn visa trên hộ chiếu của người nước ngoài.
 - Bước 4: Cán bộ ký xác nhận tiếp nhận vào Phiếu NA17, thực hiện sao lưu thông tin và trả lại 01 bản phiếu cho người khai báo để lưu giữ tại cơ sở. Tiến hành cập nhật thông tin người nước ngoài vào hệ thống quản lý xuất nhập cảnh.
@@ -250,7 +244,7 @@ MỤC VII. CÔNG TÁC KIỂM TRA HÀNH CHÍNH NGƯỜI NƯỚC NGOÀI CỦA CÔN
 
 1. Nguyên tắc kiểm tra:
 
-- Việc kiểm tra hành chính đối với người nước ngoài cư trú trên địa bàn phải được thực hiện theo đúng kế hoạch công tác được Trưởng Công an cấp huyện phê duyệt, hoặc thực hiện đột xuất khi phát hiện dấu hiệu vi phạm pháp luật rõ ràng.
+- Việc kiểm tra hành chính đối với người nước ngoài cư trú trên địa bàn phải được thực hiện theo đúng kế hoạch công tác được Trưởng Công an cấp xã/cấp có thẩm quyền phê duyệt, hoặc thực hiện đột xuất khi phát hiện dấu hiệu vi phạm pháp luật rõ ràng.
 
 - Lực lượng kiểm tra bao gồm Cảnh sát khu vực phối hợp cùng đại diện chính quyền địa phương, tổ dân phố. Quá trình kiểm tra phải giữ thái độ lịch sự, chuyên nghiệp, tôn trọng quyền tự do cá nhân và quyền ngoại giao của người nước ngoài.
 
@@ -295,7 +289,7 @@ MỤC IX. QUY ĐỊNH CHO HỌC SINH, SINH VIÊN VÀ LAO ĐỘNG NƯỚC NGOÀI 
 
 2. Đối với lao động nước ngoài cư trú tại khu công nghiệp:
 
-- Doanh nghiệp sử dụng lao động nước ngoài phải chủ động đăng ký tạm trú tập trung cho người lao động tại các khu nhà ở chuyên gia, nhà ở công nhân đã được thẩm duyệt nghiệm thu về an ninh trật tự và PCCC.
+- Doanh nghiệp sử dụng lao động nước ngoài phải chủ động khai báo tạm trú tập trung cho người lao động tại các khu nhà ở chuyên gia, nhà ở công nhân đã được thẩm duyệt nghiệm thu về an ninh trật tự và PCCC.
 
 - Hợp đồng lao động và Giấy phép lao động hợp pháp phải được đính kèm khi nộp hồ sơ xin cấp/gia hạn thẻ tạm trú cho người lao động tại địa bàn phường.
 
@@ -307,15 +301,15 @@ MỤC X. CÁC CÂU HỎI THƯỜNG GẶP (FAQ) VỀ NGƯỜI NGOẠI KIỀU
 - Trả lời: Không. Miễn thị thực đơn phương 45 ngày chỉ có giá trị cho một lần nhập cảnh và không được gia hạn tự động tại Việt Nam. Nếu bạn của bạn muốn tiếp tục ở lại Việt Nam, bạn của bạn phải xuất cảnh sang nước thứ ba (ví dụ Campuchia, Thái Lan...) rồi làm thủ tục xin visa mới (như e-Visa 90 ngày) để quay trở lại Việt Nam, hoặc có cơ quan, doanh nghiệp tại Việt Nam đứng ra bảo lãnh làm thủ tục chuyển đổi diện visa theo quy định.
 
 2. Câu hỏi 2: Tôi có nhà riêng và cho một người Hàn Quốc thuê ở, tôi không biết sử dụng mạng internet thì có thể khai báo tạm trú cho người này bằng phiếu giấy được không?
-- Trả lời: Có. Bạn có thể đến trực tiếp trụ sở Công an phường Trung Tâm để xin Mẫu Phiếu NA17, điền đầy đủ thông tin của bạn và người khách Hàn Quốc, đính kèm bản chụp hộ chiếu của khách và nộp trực tiếp cho cán bộ trực ban Công an phường. Việc nộp bằng phiếu giấy phải được thực hiện trong vòng 12 giờ kể từ khi khách đến lưu trú tại nhà bạn.
+- Trả lời: Có. Bạn có thể đến trực tiếp trụ sở Công an phường Bình Dương để xin Mẫu Phiếu NA17, điền đầy đủ thông tin của bạn và người khách Hàn Quốc, đính kèm bản chụp hộ chiếu của khách và nộp trực tiếp cho cán bộ trực ban Công an phường. Việc nộp bằng phiếu giấy phải được thực hiện trong vòng 12 giờ kể từ khi khách đến lưu trú tại nhà bạn.
 
 3. Câu hỏi 3: Người nước ngoài làm việc tại trường học trên địa bàn phường bị quá hạn visa 5 ngày thì bị phạt tiền bao nhiêu?
 - Trả lời: Theo quy định tại Nghị định số 144/2021/NĐ-CP, người nước ngoài sử dụng chứng nhận tạm trú hoặc visa quá hạn dưới 16 ngày mà không được cơ quan có thẩm quyền cho phép sẽ bị xử phạt vi phạm hành chính với mức phạt tiền từ 500.000 đồng đến 2.000.000 đồng. Ngoài ra, người nước ngoài phải hoàn thành thủ tục nộp phạt và làm đơn xin gia hạn visa/xin xuất cảnh tại Cục Quản lý xuất nhập cảnh.
 
-4. Câu hỏi 4: Tôi là chủ nhà, khách nước ngoài tự đăng ký tạm trú trực tuyến rồi thì tôi có cần làm gì nữa không?
-- Trả lời: Theo Luật Nhập cảnh, xuất cảnh, quá cảnh, cư trú của người nước ngoài tại Việt Nam, trách nhiệm khai báo tạm trú thuộc về chủ cơ sở lưu trú (là chủ nhà). Do đó, bạn phải là người đăng ký tài khoản và khai báo cho khách, hoặc nếu khách tự đăng ký thì bạn vẫn có trách nhiệm kiểm tra đối chiếu thông tin để đảm bảo khách đã khai báo trung thực và chính xác, tránh việc bị xử phạt hành chính đối với chủ nhà do không khai báo tạm trú cho người nước ngoài.
+4. Câu hỏi 4: Tôi là chủ nhà, khách nước ngoài tự khai báo tạm trú trực tuyến rồi thì tôi có cần làm gì nữa không?
+- Trả lời: Theo Luật Nhập cảnh, xuất cảnh, quá cảnh, cư trú của người nước ngoài tại Việt Nam, trách nhiệm khai báo tạm trú thuộc về chủ cơ sở lưu trú (là chủ nhà). Do đó, bạn phải là người đăng ký tài khoản và khai báo cho khách, hoặc nếu khách tự khai báo thì bạn vẫn có trách nhiệm kiểm tra đối chiếu thông tin để đảm bảo khách đã khai báo trung thực và chính xác, tránh việc bị xử phạt hành chính đối với chủ nhà do không khai báo tạm trú cho người nước ngoài.
 
 ------------------------------------------------------------------------
-Đường dây nóng hỗ trợ quản lý người nước ngoài Công an Phường Trung Tâm: 0243.xxx.xxxx
-Địa chỉ trụ sở tiếp dân trực tiếp: Số 12, Đường Lý Tự Trọng, Phường Trung Tâm.
+Đường dây nóng hỗ trợ quản lý người nước ngoài Công an Phường Bình Dương: 0243.xxx.xxxx
+Địa chỉ trụ sở tiếp dân trực tiếp: Số 12, Đường Lý Tự Trọng, Phường Bình Dương.
 Hãy tuân thủ quy định cư trú để đảm bảo chuyến đi của bạn tại Việt Nam được an toàn và hợp pháp!

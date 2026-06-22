@@ -3,7 +3,7 @@ CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
 Độc lập - Tự do - Hạnh phúc
 ----------------
 
-CÔNG AN PHƯỜNG TRUNG TÂM
+CÔNG AN PHƯỜNG BÌNH DƯƠNG
 BỘ PHẬN TIẾP NHẬN VÀ TRẢ KẾT QUẢ ĐĂNG KÝ CƯ TRÚ
 
 TÀI LIỆU HƯỚNG DẪN THỦ TỤC HÀNH CHÍNH VỀ CƯ TRÚ VÀ ĐỊA BÀN
@@ -77,7 +77,7 @@ Công dân chuẩn bị hồ sơ tương ứng với từng diện đăng ký:
 
 6. Trình tự thực hiện (từng bước):
 
-- Bước 1: Công dân nộp hồ sơ trực tiếp tại Bộ phận Tiếp nhận và Trả kết quả Công an phường Trung Tâm hoặc nộp trực tuyến qua Cổng dịch vụ công Bộ Công an, Cổng dịch vụ công Quốc gia hoặc qua ứng dụng VNeID.
+- Bước 1: Công dân nộp hồ sơ trực tiếp tại Bộ phận Tiếp nhận và Trả kết quả Công an phường Bình Dương hoặc nộp trực tuyến qua Cổng dịch vụ công Bộ Công an, Cổng dịch vụ công Quốc gia hoặc qua ứng dụng VNeID.
 
 - Bước 2: Cán bộ tiếp nhận kiểm tra hồ sơ:
   + Nếu hồ sơ đầy đủ, hợp lệ: Thực hiện tiếp nhận, lập Phiếu tiếp nhận hồ sơ và hẹn trả kết quả (Mẫu CT03) gửi cho công dân (hoặc thông báo trạng thái tiếp nhận qua cổng dịch vụ công/VNeID).
@@ -300,7 +300,7 @@ MỤC V. THỦ TỤC THÔNG BÁO LƯU TRÚ
 - Bước 1: Người đến lưu trú xuất trình giấy tờ tùy thân cho chủ hộ gia đình hoặc người quản lý cơ sở lưu trú.
 
 - Bước 2: Người thực hiện thông báo lưu trú lựa chọn một trong các hình thức thông báo sau:
-  + Hình thức 1: Thông báo trực tiếp tại Trụ sở Công an phường Trung Tâm hoặc qua số điện thoại trực ban Công an phường.
+  + Hình thức 1: Thông báo trực tiếp tại Trụ sở Công an phường Bình Dương hoặc qua số điện thoại trực ban Công an phường.
   + Hình thức 2: Thông báo trực tuyến qua Cổng dịch vụ công Bộ Công an hoặc qua ứng dụng định danh điện tử quốc gia VNeID trên điện thoại thông minh.
   + Hình thức 3: Đối với các cơ sở kinh doanh lưu trú chuyên nghiệp (khách sạn, nhà nghỉ, nhà trọ), thực hiện thông báo tự động qua phần mềm Quản lý lưu trú ASM kết nối trực tiếp với Cơ sở dữ liệu quốc gia về dân cư.
 
@@ -420,7 +420,7 @@ MỤC IX. CÁC CÂU HỎI THƯỜNG GẶP (FAQ) VỀ THỦ TỤC CƯ TRÚ
 1. Câu hỏi 1: Tôi đi thuê nhà và chủ nhà không đồng ý ký trực tiếp vào tờ khai CT01 thì tôi có thể đăng ký tạm trú được không?
 - Trả lời: Theo Nghị định 58/2026/NĐ-CP, nếu chủ nhà đã có tài khoản VNeID Mức 2, bạn có thể thực hiện đăng ký tạm trú trực tuyến và điền số định danh của chủ nhà. Hệ thống sẽ gửi yêu cầu xác nhận trực tiếp đến tài khoản VNeID của chủ nhà. Khi chủ nhà nhấn "Đồng ý" trên ứng dụng VNeID, bạn hoàn toàn có thể đăng ký tạm trú thành công mà không cần chữ ký giấy của chủ nhà trên tờ khai CT01.
 
-2. Câu hỏi 2: Diện tích nhà ở tối thiểu tại phường Trung Tâm để được đăng ký thường trú diện thuê, mượn, ở nhờ là bao nhiêu?
+2. Câu hỏi 2: Diện tích nhà ở tối thiểu tại phường Bình Dương để được đăng ký thường trú diện thuê, mượn, ở nhờ là bao nhiêu?
 - Trả lời: Theo quy định hiện hành của Hội đồng nhân dân tỉnh/thành phố và Thông tư của Bộ Công an, diện tích sàn tối thiểu đối với trường hợp thuê, mượn, ở nhờ để đăng ký thường trú là 08 m2 sàn/người. Công dân cần có biên bản xác nhận diện tích của cơ quan thẩm quyền hoặc hợp đồng thuê nhà có thể hiện rõ diện tích sử dụng để làm căn cứ tính toán.
 
 3. Câu hỏi 3: Nếu con tôi mới sinh dưới 6 tuổi, tôi muốn đăng ký thường trú cho con tại nhà tôi đang thuê thì có cần chủ nhà đồng ý không?
@@ -430,8 +430,8 @@ MỤC IX. CÁC CÂU HỎI THƯỜNG GẶP (FAQ) VỀ THỦ TỤC CƯ TRÚ
 - Trả lời: Có. Theo Nghị định 58/2026/NĐ-CP, hệ thống quản lý cư trú sẽ tự động xóa đăng ký tạm trú của công dân khi hết thời hạn tạm trú đã đăng ký mà không thực hiện gia hạn trong vòng 15 ngày trước khi hết hạn. Do đó, công dân cần lưu ý thời gian để thực hiện thủ tục gia hạn kịp thời.
 
 ------------------------------------------------------------------------
-Đường dây nóng hỗ trợ giải quyết thủ tục cư trú Công an Phường Trung Tâm: 0243.xxx.xxxx
-Địa chỉ trụ sở tiếp dân trực tiếp: Số 12, Đường Lý Tự Trọng, Phường Trung Tâm.
+Đường dây nóng hỗ trợ giải quyết thủ tục cư trú Công an Phường Bình Dương: 0243.xxx.xxxx
+Địa chỉ trụ sở tiếp dân trực tiếp: Số 12, Đường Lý Tự Trọng, Phường Bình Dương.
 Trực ban Công an Phường hoạt động 24/7 giải quyết các phản ánh của công dân.
 
 

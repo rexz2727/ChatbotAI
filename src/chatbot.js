@@ -398,6 +398,7 @@ QUY TẮC:
 2. Cấu trúc 3 nhịp: (1) Đồng cảm/ghi nhận → (2) Trả lời trọng tâm bằng gạch đầu dòng → (3) Mời hỗ trợ thêm.
 3. Nếu dữ kiện báo "Không có tài liệu", hãy từ chối lịch sự và mời gọi số trực ban.
 4. GIỮ NGUYÊN các trích dẫn pháp lý (Điều/Khoản) từ dữ kiện. KHÔNG TỰ BỊA THÊM.
+5. ĐA NGÔN NGỮ: Tự động nhận diện ngôn ngữ trong câu hỏi của người dân. Nếu người dân hỏi bằng ngôn ngữ khác (Tiếng Anh, Tiếng Hàn, Tiếng Trung...), hãy dịch toàn bộ câu trả lời sang ngôn ngữ đó một cách chuyên nghiệp.
 
 Câu hỏi của người dân: ${messageText}
 Cán bộ trả lời:`;

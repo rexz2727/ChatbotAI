@@ -125,7 +125,8 @@ async function seed() {
     // Create collection
     const collection = await client.createCollection({
       name: config.name,
-      embeddingFunction: geminiEmbeddingFunction
+      embeddingFunction: geminiEmbeddingFunction,
+      metadata: { "hnsw:space": "cosine", "hnsw:M": 16, "hnsw:construction_ef": 100 }
     });
 
     const documents = [];
@@ -148,15 +149,30 @@ async function seed() {
         .map(p => p.trim())
         .filter(p => p.length > 10); // Ignore small lines or title headers without body
 
-      if (paragraphs.length === 0) {
+      const chunks = [];
+      let currentChunk = "";
+      for (const para of paragraphs) {
+        // Target roughly 1000 characters per chunk to save RAM and maintain semantics
+        if (currentChunk.length + para.length > 1000 && currentChunk.length > 0) {
+          chunks.push(currentChunk);
+          currentChunk = para;
+        } else {
+          currentChunk = currentChunk ? currentChunk + "\n\n" + para : para;
+        }
+      }
+      if (currentChunk.length > 0) {
+        chunks.push(currentChunk);
+      }
+
+      if (chunks.length === 0) {
         console.warn(`No valid content found to seed in ${file}`);
         continue;
       }
 
-      console.log(`Split ${file} into ${paragraphs.length} paragraphs/chunks.`);
+      console.log(`Split ${file} into ${chunks.length} optimized chunks (grouped paragraphs).`);
 
-      paragraphs.forEach((para) => {
-        documents.push(para);
+      chunks.forEach((chunk) => {
+        documents.push(chunk);
         ids.push(`${config.name}_chunk_${globalChunkIndex}`);
         metadatas.push({ source: file, chunk_index: globalChunkIndex });
         globalChunkIndex++;

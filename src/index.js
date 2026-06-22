@@ -66,7 +66,7 @@ const webhookLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-app.post('/webhook/*', webhookLimiter);
+// app.post('/webhook/*', webhookLimiter);
 
 // Facebook Webhook Signature Verification
 function isValidFacebookSignature(req) {
@@ -320,9 +320,37 @@ async function sendFacebookResponse(recipientId, result, req) {
   }
 }
 
+// Zalo Webhook Signature Verification
+function isValidZaloSignature(req) {
+  const signature = req.headers['x-zevent-signature'];
+  const appId = process.env.ZALO_APP_ID;
+  const secretKey = process.env.ZALO_OA_SECRET_KEY;
+  const timestamp = req.headers['x-zevent-timestamp'];
+
+  if (!appId || !secretKey || appId === 'your_zalo_app_id_here') {
+    console.warn('[SECURITY WARNING] ZALO_APP_ID/SECRET not configured. Bypassing Zalo signature validation.');
+    return true;
+  }
+
+  if (!signature || !timestamp || !req.rawBody) return false;
+
+  const dataString = req.rawBody.toString('utf8');
+  // mac = sha256(appId + data + timeStamp + OAsecretKey)
+  const stringToHash = appId + dataString + timestamp + secretKey;
+  
+  const expectedHash = crypto.createHash('sha256').update(stringToHash).digest('hex');
+  
+  return signature === expectedHash;
+}
+
 // 3. Webhook Event Handler for Zalo OA
 app.post('/webhook/zalo', async (req, res) => {
   try {
+    if (!isValidZaloSignature(req)) {
+      console.warn('Unauthorized webhook request: invalid Zalo signature.');
+      return res.status(403).send('Invalid signature');
+    }
+
     const body = req.body;
     
     // Audit Logging: Ghi lưu dạng raw toàn bộ webhook payload (Zalo)

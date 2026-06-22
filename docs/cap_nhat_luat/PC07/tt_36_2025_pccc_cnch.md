@@ -1,0 +1,17 @@
+# Thông tư 36/2025/TT-BCA — Quy định chi tiết thi hành Luật PCCC & CNCH và NĐ 105/2025
+- **Số/ký hiệu:** 36/2025/TT-BCA
+- **Ngày ban hành:** 15/05/2025
+- **Hiệu lực:** 01/07/2025
+- **Cơ quan ban hành:** Bộ Công an
+- **Thay thế VB nào:** Quy định chi tiết một số điều của Luật PCCC & CNCH số 55/2024/QH15 và Nghị định 105/2025/NĐ-CP. ⚠️ Cần xác minh danh mục thông tư cũ của Bộ Công an bị thay thế/bãi bỏ tại điều khoản thi hành của TT 36/2025.
+- **Tóm tắt điểm chính:**
+  - Quy định chi tiết khoản 4 Điều 42 Luật PCCC & CNCH về trang bị phương tiện PCCC & CNCH cho lực lượng PCCC & CNCH cơ sở, lực lượng chuyên ngành và lực lượng dân phòng.
+  - Quy định chi tiết khoản 3 Điều 43 về quản lý, bảo quản, bảo dưỡng phương tiện PCCC & CNCH.
+  - Ban hành danh mục phương tiện PCCC trang bị cho các đội PCCC cơ sở, chuyên ngành (áp dụng từ 01/7/2025).
+  - Quy định các biểu mẫu nghiệp vụ kèm theo phục vụ công tác PCCC & CNCH.
+  - ⚠️ Cần xác minh số điều/khoản viện dẫn (Điều 42, 43) khớp với bản gốc Luật 55/2024 trước khi trích dẫn.
+- **Tác động tới lĩnh vực nào trong data/:** Tác động trực tiếp tới `data/knowledge/PC07/pccc_cnch.txt`. Cung cấp chi tiết kỹ thuật/nghiệp vụ và biểu mẫu cho phần PCCC; bổ trợ cho Luật 55/2024 và NĐ 105/2025 mà chatbot dẫn chiếu.
+- **Link nguồn chính thống:**
+  - Công báo Chính phủ: https://congbao.chinhphu.vn/van-ban/thong-tu-so-36-2025-tt-bca-44981.htm
+  - Cơ sở dữ liệu VBQPPL Bộ Công an (vbpl.vn): https://vbpl.vn/bocongan/Pages/vbpq-toanvan.aspx?ItemID=177834&dvid=316
+  - Cổng TTĐT Cục Cảnh sát PCCC & CNCH: https://canhsatpccc.gov.vn/vi/news/tuyen-truyen/thong-tu-362025tt-bca-ngay-155-2025-quy-dinh-chi-tiet-mot-so-dieu-cua-luat-phong-chay-chua-chay-va-cuu-nan-cuu-ho-va-nghi-dinh-so-1052025nd-cp-ngay-1552025-cua-chinh-phu-quy-dinh-chi-tiet-mot-so-dieu-va-bien-phap-thi-hanh-luat-pccc-va-cnch-4607

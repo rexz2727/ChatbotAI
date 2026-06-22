@@ -1,0 +1,12 @@
+# Luật Nhập cảnh, xuất cảnh, quá cảnh, cư trú của người nước ngoài tại Việt Nam năm 2014
+- **Số/ký hiệu:** 47/2014/QH13
+- **Ngày ban hành:** 16/06/2014
+- **Hiệu lực:** 01/01/2015
+- **Cơ quan ban hành:** Quốc hội
+- **Thay thế VB nào:** Là luật chuyên ngành đầu tiên về lĩnh vực này (trước đó điều chỉnh bằng Pháp lệnh nhập cảnh, xuất cảnh, cư trú của người nước ngoài tại Việt Nam năm 2000). Đã được sửa đổi, bổ sung bởi Luật 51/2019/QH14 (hiệu lực 01/07/2020) và Luật 23/2023/QH15 (hiệu lực 15/08/2023).
+- **Tóm tắt điểm chính:** Quy định nguyên tắc, điều kiện, trình tự, thủ tục, quyền và nghĩa vụ của người nước ngoài nhập cảnh, xuất cảnh, quá cảnh, cư trú tại Việt Nam; quy định về thị thực (visa), thẻ tạm trú, thẻ thường trú, gia hạn tạm trú; trách nhiệm của cơ quan quản lý xuất nhập cảnh và của cơ sở lưu trú trong việc khai báo tạm trú cho người nước ngoài.
+- **Tác động tới lĩnh vực nào trong data/:** Là văn bản gốc (nền tảng) cho `data/knowledge/PA08/ngoai_kieu.txt`. Mọi nội dung về visa, tạm trú, thường trú, khai báo lưu trú của người nước ngoài phải dẫn chiếu luật này (đã hợp nhất với 51/2019 và 23/2023). **Lưu ý mô hình 2 cấp:** việc khai báo tạm trú của người nước ngoài được tiếp nhận tại Công an cấp xã/phường; các thủ tục cấp/gia hạn thị thực, thẻ tạm trú, thẻ thường trú, trục xuất thuộc thẩm quyền Phòng Quản lý xuất nhập cảnh (PA08) Công an cấp tỉnh — chatbot cấp phường KHÔNG xử lý các thủ tục vượt thẩm quyền này mà phải hướng dẫn liên hệ PA08 tỉnh.
+- **Link nguồn chính thống:**
+  - Cổng TTĐT Chính phủ: https://vanban.chinhphu.vn/default.aspx?pageid=27160&docid=175355
+  - Văn bản gốc (PDF) vbpl.vn: https://vbpl.vn/FileData/TW/Lists/vbpq/Attachments/36823/VanBanGoc_47.2014.QH13.pdf
+  - Thư viện pháp luật: https://thuvienphapluat.vn/van-ban/Xuat-nhap-khau/Luat-Nhap-canh-xuat-canh-qua-canh-cu-tru-cua-nguoi-nuoc-ngoai-tai-Viet-Nam-2014-238649.aspx

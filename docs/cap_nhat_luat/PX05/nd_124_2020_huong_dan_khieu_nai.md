@@ -1,0 +1,14 @@
+# Nghị định quy định chi tiết một số điều và biện pháp thi hành Luật Khiếu nại
+- **Số/ký hiệu:** 124/2020/NĐ-CP
+- **Ngày ban hành:** 19/10/2020
+- **Hiệu lực:** 10/12/2020
+- **Cơ quan ban hành:** Chính phủ
+- **Thay thế VB nào:** Thay thế Nghị định 75/2012/NĐ-CP ngày 03/10/2012.
+- **Tóm tắt điểm chính:**
+  - Quy định chi tiết thi hành Luật Khiếu nại 2011: khiếu nại và giải quyết khiếu nại trong đơn vị sự nghiệp công lập; nhiều người cùng khiếu nại về một nội dung; công khai quyết định giải quyết khiếu nại.
+  - Quy định mẫu đơn khiếu nại, thủ tục khiếu nại lần hai, đại diện thực hiện việc khiếu nại, trình tự giải quyết khiếu nại.
+  - Kiểm tra, xem xét lại việc giải quyết khiếu nại có vi phạm; xử lý vi phạm trong giải quyết khiếu nại.
+- **Tác động tới lĩnh vực nào trong data/:** Văn bản hướng dẫn chi tiết, củng cố mục 1 của `data/knowledge/PX05/khieu_nai_to_cao.txt` (thủ tục, biểu mẫu, trình tự giải quyết khiếu nại). Lưu ý phải rà soát lại khi Luật 136/2025/QH15 có hiệu lực vì có thể phát sinh nghị định hướng dẫn thay thế.
+- **Link nguồn chính thống:**
+  - https://vanban.chinhphu.vn/default.aspx?pageid=27160&docid=201363 (Cổng TTĐT Chính phủ)
+  - https://moj.gov.vn/qt/tintuc/Pages/van-ban-chinh-sach-moi.aspx?ItemID=3301 (Bộ Tư pháp)

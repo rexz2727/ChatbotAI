@@ -1,0 +1,16 @@
+# Luật sửa đổi, bổ sung một số điều của Luật Tiếp công dân, Luật Khiếu nại, Luật Tố cáo (2025)
+- **Số/ký hiệu:** 136/2025/QH15
+- **Ngày ban hành:** 10/12/2025
+- **Hiệu lực:** 01/07/2026
+- **Cơ quan ban hành:** Quốc hội (khóa XV)
+- **Thay thế VB nào:** Không thay thế toàn bộ — sửa đổi, bổ sung Luật Tiếp công dân 2013 (42/2013/QH13), Luật Khiếu nại 2011 (02/2011/QH13), Luật Tố cáo 2018 (25/2018/QH14).
+- **Tóm tắt điểm chính:**
+  - Đổi chủ thể thực hiện quyền khiếu nại từ "công dân" thành "cá nhân" để mở rộng phạm vi áp dụng.
+  - Bổ sung quy định về tạm dừng/chấm dứt giải quyết khiếu nại (sự kiện bất khả kháng, chờ kết quả của cơ quan có thẩm quyền, người khiếu nại rút toàn bộ khiếu nại).
+  - Cho phép người khiếu nại rút một phần nội dung khiếu nại.
+  - Điều chỉnh đồng bộ ba luật theo mô hình chính quyền địa phương 2 cấp (cấp tỉnh và cấp xã), bỏ cấp huyện.
+  - ⚠️ Nội dung chi tiết từng điều khoản chưa trích xuất được đầy đủ từ toàn văn; cần đối chiếu bản DOCX/PDF chính thức trước khi đưa vào kịch bản chatbot.
+- **Tác động tới lĩnh vực nào trong data/:** Tác động trực tiếp tới `data/knowledge/PX05/khieu_nai_to_cao.txt`. Cần cập nhật căn cứ pháp lý ở dòng tiêu đề (hiện ghi "Luật Khiếu nại 2011, Luật Tố cáo 2018"), bổ sung Luật 136/2025/QH15 khi có hiệu lực 01/07/2026. Lưu ý thay đổi thuật ngữ "công dân" → "cá nhân" trong quyền khiếu nại.
+- **Link nguồn chính thống:**
+  - https://congbao.chinhphu.vn/van-ban/luat-so-136-2025-qh15-468696.htm (Công báo Chính phủ)
+  - https://vanban.chinhphu.vn/?classid=1&docid=216516&pageid=27160&typegroupid=3

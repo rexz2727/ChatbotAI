@@ -47,7 +47,7 @@ const responses = {
   },
   'FLOW_AN_NINH_PCCC_HOSO': {
     agentState: 'AGENT_AN_NINH',
-    text: `[HỒ SƠ PHÊ DUYỆT PHƯƠNG ÁN PCCC]\n\n1. Văn bản đề nghị phê duyệt (Mẫu PC19).\n2. 02 bản Phương án chữa cháy của cơ sở (Mẫu PC17).\n\n📺 *Video Hướng Dẫn Lập Mẫu PC17:* https://youtube.com/watch?v=LapPhuongAnChuaChay`,
+    text: `[HỒ SƠ PHÊ DUYỆT PHƯƠNG ÁN PCCC]\n\n1. Văn bản đề nghị phê duyệt (Mẫu PC19).\n2. 02 bản Phương án chữa cháy của cơ sở (Mẫu PC17).\n\n*(Video hướng dẫn lập mẫu PC17 đang được cập nhật)*`,
     afterReplies: [
       { title: "Quay lại", payload: "FLOW_AN_NINH_PCCC_MAIN" },
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }

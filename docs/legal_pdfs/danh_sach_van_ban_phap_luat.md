@@ -1,5 +1,5 @@
 # Danh sách Văn bản Pháp luật — Chatbot Công an Phường
-*Cập nhật: 2026-06-19*
+*Cập nhật: 2026-06-22*
 
 ---
 

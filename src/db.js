@@ -390,8 +390,27 @@ const getSecurityIncidentSummary = () => {
   });
 };
 
+
+/**
+ * Retrieves all unique user IDs from the sessions table.
+ * @returns {Promise<Array<string>>}
+ */
+const getAllUsers = () => {
+  return new Promise((resolve, reject) => {
+    db.all('SELECT user_id FROM sessions', [], (err, rows) => {
+      if (err) {
+        console.error('Error getting all users:', err);
+        reject(err);
+      } else {
+        resolve(rows.map(row => row.user_id));
+      }
+    });
+  });
+};
+
 module.exports = {
   db,
+  getAllUsers,
   getSession,
   setSession,
   saveMessage,

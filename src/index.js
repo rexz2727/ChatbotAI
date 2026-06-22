@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const axios = require('axios');
+// Using native fetch instead of axios
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
@@ -234,13 +234,21 @@ async function sendFacebookResponse(recipientId, result) {
       return;
     }
 
-    await axios.post(url, {
-      recipient: { id: recipientId },
-      message: messageData
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        recipient: { id: recipientId },
+        message: messageData
+      })
     });
+    if (!response.ok) {
+      const errData = await response.text();
+      throw new Error(`HTTP ${response.status}: ${errData}`);
+    }
     console.log(`Facebook message sent to ${recipientId}`);
   } catch (error) {
-    console.error('Error sending Facebook message:', error.response ? error.response.data : error.message);
+    console.error('Error sending Facebook message:', error.message);
   }
 }
 
@@ -342,15 +350,21 @@ async function sendZaloResponse(recipientId, result) {
       return;
     }
 
-    await axios.post(url, messageData, {
+    const response = await fetch(url, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'access_token': process.env.ZALO_ACCESS_TOKEN
-      }
+      },
+      body: JSON.stringify(messageData)
     });
+    if (!response.ok) {
+      const errData = await response.text();
+      throw new Error(`HTTP ${response.status}: ${errData}`);
+    }
     console.log(`Zalo message sent to ${recipientId}`);
   } catch (error) {
-    console.error('Error sending Zalo message:', error.response ? error.response.data : error.message);
+    console.error('Error sending Zalo message:', error.message);
   }
 }
 

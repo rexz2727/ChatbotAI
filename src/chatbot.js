@@ -167,6 +167,14 @@ async function processUserMessage(userId, messageText, buttonPayload = null) {
     const userMessageContent = messageText ? messageText : `[Payload: ${buttonPayload}]`;
     await db.saveMessage(userId, 'user', userMessageContent).catch(e => console.error("History log error:", e));
 
+    if (payload && payload.startsWith('CSAT_')) {
+      const rating = payload.replace('CSAT_', '');
+      return {
+        text: `[Chatbot Auto] Cảm ơn bạn đã đánh giá ${rating} Sao! Ý kiến của bạn giúp chúng tôi cải thiện chất lượng dịch vụ.`,
+        showMenu: true
+      };
+    }
+
     // 1a. Handle main menu reset and GET_STARTED payload
     if (payload === 'SHOW_MAIN_MENU' || payload === 'GET_STARTED' || payload === 'START') {
       await db.setSession(userId, 'MAIN_MENU');
@@ -405,7 +413,14 @@ Cán bộ trả lời:`;
 
     return {
       text: replyText,
-      showMenu: false
+      showMenu: false,
+      quickReplies: [
+        { title: "1 Sao", payload: "CSAT_1" },
+        { title: "2 Sao", payload: "CSAT_2" },
+        { title: "3 Sao", payload: "CSAT_3" },
+        { title: "4 Sao", payload: "CSAT_4" },
+        { title: "5 Sao", payload: "CSAT_5" }
+      ]
     };
   } catch (error) {
     console.error("Error in processUserMessage:", error);

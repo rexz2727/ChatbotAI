@@ -13,7 +13,7 @@ CÁC TRƯỜNG THÔNG TIN CẦN KÊ KHAI VÀ HƯỚNG DẪN CHI TIẾT:
 
 1. Kính gửi: 
 Ghi tên cơ quan Công an nơi tiếp nhận hồ sơ giải quyết thủ tục cư trú.
-Ví dụ: "Kính gửi: Công an phường Trung Tâm, quận Hoàn Kiếm, TP. Hà Nội".
+Ví dụ: "Kính gửi: Công an phường Bình Dương, quận Hoàn Kiếm, TP. Hà Nội".
 
 2. Họ, chữ đệm và tên của người viết tờ khai:
 Ghi đầy đủ họ tên bằng chữ in hoa, có dấu.
@@ -50,8 +50,8 @@ Ghi 12 số định danh cá nhân của người có thay đổi cư trú.
 12. Nội dung đề nghị:
 Ghi rõ ràng thủ tục hành chính muốn giải quyết.
 Ví dụ:
-- "Đăng ký thường trú vào chỗ ở hợp pháp của bản thân tại số 12 Lý Tự Trọng, phường Trung Tâm."
-- "Đăng ký tạm trú tại phòng trọ số 3, ngõ 45 đường Lê Lợi, phường Trung Tâm."
+- "Đăng ký thường trú vào chỗ ở hợp pháp của bản thân tại số 12 Lý Tự Trọng, phường Bình Dương."
+- "Đăng ký tạm trú tại phòng trọ số 3, ngõ 45 đường Lê Lợi, phường Bình Dương."
 - "Gia hạn tạm trú."
 - "Khai báo tạm vắng."
 

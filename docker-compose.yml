@@ -33,9 +33,29 @@ services:
       - .env
     volumes:
       - sqlite-data:/app/data
+      - ./src:/app/src
+      - ./public:/app/public
     depends_on:
       chromadb:
         condition: service_healthy
+    restart: always
+
+  admin:
+    build: .
+    container_name: chatbot-admin
+    command: node src/admin.js
+    ports:
+      - "192.168.1.100:3001:3001"   # LAN - máy chính
+      - "100.88.116.97:3001:3001"    # Tailscale - laptop
+    env_file:
+      - .env
+    environment:
+      - SQLITE_DB_PATH=/app/data/database.db
+    volumes:
+      - sqlite-data:/app/data
+      - ./src:/app/src
+      - ./public:/app/public
+      - /run/user/1000/podman/podman.sock:/var/run/docker.sock:ro
     restart: always
 
 volumes:

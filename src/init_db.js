@@ -85,16 +85,28 @@ const geminiEmbeddingFunction = {
   }
 };
 
-const collectionsConfig = [
-  { name: "db_cu_tru", files: ["PC06/cu_tru.txt"] },
-  { name: "db_can_cuoc", files: ["PC06/can_cuoc.txt"] },
-  { name: "db_giao_thong", files: ["PC08/giao_thong.txt"] },
-  { name: "db_an_ninh", files: ["PC06/an_ninh_trat_tu.txt", "PC07/pccc_cnch.txt", "PA05/an_ninh_mang.txt"] },
-  { name: "db_ngoai_kieu", files: ["PA08/ngoai_kieu.txt"] },
-  { name: "db_khieu_nai", files: ["PX05/khieu_nai_to_cao.txt", "PC01/to_giac_tin_bao_toi_pham.txt"] },
-  { name: "db_thu_tuc_hanh_chinh", files: ["_chung/thu_tuc_hanh_chinh.txt"] },
-  { name: "db_lien_he", files: ["_chung/lien_he_co_quan.txt"] }
-];
+const knowledgeDir = path.join(__dirname, '..', 'data', 'knowledge');
+const collectionsConfig = [];
+
+if (fs.existsSync(knowledgeDir)) {
+  const folders = fs.readdirSync(knowledgeDir, { withFileTypes: true });
+  for (const folder of folders) {
+    if (folder.isDirectory()) {
+      const folderPath = path.join(knowledgeDir, folder.name);
+      const files = fs.readdirSync(folderPath, { withFileTypes: true });
+      for (const file of files) {
+        if (file.isFile() && file.name.endsWith('.txt')) {
+          const fileNameWithoutExt = path.parse(file.name).name;
+          const collectionName = `db_${folder.name.toLowerCase()}_${fileNameWithoutExt.toLowerCase()}`;
+          collectionsConfig.push({
+            name: collectionName,
+            files: [`${folder.name}/${file.name}`]
+          });
+        }
+      }
+    }
+  }
+}
 
 async function seed() {
   console.log("Starting database seeding process...");

@@ -12,7 +12,7 @@ const responses = {
   // === ĐĂNG KÝ XE MÁY ===
   'FLOW_GT_DANGKY_MAIN': {
     agentState: 'AGENT_GIAO_THONG',
-    text: `[ĐĂNG KÝ XE MÁY TẠI CÔNG AN PHƯỜNG]\n\nChào bạn, hiện tại Công an Phường đã được phân cấp đăng ký xe mô tô, xe gắn máy, xe máy điện cho công dân có hộ khẩu tại phường.`,
+    text: `[ĐĂNG KÝ XE MÁY TẠI CÔNG AN PHƯỜNG]\n\n(Căn cứ: Luật Trật tự, an toàn giao thông đường bộ 36/2024/QH15)\n\nChào bạn, hiện tại Công an Phường đã được phân cấp đăng ký xe mô tô, xe gắn máy, xe máy điện cho công dân có hộ khẩu tại phường.`,
     afterReplies: [
       { title: "Hồ sơ & Thuế trước bạ", payload: "FLOW_GT_DANGKY_HOSO" },
       { title: "Quy trình Xét xe", payload: "FLOW_GT_DANGKY_QUYTRINH" },
@@ -66,7 +66,7 @@ const responses = {
   // === ĐỔI BẰNG LÁI ===
   'FLOW_GT_GPLX_MAIN': {
     agentState: 'AGENT_GIAO_THONG',
-    text: `[ĐỔI GIẤY PHÉP LÁI XE (GPLX)]\n\n- Cơ quan cấp: Sở Giao thông Vận tải (Công an Phường không cấp GPLX).\n- Đổi Online toàn quốc qua Cổng DVC Quốc gia (yêu cầu có Giấy khám sức khỏe điện tử).\n- Lệ phí đổi GPLX: 135.000đ.\n\n📺 *Video Hướng Dẫn Nộp Online:* https://www.youtube.com/watch?v=vwwSydJlWao`,
+    text: `[ĐỔI GIẤY PHÉP LÁI XE (GPLX)]\n\n(Căn cứ: Luật Trật tự, ATGT đường bộ 36/2024/QH15, Nghị định 168/2024/NĐ-CP & Thông tư 12/2025/TT-BCA)\n\n- Từ 01/3/2025, công tác cấp, đổi GPLX đã chuyển về Bộ Công an (Phòng CSGT Công an tỉnh/thành phố thực hiện). Công an Phường không trực tiếp cấp, đổi GPLX.\n- Đổi Online toàn quốc qua Cổng DVC Quốc gia / VNeID (yêu cầu có Giấy khám sức khỏe điện tử).\n- Lệ phí đổi GPLX: 135.000đ.\n\n📺 *Video Hướng Dẫn Nộp Online:* https://www.youtube.com/watch?v=vwwSydJlWao`,
     afterReplies: [
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }
     ]

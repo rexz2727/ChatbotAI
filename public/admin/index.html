@@ -6,73 +6,206 @@
   <title>Admin - Công an Phường Chatbot</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <div class="dashboard">
     <aside class="sidebar">
       <h2><span class="shield">🛡️</span> CA Phường</h2>
       <nav>
-        <button class="nav-btn active" data-target="dashboard-view">Tổng quan</button>
-        <button class="nav-btn" data-target="feedback-view">Góp ý của dân</button>
-        <button class="nav-btn" data-target="forms-view">Quản lý biểu mẫu</button>
+        <button class="nav-btn active" data-target="dashboard-view">Bảng điều khiển chung</button>
+        <button class="nav-btn" data-target="system-view">Hệ thống & Giám sát APM</button>
       </nav>
     </aside>
+    <button id="sidebar-toggle" class="sidebar-toggle-btn">❮</button>
     <main class="content">
       <header>
-        <h1>Hệ thống Quản trị Nội bộ</h1>
-        <div class="status-badge">Đang hoạt động</div>
+        <div style="display: flex; align-items: center;">
+          <h1>Hệ thống Quản trị Nội bộ</h1>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="status-badge">Đang hoạt động</div>
+          <button id="logout-btn" class="btn danger">Đăng xuất</button>
+        </div>
       </header>
       
-      <!-- Views -->
+      <!-- Master Dashboard View -->
       <section id="dashboard-view" class="view active">
+        <!-- TẦNG 1: TỔNG QUAN -->
+        <h3 style="margin-bottom: 16px; color: var(--primary);">TẦNG 1: CHỈ SỐ TỔNG QUAN</h3>
         <div class="stats-grid">
           <div class="stat-card">
-            <h3>Tổng số người dùng</h3>
+            <h3>Tổng người dùng</h3>
             <p class="stat-value" id="stat-users">...</p>
           </div>
           <div class="stat-card">
-            <h3>Tổng tin nhắn AI</h3>
+            <h3>Tổng lượt nhắn AI</h3>
             <p class="stat-value" id="stat-messages">...</p>
           </div>
-        </div>
-      </section>
-
-      <section id="feedback-view" class="view">
-        <div class="card">
-          <h2>Danh sách Góp ý</h2>
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Thời gian</th>
-                <th>Người dùng (ID)</th>
-                <th>Nội dung</th>
-              </tr>
-            </thead>
-            <tbody id="feedback-table-body"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <section id="forms-view" class="view">
-        <div class="card">
-          <div class="card-header">
-            <h2>Quản lý File Biểu mẫu</h2>
-            <form id="upload-form">
-              <input type="file" id="file-input" name="formFile" required>
-              <button type="submit" class="btn primary">Tải lên</button>
-            </form>
+          <div class="stat-card">
+            <h3>Uptime Hệ thống</h3>
+            <p class="stat-value" id="health-uptime-dash" style="font-size:28px">...</p>
           </div>
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Tên file</th>
-                <th>Kích thước</th>
-                <th>Hành động</th>
-              </tr>
-            </thead>
-            <tbody id="forms-table-body"></tbody>
-          </table>
+          <div class="stat-card">
+            <h3>Trạng thái DB</h3>
+            <p class="stat-value" id="health-db-dash" style="font-size:28px">...</p>
+          </div>
         </div>
+
+        <!-- TẦNG 2: XU HƯỚNG -->
+        <h3 style="margin-bottom: 16px; color: var(--primary);">TẦNG 2: XU HƯỚNG TƯƠNG TÁC</h3>
+        <div class="card chart-container" style="height: 400px; margin-bottom: 32px;">
+          <h3>Lưu lượng truy cập theo ngày</h3>
+          <canvas id="messagesChart"></canvas>
+        </div>
+
+        <!-- TẦNG 3: CHI TIẾT -->
+        <h3 style="margin-bottom: 16px; color: var(--primary);">TẦNG 3: PHÂN TÍCH NHÂN KHẨU & TƯƠNG TÁC</h3>
+        <div class="stats-grid" style="grid-template-columns: 1fr 1fr;">
+          <div class="card chart-container" style="height: 350px;">
+            <h3>Tỉ lệ chuyên mục được hỏi</h3>
+            <canvas id="topicsChart"></canvas>
+          </div>
+          <div class="card" style="height: 350px; overflow-y: auto;">
+            <h3>Góp ý mới nhất</h3>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Nội dung</th>
+                  <th>ID</th>
+                </tr>
+              </thead>
+              <tbody id="dash-feedback-table"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TẦNG 4: BIỂU MẪU VÀ TOÀN BỘ GÓP Ý -->
+        <h3 style="margin-top: 32px; margin-bottom: 16px; color: var(--primary);">TẦNG 4: QUẢN TRỊ DỮ LIỆU</h3>
+        <div class="stats-grid" style="grid-template-columns: 1fr 1fr;">
+          <div class="card" style="height: 400px; overflow-y: auto;">
+            <h2>Tất cả Góp ý</h2>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Thời gian</th>
+                  <th>ID</th>
+                  <th>Nội dung</th>
+                </tr>
+              </thead>
+              <tbody id="feedback-table-body"></tbody>
+            </table>
+          </div>
+          <div class="card" style="height: 400px; overflow-y: auto;">
+            <div class="card-header">
+              <h2>File Biểu mẫu</h2>
+              <form id="upload-form">
+                <input type="file" id="file-input" name="formFile" required style="width: 150px;">
+                <button type="submit" class="btn primary">Tải lên</button>
+              </form>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Tên file</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody id="forms-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="system-view" class="view">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>Thời gian hoạt động</h3>
+            <p class="stat-value" id="health-uptime">...</p>
+          </div>
+          <div class="stat-card">
+            <h3>Sử dụng RAM</h3>
+            <p class="stat-value" id="health-memory">...</p>
+          </div>
+          <div class="stat-card">
+            <h3>Trạng thái DB</h3>
+            <p class="stat-value" id="health-db">...</p>
+          </div>
+          <div class="stat-card">
+            <h3>Trạng thái Chroma</h3>
+            <p class="stat-value" id="health-chroma">...</p>
+          </div>
+        </div>
+        <div class="stats-grid" style="grid-template-columns: 1fr 1fr; margin-top: 32px;">
+          <div class="card chart-container" style="height: 350px;">
+            <h3>CPU Load</h3>
+            <canvas id="cpuChart"></canvas>
+          </div>
+          <div class="card chart-container" style="height: 350px;">
+            <h3>RAM Usage</h3>
+            <canvas id="ramChart"></canvas>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 32px; margin-bottom: 16px; color: var(--primary);">PODMAN RADAR (CONTAINERS)</h3>
+        <table class="data-table" style="margin-bottom: 32px;">
+          <thead>
+            <tr>
+              <th>Tên Container</th>
+              <th>Trạng thái</th>
+              <th>Thời gian (Uptime)</th>
+            </tr>
+          </thead>
+          <tbody id="containers-table-body"></tbody>
+        </table>
+
+        <h3 style="margin-top: 32px; margin-bottom: 16px; color: var(--primary);">SYSTEM LOGS (DATADOG REPLICA)</h3>
+        <div id="log-terminal" class="terminal-log"></div>
+        
+        <h3 style="margin-top: 32px; margin-bottom: 16px; color: var(--danger);">SECURITY INCIDENTS (HONEYPOT)</h3>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Timestamp & Detail</th>
+            </tr>
+          </thead>
+          <tbody id="security-table-body"></tbody>
+        </table>
+
+        <h3 style="margin-top: 32px; margin-bottom: 16px; color: var(--danger);">GIÁM SÁT MÃ ĐỘC</h3>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>Đã quét</h3>
+            <p class="stat-value" id="sec-scanned" style="font-size:32px">...</p>
+          </div>
+          <div class="stat-card">
+            <h3>Mã độc</h3>
+            <p class="stat-value" id="sec-malicious" style="font-size:32px; color: var(--danger)">...</p>
+          </div>
+          <div class="stat-card">
+            <h3>Nghi ngờ</h3>
+            <p class="stat-value" id="sec-suspicious" style="font-size:32px; color: var(--warning)">...</p>
+          </div>
+          <div class="stat-card">
+            <h3>An toàn</h3>
+            <p class="stat-value" id="sec-safe" style="font-size:32px; color: var(--success)">...</p>
+          </div>
+        </div>
+        <table class="data-table" style="margin-bottom: 32px;">
+          <thead>
+            <tr>
+              <th>Thời gian</th>
+              <th>Nền tảng</th>
+              <th>Người gửi</th>
+              <th>Kết luận</th>
+              <th>Engines</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody id="malware-table-body"></tbody>
+        </table>
       </section>
     </main>
   </div>

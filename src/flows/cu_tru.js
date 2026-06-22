@@ -12,7 +12,7 @@ const responses = {
   // === THƯỜNG TRÚ ===
   'FLOW_CU_TRU_THUONG_TRU_MAIN': {
     agentState: 'AGENT_CU_TRU',
-    text: `[CHUYÊN ĐỀ ĐĂNG KÝ THƯỜNG TRÚ (NHẬP HỘ KHẨU)]\n\nChào bạn, để thủ tục được nhanh chóng, vui lòng chọn thông tin bạn cần tìm hiểu bên dưới:`,
+    text: `[CHUYÊN ĐỀ ĐĂNG KÝ THƯỜNG TRÚ (NHẬP HỘ KHẨU)]\n\n(Căn cứ: Luật Cư trú 2020 & Nghị định 58/2026/NĐ-CP)\n\nChào bạn, để thủ tục được nhanh chóng, vui lòng chọn thông tin bạn cần tìm hiểu bên dưới:`,
     afterReplies: [
       { title: "1. Hồ sơ cần chuẩn bị", payload: "FLOW_CU_TRU_TT_HOSO" },
       { title: "2. Quy trình Nộp Online", payload: "FLOW_CU_TRU_TT_ONLINE" },
@@ -23,7 +23,7 @@ const responses = {
   },
   'FLOW_CU_TRU_TT_HOSO': {
     agentState: 'AGENT_CU_TRU',
-    text: `[HỒ SƠ ĐĂNG KÝ THƯỜNG TRÚ]\n\nBao gồm:\n1. Tờ khai thay đổi thông tin cư trú (Mẫu CT01). Tải mẫu: Xin gõ "xin biểu mẫu CT01"\n2. Giấy tờ chứng minh chỗ ở hợp pháp (Sổ đỏ, Hợp đồng mua bán, hoặc Hợp đồng thuê nhà có công chứng).\n3. Nếu nhập khẩu vào nhà người thân: Phải có chữ ký đồng ý của Chủ hộ vào Tờ khai CT01.\n\n📺 *Video Hướng Dẫn Cách Viết Tờ Khai CT01:* https://www.youtube.com/watch?v=dxzEhyfv750`,
+    text: `[HỒ SƠ ĐĂNG KÝ THƯỜNG TRÚ]\n\n(Căn cứ: Thông tư 53/2025/TT-BCA)\n\nBao gồm:\n1. Tờ khai thay đổi thông tin cư trú (Mẫu CT01). Tải mẫu: Xin gõ "xin biểu mẫu CT01"\n2. Giấy tờ chứng minh chỗ ở hợp pháp (Sổ đỏ, Hợp đồng mua bán, hoặc Hợp đồng thuê nhà có công chứng).\n3. Nếu nhập khẩu vào nhà người thân: Phải có chữ ký đồng ý của Chủ hộ vào Tờ khai CT01.\n\n📺 *Video Hướng Dẫn Cách Viết Tờ Khai CT01:* https://www.youtube.com/watch?v=dxzEhyfv750`,
     afterReplies: [
       { title: "Xem cách nộp Online", payload: "FLOW_CU_TRU_TT_ONLINE" },
       { title: "Quay lại Thường trú", payload: "FLOW_CU_TRU_THUONG_TRU_MAIN" },
@@ -58,7 +58,7 @@ const responses = {
   // === TẠM TRÚ ===
   'FLOW_CU_TRU_TAM_TRU_MAIN': {
     agentState: 'AGENT_CU_TRU',
-    text: `[CHUYÊN ĐỀ ĐĂNG KÝ TẠM TRÚ]\n\nNgười dân đến sinh sống từ 30 ngày trở lên phải đăng ký tạm trú (thời hạn tạm trú tối đa 2 năm). Bạn muốn xem nội dung nào?`,
+    text: `[CHUYÊN ĐỀ ĐĂNG KÝ TẠM TRÚ]\n\n(Căn cứ: Luật Cư trú 2020 & Nghị định 58/2026/NĐ-CP)\n\nNgười dân đến sinh sống từ 30 ngày trở lên phải đăng ký tạm trú (thời hạn tạm trú tối đa 2 năm). Bạn muốn xem nội dung nào?`,
     afterReplies: [
       { title: "1. Hồ sơ tạm trú", payload: "FLOW_CU_TRU_TAMT_HOSO" },
       { title: "2. Quy trình Online", payload: "FLOW_CU_TRU_TAMT_ONLINE" },
@@ -68,7 +68,7 @@ const responses = {
   },
   'FLOW_CU_TRU_TAMT_HOSO': {
     agentState: 'AGENT_CU_TRU',
-    text: `[HỒ SƠ ĐĂNG KÝ TẠM TRÚ]\n\n1. Tờ khai CT01.\n2. Bản sao CCCD.\n3. Hợp đồng thuê nhà (hoặc văn bản đồng ý cho ở nhờ của chủ nhà).\n\n📺 *Video Hướng Dẫn:* https://www.youtube.com/watch?v=WC_mnMmiqL4`,
+    text: `[HỒ SƠ ĐĂNG KÝ TẠM TRÚ]\n\n(Căn cứ: Thông tư 53/2025/TT-BCA)\n\n1. Tờ khai CT01.\n2. Bản sao CCCD.\n3. Hợp đồng thuê nhà (hoặc văn bản đồng ý cho ở nhờ của chủ nhà).\n\n📺 *Video Hướng Dẫn:* https://www.youtube.com/watch?v=WC_mnMmiqL4`,
     afterReplies: [
       { title: "Quay lại Tạm trú", payload: "FLOW_CU_TRU_TAM_TRU_MAIN" },
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }

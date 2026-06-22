@@ -90,6 +90,31 @@ db.serialize(() => {
       window_start INTEGER NOT NULL
     )
   `);
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS message_queue (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      platform TEXT NOT NULL,
+      sender_id TEXT NOT NULL,
+      message_text TEXT,
+      payload TEXT,
+      created_at INTEGER NOT NULL,
+      status TEXT DEFAULT 'pending'
+    )
+  `);
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS security_incidents (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      ts INTEGER NOT NULL,
+      platform TEXT,
+      sender_id TEXT,
+      sha256 TEXT,
+      verdict TEXT,
+      engines INTEGER,
+      action TEXT
+    )
+  `);
 });
 
 /**
@@ -276,6 +301,95 @@ const checkRateLimit = (userId) => {
   });
 };
 
+const enqueueMessage = (platform, senderId, messageText, payload) => {
+  return new Promise((resolve, reject) => {
+    const query = 'INSERT INTO message_queue (platform, sender_id, message_text, payload, created_at) VALUES (?, ?, ?, ?, ?)';
+    db.run(query, [platform, senderId, messageText, payload, Date.now()], function(err) {
+      if (err) return reject(err);
+      resolve(this.lastID);
+    });
+  });
+};
+
+const dequeueMessage = () => {
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM message_queue WHERE status = ? ORDER BY created_at ASC LIMIT 1', ['pending'], (err, row) => {
+      if (err) return reject(err);
+      if (!row) return resolve(null);
+      db.run('UPDATE message_queue SET status = ? WHERE id = ?', ['processing', row.id], (updateErr) => {
+        if (updateErr) return reject(updateErr);
+        resolve(row);
+      });
+    });
+  });
+};
+
+const completeMessage = (id) => {
+  return new Promise((resolve, reject) => {
+    db.run('DELETE FROM message_queue WHERE id = ?', [id], (err) => {
+      if (err) return reject(err);
+      resolve(true);
+    });
+  });
+};
+
+/**
+ * Records a security incident from attachment scanning.
+ * @param {{platform: string, senderId: string, sha256: string, verdict: string, engines: number, action: string}} incident
+ * @returns {Promise<number>} - The ID of the inserted row.
+ */
+const recordSecurityIncident = ({ platform, senderId, sha256, verdict, engines, action }) => {
+  return new Promise((resolve, reject) => {
+    const query = `INSERT INTO security_incidents (ts, platform, sender_id, sha256, verdict, engines, action) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    db.run(query, [Date.now(), platform, senderId, sha256, verdict, engines, action], function (err) {
+      if (err) return reject(err);
+      resolve(this.lastID);
+    });
+  });
+};
+
+/**
+ * Retrieves recent security incidents, newest first.
+ * @param {number} limit - Max rows to return (default 50).
+ * @returns {Promise<Array>}
+ */
+const getSecurityIncidents = (limit = 50) => {
+  return new Promise((resolve, reject) => {
+    db.all('SELECT * FROM security_incidents ORDER BY ts DESC LIMIT ?', [limit], (err, rows) => {
+      if (err) return reject(err);
+      resolve(rows);
+    });
+  });
+};
+
+/**
+ * Aggregates security incidents into a summary count by verdict category.
+ * @returns {Promise<{scanned: number, malicious: number, suspicious: number, safe: number, error: number}>}
+ */
+const getSecurityIncidentSummary = () => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      SELECT
+        COUNT(*) AS scanned,
+        SUM(CASE WHEN verdict = 'malicious' THEN 1 ELSE 0 END) AS malicious,
+        SUM(CASE WHEN verdict IN ('unknown', 'oversize') THEN 1 ELSE 0 END) AS suspicious,
+        SUM(CASE WHEN verdict = 'safe' THEN 1 ELSE 0 END) AS safe,
+        SUM(CASE WHEN verdict = 'error' THEN 1 ELSE 0 END) AS error
+      FROM security_incidents
+    `;
+    db.get(query, [], (err, row) => {
+      if (err) return reject(err);
+      resolve({
+        scanned: row.scanned || 0,
+        malicious: row.malicious || 0,
+        suspicious: row.suspicious || 0,
+        safe: row.safe || 0,
+        error: row.error || 0
+      });
+    });
+  });
+};
+
 module.exports = {
   db,
   getSession,
@@ -286,5 +400,11 @@ module.exports = {
   markMessageProcessed,
   getCachedResponse,
   setCachedResponse,
-  checkRateLimit
+  checkRateLimit,
+  enqueueMessage,
+  dequeueMessage,
+  completeMessage,
+  recordSecurityIncident,
+  getSecurityIncidents,
+  getSecurityIncidentSummary
 };

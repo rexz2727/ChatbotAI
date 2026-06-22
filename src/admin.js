@@ -1,20 +1,166 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const crypto = require('crypto');
 const db = require('./db');
 const multer = require('multer');
+const os = require('os');
 
 const app = express();
 const PORT = 3001;
-const HOST = '127.0.0.1'; // Strictly bind to localhost for internal use only
+const HOST = '0.0.0.0'; // Container nghe mọi IP; truy cập từ ngoài được kiểm soát bằng port-binding của docker-compose + lớp đăng nhập (middleware auth bên dưới).
+
+const SESSION_SECRET = process.env.SESSION_SECRET || 'insecure-default-change-me';
+const SESSION_TTL_MS = 8 * 60 * 60 * 1000;
+
+function signToken(payloadObj) {
+  const payload = Buffer.from(JSON.stringify(payloadObj)).toString('base64url');
+  const sig = crypto.createHmac('sha256', SESSION_SECRET).update(payload).digest('hex');
+  return payload + '.' + sig;
+}
+
+function verifyToken(tokenString) {
+  if (typeof tokenString !== 'string') return null;
+  const parts = tokenString.split('.');
+  if (parts.length !== 2) return null;
+  const [payload, sig] = parts;
+  const expected = crypto.createHmac('sha256', SESSION_SECRET).update(payload).digest('hex');
+  const sigBuf = Buffer.from(sig, 'hex');
+  const expBuf = Buffer.from(expected, 'hex');
+  if (sigBuf.length !== expBuf.length || !crypto.timingSafeEqual(sigBuf, expBuf)) return null;
+  let data;
+  try {
+    data = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+  } catch (e) {
+    return null;
+  }
+  if (!data || typeof data.iat !== 'number') return null;
+  if (Date.now() - data.iat > SESSION_TTL_MS) return null;
+  return data;
+}
+
+function checkUsername(username) {
+  const expected = process.env.ADMIN_USER || '';
+  const a = Buffer.from(String(username == null ? '' : username));
+  const b = Buffer.from(expected);
+  // timingSafeEqual requires equal-length buffers
+  if (a.length !== b.length) return false;
+  return crypto.timingSafeEqual(a, b);
+}
+
+function checkPassword(password) {
+  const stored = process.env.ADMIN_PASSWORD_HASH || '';
+  const [salt, hashHex] = stored.split(':');
+  if (!salt || !hashHex) return false;
+  const expected = Buffer.from(hashHex, 'hex');
+  const derived = crypto.scryptSync(String(password == null ? '' : password), salt, expected.length);
+  if (derived.length !== expected.length) return false;
+  return crypto.timingSafeEqual(derived, expected);
+}
+
+// Brute-force protection for /api/login. Admin runs as a single process, so an
+// in-memory Map keyed by IP is sufficient (no shared store / extra dependency).
+const LOGIN_MAX_FAILURES = 5;
+const LOGIN_WINDOW_MS = 15 * 60 * 1000;
+const loginFailures = new Map();
+
+function getClientIp(req) {
+  const xff = req.headers && req.headers['x-forwarded-for'];
+  if (xff) return String(xff).split(',')[0].trim();
+  return req.ip || (req.socket && req.socket.remoteAddress) || 'unknown';
+}
+
+function isLoginBlocked(ip, now = Date.now()) {
+  const entry = loginFailures.get(ip);
+  if (!entry) return false;
+  if (now - entry.firstAt > LOGIN_WINDOW_MS) {
+    loginFailures.delete(ip);
+    return false;
+  }
+  return entry.count >= LOGIN_MAX_FAILURES;
+}
+
+function recordLoginFailure(ip, now = Date.now()) {
+  const entry = loginFailures.get(ip);
+  if (!entry || now - entry.firstAt > LOGIN_WINDOW_MS) {
+    loginFailures.set(ip, { count: 1, firstAt: now });
+  } else {
+    entry.count += 1;
+  }
+}
+
+function resetLoginFailures(ip) {
+  loginFailures.delete(ip);
+}
+
+function loginRetryAfterSeconds(ip, now = Date.now()) {
+  const entry = loginFailures.get(ip);
+  if (!entry) return 0;
+  return Math.max(1, Math.ceil((entry.firstAt + LOGIN_WINDOW_MS - now) / 1000));
+}
+
+function parseCookies(header) {
+  const out = {};
+  if (!header) return out;
+  header.split(';').forEach((part) => {
+    const idx = part.indexOf('=');
+    if (idx < 0) return;
+    const k = part.slice(0, idx).trim();
+    const v = part.slice(idx + 1).trim();
+    if (k) out[k] = decodeURIComponent(v);
+  });
+  return out;
+}
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../public/admin')));
 
-// Health check
+// Health check (public — must stay reachable without auth)
 app.get('/api/health', (req, res) => {
   res.json({ status: 'Admin Server OK' });
 });
+
+app.post('/api/login', (req, res) => {
+  const ip = getClientIp(req);
+  if (isLoginBlocked(ip)) {
+    res.setHeader('Retry-After', String(loginRetryAfterSeconds(ip)));
+    return res.status(429).json({ error: 'Quá nhiều lần thử, vui lòng đợi' });
+  }
+  const { username, password } = req.body || {};
+  if (!checkUsername(username) || !checkPassword(password)) {
+    recordLoginFailure(ip);
+    return res.status(401).json({ error: 'Sai tên đăng nhập hoặc mật khẩu' });
+  }
+  resetLoginFailures(ip);
+  const token = signToken({ u: process.env.ADMIN_USER, iat: Date.now() });
+  res.setHeader('Set-Cookie', `admin_session=${token}; HttpOnly; Path=/; Max-Age=28800; SameSite=Lax`);
+  res.json({ ok: true });
+});
+
+app.post('/api/logout', (req, res) => {
+  res.setHeader('Set-Cookie', 'admin_session=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax');
+  res.json({ ok: true });
+});
+
+const PUBLIC_PAGES = new Set(['/login.html']);
+const PUBLIC_API = new Set(['/api/login', '/api/logout', '/api/health']);
+const STATIC_ASSET = /\.(css|js|png|jpe?g|gif|svg|ico|woff2?|ttf|map)$/i;
+
+app.use((req, res, next) => {
+  const session = verifyToken(parseCookies(req.headers.cookie).admin_session);
+  if (session) return next();
+
+  const p = req.path;
+  if (p.startsWith('/api/')) {
+    if (PUBLIC_API.has(p)) return next();
+    return res.status(401).json({ error: 'unauthorized' });
+  }
+  // Login page itself + shared static assets must load while unauthenticated,
+  // otherwise the login screen breaks. Protected pages redirect to login.
+  if (PUBLIC_PAGES.has(p) || STATIC_ASSET.test(p)) return next();
+  return res.redirect('/login.html');
+});
+
+app.use(express.static(path.join(__dirname, '../public/admin')));
 
 app.get('/api/stats', async (req, res) => {
   try {
@@ -36,6 +182,80 @@ app.get('/api/stats', async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch stats' });
+  }
+});
+
+app.get('/api/analytics/messages-by-day', async (req, res) => {
+  try {
+    const data = await new Promise((resolve, reject) => {
+      const query = `
+        SELECT strftime('%Y-%m-%d', created_at / 1000, 'unixepoch') as day, COUNT(*) as count 
+        FROM messages 
+        GROUP BY day 
+        ORDER BY day DESC 
+        LIMIT 7
+      `;
+      db.db.all(query, [], (err, rows) => {
+        if (err) reject(err); else resolve(rows);
+      });
+    });
+    res.json(data.reverse());
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch messages by day' });
+  }
+});
+
+app.get('/api/analytics/topics', async (req, res) => {
+  try {
+    const data = await new Promise((resolve, reject) => {
+      const query = `
+        SELECT agent_state as topic, COUNT(*) as count 
+        FROM sessions 
+        GROUP BY agent_state
+      `;
+      db.db.all(query, [], (err, rows) => {
+        if (err) reject(err); else resolve(rows);
+      });
+    });
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch topics' });
+  }
+});
+
+app.get('/api/health-details', async (req, res) => {
+  try {
+    const uptime = process.uptime();
+    const memory = process.memoryUsage().rss;
+    
+    let dbOk = false;
+    try {
+      await new Promise((resolve, reject) => {
+        db.db.get('SELECT 1', [], (err) => {
+          if (err) reject(err); else resolve();
+        });
+      });
+      dbOk = true;
+    } catch (e) {
+      dbOk = false;
+    }
+
+    let chromaOk = false;
+    try {
+      const chromaRes = await fetch('http://chromadb:8000/api/v1/heartbeat', { timeout: 2000 });
+      if (chromaRes.ok) chromaOk = true;
+    } catch (e) {
+      chromaOk = false;
+    }
+
+    res.json({
+      uptime,
+      memory,
+      dbStatus: dbOk ? 'OK' : 'Error',
+      chromaStatus: chromaOk ? 'OK' : 'Error'
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch health details' });
   }
 });
 
@@ -128,6 +348,108 @@ app.delete('/api/forms/:filename', (req, res) => {
   }
 });
 
-app.listen(PORT, HOST, () => {
-  console.log(`Internal Web Admin running on http://${HOST}:${PORT}`);
+// APM Endpoints
+app.get('/api/system/metrics', (req, res) => {
+  const cpu = os.loadavg()[0];
+  const ram = (os.totalmem() - os.freemem()) / os.totalmem() * 100;
+  res.json({ cpu: cpu, ram: ram });
 });
+
+app.get('/api/system/logs', (req, res) => {
+  try {
+    const logFile = path.join(__dirname, '../data/system.log');
+    if (!fs.existsSync(logFile)) return res.json({ logs: ['[INFO] No logs found yet.'] });
+    
+    // Read the last 100 lines using pure JS
+    const content = fs.readFileSync(logFile, 'utf8');
+    const lines = content.trim().split('\n').slice(-100);
+    res.json({ logs: lines });
+  } catch(e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get('/api/system/security', (req, res) => {
+  try {
+    const logFile = path.join(__dirname, '../data/system.log');
+    if (!fs.existsSync(logFile)) return res.json({ incidents: [] });
+    
+    const content = fs.readFileSync(logFile, 'utf8');
+    const lines = content.trim().split('\n');
+    const incidents = lines.filter(line => line.includes('[HONEYPOT]') || line.includes('[Rate Limit]')).slice(-50);
+    res.json({ incidents });
+  } catch(e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+const http = require('http');
+app.get('/api/system/containers', (req, res) => {
+  const options = {
+    socketPath: '/var/run/docker.sock',
+    path: '/v1.40/containers/json?all=true',
+    method: 'GET'
+  };
+  const request = http.request(options, (response) => {
+    let data = '';
+    response.on('data', chunk => data += chunk);
+    response.on('end', () => {
+      try {
+        const containers = JSON.parse(data);
+        const simplified = containers.map(c => ({
+          name: c.Names[0].replace('/', ''),
+          state: c.State,
+          status: c.Status,
+          image: c.Image
+        }));
+        res.json({ containers: simplified });
+      } catch(e) {
+        res.status(500).json({ error: e.message });
+      }
+    });
+  });
+  request.on('error', (e) => {
+    // Nếu không đọc được socket (chạy ở máy Dev không có Docker/Podman)
+    res.json({ containers: [] });
+  });
+  request.end();
+});
+
+
+// Malware / security incident monitoring (DB-backed; protected by auth above)
+app.get('/api/security/incidents', async (req, res) => {
+  try {
+    const parsed = parseInt(req.query.limit, 10);
+    const limit = Number.isFinite(parsed) && parsed > 0 ? parsed : 50;
+    res.json({ incidents: await db.getSecurityIncidents(limit) });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get('/api/security/summary', async (req, res) => {
+  try {
+    res.json(await db.getSecurityIncidentSummary());
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+if (require.main === module) {
+  app.listen(PORT, HOST, () => {
+    console.log(`Internal Web Admin running on http://${HOST}:${PORT}`);
+  });
+}
+
+module.exports = {
+  app,
+  signToken,
+  verifyToken,
+  getClientIp,
+  isLoginBlocked,
+  recordLoginFailure,
+  resetLoginFailures,
+  loginRetryAfterSeconds,
+  LOGIN_MAX_FAILURES,
+  LOGIN_WINDOW_MS,
+};

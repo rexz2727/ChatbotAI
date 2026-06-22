@@ -12,7 +12,7 @@ const responses = {
   // === CẤP LẦN ĐẦU ===
   'FLOW_CAN_CUOC_LANDAU_MAIN': {
     agentState: 'AGENT_CAN_CUOC',
-    text: `[CẤP CĂN CƯỚC LẦN ĐẦU]\n\nDành cho công dân đủ 14 tuổi trở lên chưa từng làm Căn cước.\nThời hạn giải quyết: 07 ngày làm việc.\nLệ phí: MIỄN PHÍ hoàn toàn.\n\n📺 *Video Toàn Cảnh Quy Trình:* https://youtube.com/watch?v=oQf7MYWwHJY`,
+    text: `[CẤP CĂN CƯỚC LẦN ĐẦU]\n\n(Căn cứ: Nghị định 58/2026/NĐ-CP & Luật Căn cước)\n\nDành cho công dân đủ 14 tuổi trở lên chưa từng làm Căn cước.\nThời hạn giải quyết: 07 ngày làm việc.\nLệ phí: MIỄN PHÍ hoàn toàn.\n\n📺 *Video Toàn Cảnh Quy Trình:* https://youtube.com/watch?v=oQf7MYWwHJY`,
     afterReplies: [
       { title: "Hồ sơ & Nơi làm", payload: "FLOW_CAN_CUOC_LANDAU_HOSO" },
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }
@@ -30,7 +30,7 @@ const responses = {
   // === ĐỔI / CẤP LẠI ===
   'FLOW_CAN_CUOC_CAPLAI_MAIN': {
     agentState: 'AGENT_CAN_CUOC',
-    text: `[ĐỔI HOẶC CẤP LẠI CĂN CƯỚC]\n\nBao gồm trường hợp thẻ hết hạn, hỏng, sai thông tin, đổi từ CMND sang Căn cước, hoặc bị mất thẻ.`,
+    text: `[ĐỔI HOẶC CẤP LẠI CĂN CƯỚC]\n\n(Căn cứ: Nghị định 58/2026/NĐ-CP)\n\nBao gồm trường hợp thẻ hết hạn, hỏng, sai thông tin, đổi từ CMND sang Căn cước, hoặc bị mất thẻ.`,
     afterReplies: [
       { title: "Quy trình làm lại (khi Mất thẻ)", payload: "FLOW_CAN_CUOC_CAPLAI_ONLINE" },
       { title: "Chi tiết Lệ phí", payload: "FLOW_CAN_CUOC_CAPLAI_FEE" },
@@ -39,7 +39,7 @@ const responses = {
   },
   'FLOW_CAN_CUOC_CAPLAI_ONLINE': {
     agentState: 'AGENT_CAN_CUOC',
-    text: `[LÀM LẠI CĂN CƯỚC KHI BỊ MẤT THẺ TRÊN VNeID]\n\n*Tin vui:* Nếu bạn mới làm CCCD chưa quá 5 năm (còn lưu mống mắt/vân tay), bạn không cần đến cơ quan Công an!\n\n📌 *Bước 1:* Mở ứng dụng VNeID, vào mục Dịch vụ công.\n📌 *Bước 2:* Chọn "Cấp lại thẻ Căn cước".\n📌 *Bước 3:* Xác nhận thông tin và thanh toán lệ phí online.\n📌 *Bước 4:* Đăng ký nhận thẻ Căn cước mới qua Bưu điện giao tận nhà.\n\n📺 *Video Hướng Dẫn:* https://www.youtube.com/watch?v=R0VJjNcalCM`,
+    text: `[LÀM LẠI CĂN CƯỚC KHI BỊ MẤT THẺ TRÊN VNeID]\n\n(Căn cứ: Nghị định 58/2026/NĐ-CP)\n\n*Tin vui:* Nếu bạn mới làm CCCD chưa quá 5 năm (còn lưu mống mắt/vân tay), bạn không cần đến cơ quan Công an!\n\n📌 *Bước 1:* Mở ứng dụng VNeID, vào mục Dịch vụ công.\n📌 *Bước 2:* Chọn "Cấp lại thẻ Căn cước".\n📌 *Bước 3:* Xác nhận thông tin và thanh toán lệ phí online.\n📌 *Bước 4:* Đăng ký nhận thẻ Căn cước mới qua Bưu điện giao tận nhà.\n\n📺 *Video Hướng Dẫn:* https://www.youtube.com/watch?v=R0VJjNcalCM`,
     afterReplies: [
       { title: "Quay lại", payload: "FLOW_CAN_CUOC_CAPLAI_MAIN" },
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }
@@ -57,7 +57,7 @@ const responses = {
   // === CĂN CƯỚC TRẺ EM ===
   'FLOW_CAN_CUOC_TREEM_MAIN': {
     agentState: 'AGENT_CAN_CUOC',
-    text: `[CĂN CƯỚC CHO TRẺ EM DƯỚI 14 TUỔI]\n\nLuật Căn cước 2023 (hiệu lực 01/07/2024) quy định cấp thẻ cho trẻ em dưới 14 tuổi (Không bắt buộc, theo nhu cầu).\nLệ phí lần đầu: MIỄN PHÍ.`,
+    text: `[CĂN CƯỚC CHO TRẺ EM DƯỚI 14 TUỔI]\n\n(Căn cứ: Luật Căn cước 2023 & Nghị định 58/2026/NĐ-CP)\n\nLuật Căn cước 2023 (hiệu lực 01/07/2024) quy định cấp thẻ cho trẻ em dưới 14 tuổi (Không bắt buộc, theo nhu cầu).\nLệ phí lần đầu: MIỄN PHÍ.`,
     afterReplies: [
       { title: "Trẻ dưới 6 tuổi (Nộp Online 100%)", payload: "FLOW_CAN_CUOC_TREEM_DUOI6" },
       { title: "Trẻ từ 6 đến dưới 14 tuổi", payload: "FLOW_CAN_CUOC_TREEM_TREN6" },

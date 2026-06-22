@@ -4,6 +4,36 @@ const express = require('express');
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
+
+// Đảm bảo thư mục data tồn tại
+const dataDir = path.join(process.cwd(), 'data');
+if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
+
+// Setup System Logger
+const sysLogFile = path.join(dataDir, 'system.log');
+const originalConsoleLog = console.log;
+const originalConsoleError = console.error;
+const originalConsoleWarn = console.warn;
+
+function writeSysLog(level, ...args) {
+  const msg = args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' ');
+  const line = `[${new Date().toISOString()}] [${level}] ${msg}\n`;
+  fs.appendFileSync(sysLogFile, line);
+}
+
+console.log = function(...args) {
+  originalConsoleLog.apply(console, args);
+  writeSysLog('INFO', ...args);
+};
+console.error = function(...args) {
+  originalConsoleError.apply(console, args);
+  writeSysLog('ERROR', ...args);
+};
+console.warn = function(...args) {
+  originalConsoleWarn.apply(console, args);
+  writeSysLog('WARN', ...args);
+};
+
 const rateLimit = require('express-rate-limit');
 const chatbot = require('./chatbot');
 const honeypot = require('./honeypot');
@@ -179,10 +209,14 @@ app.post('/webhook/facebook', async (req, res) => {
             // return res.sendStatus(429);
             continue;
           }
-          const result = await chatbot.handleUserMessage(senderId, messageText, payload);
-          await sendFacebookResponse(senderId, result, req);
+          
+          // Send typing indicator immediately
+          sendFacebookTypingOn(senderId).catch(err => console.error("Typing Error:", err.message));
+          
+          // Enqueue message
+          await db.enqueueMessage('facebook', senderId, messageText, payload);
 
-          // Mark message as processed after successful handling
+          // Mark message as processed after enqueuing
           if (webhookEvent.message && webhookEvent.message.mid) {
             try {
               await markMessageProcessed(webhookEvent.message.mid);
@@ -200,6 +234,19 @@ app.post('/webhook/facebook', async (req, res) => {
     res.sendStatus(500);
   }
 });
+
+// Facebook Typing Indicator
+async function sendFacebookTypingOn(recipientId) {
+  const isPlaceholderToken = !process.env.FB_PAGE_ACCESS_TOKEN || process.env.FB_PAGE_ACCESS_TOKEN === 'your_fb_page_access_token_here';
+  if (isPlaceholderToken) return;
+  const url = `https://graph.facebook.com/v19.0/me/messages?access_token=${process.env.FB_PAGE_ACCESS_TOKEN}`;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ recipient: { id: recipientId }, sender_action: "typing_on" })
+  });
+  if (!response.ok) throw new Error(await response.text());
+}
 
 // Facebook Send API Helper
 async function sendFacebookResponse(recipientId, result, req) {
@@ -306,8 +353,7 @@ app.post('/webhook/zalo', async (req, res) => {
         return;
       }
       
-      const result = await chatbot.handleUserMessage(senderId, messageText, null);
-      await sendZaloResponse(senderId, result);
+      await db.enqueueMessage('zalo', senderId, messageText, null);
     } 
     else if (body.event_name === 'user_click_button') {
       const senderId = body.sender.id;
@@ -320,8 +366,7 @@ app.post('/webhook/zalo', async (req, res) => {
         return;
       }
       
-      const result = await chatbot.handleUserMessage(senderId, null, payload);
-      await sendZaloResponse(senderId, result);
+      await db.enqueueMessage('zalo', senderId, null, payload);
     }
     else if (body.event_name === 'follow') {
       const senderId = body.sender.id || body.follower.id;
@@ -331,8 +376,7 @@ app.post('/webhook/zalo', async (req, res) => {
         // return res.sendStatus(429);
         return;
       }
-      const result = await chatbot.handleUserMessage(senderId, null, 'GET_STARTED');
-      await sendZaloResponse(senderId, result);
+      await db.enqueueMessage('zalo', senderId, null, 'GET_STARTED');
     }
   } catch (error) {
     console.error('Error handling Zalo webhook event:', error);
@@ -469,4 +513,42 @@ app.get('/privacy', (req, res) => {
 // Start Server
 app.listen(PORT, HOST, () => {
   console.log(`Express webhook server is listening on ${HOST}:${PORT}`);
+  startQueueWorker();
 });
+
+// Queue Worker
+async function startQueueWorker() {
+  console.log('[Queue Worker] Started and listening for messages...');
+  while (true) {
+    try {
+      const msg = await db.dequeueMessage();
+      if (!msg) {
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Sleep 1s if queue empty
+        continue;
+      }
+      
+      console.log(`[Queue Worker] Processing message ID: ${msg.id} for ${msg.platform} user ${msg.sender_id}`);
+      
+      // Simulate req object for relative URL parsing if needed
+      const dummyReq = {
+        protocol: 'https',
+        get: () => process.env.PUBLIC_URL || 'trycloudflare.com', // fallback
+        headers: {}
+      };
+      
+      const result = await chatbot.handleUserMessage(msg.sender_id, msg.message_text, msg.payload);
+      
+      if (msg.platform === 'facebook') {
+        await sendFacebookResponse(msg.sender_id, result, dummyReq);
+      } else if (msg.platform === 'zalo') {
+        await sendZaloResponse(msg.sender_id, result);
+      }
+      
+      await db.completeMessage(msg.id);
+      
+    } catch (err) {
+      console.error('[Queue Worker] Error processing message:', err);
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Backoff on error
+    }
+  }
+}

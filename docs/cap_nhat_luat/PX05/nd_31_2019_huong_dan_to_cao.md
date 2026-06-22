@@ -1,0 +1,14 @@
+# Nghị định quy định chi tiết một số điều và biện pháp tổ chức thi hành Luật Tố cáo
+- **Số/ký hiệu:** 31/2019/NĐ-CP
+- **Ngày ban hành:** 10/04/2019
+- **Hiệu lực:** 28/05/2019
+- **Cơ quan ban hành:** Chính phủ
+- **Thay thế VB nào:** Thay thế Nghị định 76/2012/NĐ-CP ngày 03/10/2012.
+- **Tóm tắt điểm chính:**
+  - Quy định chi tiết thi hành Luật Tố cáo 2018: thời hạn giải quyết tố cáo; rút tố cáo; giải quyết tố cáo quá thời hạn mà chưa được giải quyết.
+  - Công khai kết luận nội dung tố cáo, quyết định xử lý hành vi vi phạm bị tố cáo.
+  - Biện pháp tổ chức bảo vệ người tố cáo; trách nhiệm của người giải quyết tố cáo và cơ quan thực hiện biện pháp bảo vệ khi nhận yêu cầu áp dụng biện pháp bảo vệ.
+- **Tác động tới lĩnh vực nào trong data/:** Văn bản hướng dẫn chi tiết, củng cố mục 2 của `data/knowledge/PX05/khieu_nai_to_cao.txt` (thủ tục tố cáo, bảo vệ người tố cáo). Cần rà soát lại khi Luật 136/2025/QH15 có hiệu lực.
+- **Link nguồn chính thống:**
+  - https://vanban.chinhphu.vn/default.aspx?pageid=27160&docid=196793 (Cổng TTĐT Chính phủ)
+  - https://tulieuvankien.dangcongsan.vn/he-thong-van-ban/van-ban-quy-pham-phap-luat/nghi-dinh-so-312019nd-cp-ngay-1042019-cua-chinh-phu-quy-dinh-chi-tiet-mot-so-dieu-va-bien-phap-to-chuc-thi-hanh-luat-to-5356

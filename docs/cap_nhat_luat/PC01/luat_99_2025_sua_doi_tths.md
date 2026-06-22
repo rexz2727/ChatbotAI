@@ -1,0 +1,13 @@
+# Luật sửa đổi, bổ sung một số điều của Bộ luật Tố tụng hình sự năm 2025
+- **Số/ký hiệu:** 99/2025/QH15
+- **Ngày ban hành:** 27/06/2025
+- **Hiệu lực:** 01/07/2025
+- **Cơ quan ban hành:** Quốc hội (Chủ tịch Quốc hội Trần Thanh Mẫn ký)
+- **Thay thế VB nào:** Không thay thế; sửa đổi, bổ sung Bộ luật Tố tụng hình sự 2015 (đã được sửa đổi bởi Luật 02/2021/QH15)
+- **Tóm tắt điểm chính:**
+  - **Chuyển mô hình Cơ quan điều tra từ 03 cấp sang 02 cấp:** không còn Cơ quan Cảnh sát điều tra Công an cấp huyện; hệ thống CQ CSĐT chỉ gồm CQ CSĐT Bộ Công an và CQ CSĐT Công an cấp tỉnh, phù hợp mô hình chính quyền địa phương 2 cấp (bỏ Công an cấp huyện từ 01/7/2025).
+  - **Trao thẩm quyền điều tra cho Công an cấp xã:** bổ sung quy định Điều tra viên trung cấp, Điều tra viên cao cấp là **Trưởng Công an cấp xã hoặc Phó Trưởng Công an cấp xã** được phân công tiến hành **khởi tố, điều tra vụ án về tội ít nghiêm trọng, tội nghiêm trọng** xảy ra trên địa bàn cấp xã; có một số nhiệm vụ, quyền hạn như Thủ trưởng Cơ quan điều tra, **trừ** quyền quyết định áp dụng, thay đổi, hủy bỏ biện pháp điều tra tố tụng đặc biệt.
+  - Điều chỉnh phân cấp thẩm quyền truy tố, xét xử giữa các cấp Viện kiểm sát, Tòa án cho phù hợp mô hình 2 cấp.
+  - Bổ sung quy định ứng dụng công nghệ thông tin trong tố tụng (số hóa hồ sơ, chữ ký số, phương thức tống đạt văn bản tố tụng trên nền tảng số); bổ sung Điều 506a.
+- **Tác động tới lĩnh vực nào trong data/:** Tác động LỚN và cần CẬP NHẬT GẤP `data/knowledge/PC01/to_giac_tin_bao_toi_pham.txt`. Mục 3 hiện ghi "chuyển hồ sơ lên Cơ quan Cảnh sát điều tra (Công an cấp Huyện/Quận)" — nội dung này ĐÃ LỖI THỜI vì không còn CQ CSĐT cấp huyện từ 01/7/2025. Cần sửa thành: Công an cấp xã trực tiếp khởi tố, điều tra vụ án về tội ít nghiêm trọng và tội nghiêm trọng trên địa bàn (khi được phân công); các vụ việc vượt thẩm quyền chuyển CQ CSĐT Công an cấp tỉnh.
+- **Link nguồn chính thống:** https://congbao.chinhphu.vn/van-ban/luat-so-99-2025-qh15-45530.htm — Công báo Chính phủ; giới thiệu nội dung: https://pbgdpl.gov.vn/Pages/chi-tiet-tin.aspx?ItemID=4792

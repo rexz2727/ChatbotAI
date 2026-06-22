@@ -1,0 +1,17 @@
+# Luật Phòng cháy, chữa cháy và cứu nạn, cứu hộ năm 2024
+- **Số/ký hiệu:** 55/2024/QH15
+- **Ngày ban hành:** 29/11/2024 (Quốc hội khóa XV thông qua tại Kỳ họp thứ 8)
+- **Hiệu lực:** 01/07/2025
+- **Cơ quan ban hành:** Quốc hội
+- **Thay thế VB nào:** Luật Phòng cháy và chữa cháy số 27/2001/QH10 (đã sửa đổi, bổ sung bởi Luật số 40/2013/QH13 và Luật số 30/2023/QH15); Nghị quyết số 99/2019/QH14 hết hiệu lực từ 01/07/2025.
+- **Tóm tắt điểm chính:**
+  - Lần đầu luật hóa toàn diện hoạt động "cứu nạn, cứu hộ" (CNCH) cùng với PCCC trong một đạo luật chung; gồm 8 chương, 55 điều.
+  - Quy định về phòng cháy, chữa cháy, cứu nạn cứu hộ; lực lượng, phương tiện; bảo đảm điều kiện hoạt động; quyền, nghĩa vụ và trách nhiệm của cơ quan, tổ chức, hộ gia đình, cá nhân.
+  - Tăng cường yêu cầu an toàn PCCC đối với nhà ở, nhà ở kết hợp sản xuất kinh doanh.
+  - Chuyển trọng tâm sang phòng ngừa, đẩy mạnh ứng dụng công nghệ và xã hội hóa công tác PCCC.
+  - ⚠️ Cần xác minh số điều/khoản cụ thể trước khi trích dẫn nguyên văn vào kịch bản chatbot.
+- **Tác động tới lĩnh vực nào trong data/:** Tác động trực tiếp tới `data/knowledge/PC07/pccc_cnch.txt`. Đây là VB khung nền tảng cho toàn bộ lĩnh vực PCCC & CNCH; mọi nội dung dẫn chiếu Luật PCCC 2001/2013 phải cập nhật sang Luật 55/2024/QH15.
+- **Link nguồn chính thống:**
+  - Cổng TTĐT Chính phủ (CSDL văn bản): https://vanban.chinhphu.vn/?pageid=27160&docid=212483
+  - Hệ thống văn bản Đảng Cộng sản VN: https://tulieuvankien.dangcongsan.vn/he-thong-van-ban/van-ban-quy-pham-phap-luat/luat-phong-chay-chua-chay-va-cuu-nan-cuu-ho-so-552024qh15-hieu-luc-thi-hanh-tu-ngay-0172025-11187
+  - Thư viện pháp luật: https://thuvienphapluat.vn/van-ban/Xay-dung-Do-thi/Luat-Phong-chay-chua-chay-cuu-nan-cuu-ho-2024-so-55-2024-QH15-621347.aspx

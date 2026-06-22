@@ -1,4 +1,6 @@
 # BẢN ĐỒ KIỂM TOÁN VÀ TÁI CẤU TRÚC DỮ LIỆU (DATA MAPPING)
+> **Cập nhật 2026-06-22 cho khớp commit f9642fa (đổi thanh_tra→PX05, cqdt→PC01; PA05=an ninh mạng).**
+
 *(Dự thảo chờ Checkpoint 1 duyệt)*
 
 Dựa trên phân tích các file text nguyên khối khổng lồ trong thư mục `data/` hiện tại, hệ thống đề xuất chia tách và tái cấu trúc cây thư mục theo hệ lực lượng chuẩn của ngành Công an như sau:
@@ -17,15 +19,15 @@ Dựa trên phân tích các file text nguyên khối khổng lồ trong thư m�
 
 ### 2.1 File `data/khieu_nai.txt` (224KB)
 File này hiện đang chứa trộn lẫn cả khiếu nại hành chính và tin báo tội phạm.
-- **Tách Phần 1 (Khiếu nại, tố cáo Cán bộ/Hành chính):** Chuyển sang `data/thanh_tra/khieu_nai_to_cao.txt` (Thanh tra Công an).
-- **Tách Phần 2 (Tố giác, tin báo tội phạm, trộm cắp, lừa đảo):** Chuyển sang `data/cqdt/to_giac_tin_bao_toi_pham.txt` (Cơ quan Cảnh sát điều tra).
+- **Tách Phần 1 (Khiếu nại, tố cáo Cán bộ/Hành chính):** Chuyển sang `data/PX05/khieu_nai_to_cao.txt` (Thanh tra Công an).
+- **Tách Phần 2 (Tố giác, tin báo tội phạm, trộm cắp, lừa đảo):** Chuyển sang `data/PC01/to_giac_tin_bao_toi_pham.txt` (Cơ quan Cảnh sát điều tra).
 
 ### 2.2 File `data/an_ninh.txt` (265KB)
 Đây là file có mức độ trộn lẫn nghiệp vụ cao nhất, từ giấy phép kinh doanh, cháy nổ đến luật không gian mạng.
 - **Tách Mục I (ANTT, Giấy phép KD có ĐK):** Chuyển sang `data/PC06/an_ninh_trat_tu.txt`.
 - **Tách Mục II (PCCC, CNCH, Nội quy chữa cháy):** Chuyển sang `data/PC07/pccc_cnch.txt`.
 - **Tách Mục III (Luật bảo vệ dữ liệu cá nhân 2025, Chỉ thị 57 an ninh mạng...):** Chuyển sang `data/PA05/an_ninh_mang.txt` (An ninh mạng và phòng, chống tội phạm sử dụng công nghệ cao).
-- **Tách Mục IV (An ninh nội bộ, chống phản động nếu có):** Chuyển sang `data/PA03/an_ninh_noi_bo.txt`.
+- **Tách Mục IV (An ninh nội bộ, chống phản động nếu có):** Chuyển sang `data/PA05/an_ninh_mang.txt`.
 
 ## Lợi ích của kiến trúc mới
 1. **ChromaDB độc lập:** Giúp tách các collection theo phòng ban (VD: `db_pc06_cutru`, `db_pc07_pccc`), giảm thiểu hallucination (bot râu ông nọ cắm cằm bà kia).

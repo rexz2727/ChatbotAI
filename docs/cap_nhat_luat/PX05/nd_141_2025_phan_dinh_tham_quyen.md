@@ -1,0 +1,15 @@
+# Nghị định quy định về phân định thẩm quyền của chính quyền địa phương 02 cấp trong lĩnh vực quản lý nhà nước của Thanh tra Chính phủ
+- **Số/ký hiệu:** 141/2025/NĐ-CP
+- **Ngày ban hành:** 12/06/2025
+- **Hiệu lực:** 01/07/2025
+- **Cơ quan ban hành:** Chính phủ (người ký: Phó Thủ tướng Thường trực Nguyễn Hòa Bình)
+- **Thay thế VB nào:** Không thay thế trực tiếp — ban hành mới nhằm phân định lại thẩm quyền theo mô hình chính quyền địa phương 2 cấp; có điều khoản chuyển tiếp đối với các vụ việc khiếu nại, tố cáo đang được giải quyết ở cấp huyện (cũ).
+- **Tóm tắt điểm chính:**
+  - Quy định phân định thẩm quyền giữa chính quyền cấp tỉnh và cấp xã trong lĩnh vực quản lý nhà nước của Thanh tra Chính phủ (gồm thanh tra, tiếp công dân, giải quyết khiếu nại, tố cáo, phòng chống tham nhũng).
+  - Bảo đảm tương thích với Hiến pháp 2013, Luật Tổ chức Chính phủ 2025, Luật Tổ chức chính quyền địa phương 2025.
+  - Có quy định chuyển tiếp xử lý các vụ khiếu nại, tố cáo trước đây thuộc thẩm quyền cấp huyện.
+  - ⚠️ Nội dung chi tiết phân quyền cụ thể giữa cấp tỉnh/cấp xã nằm trong PDF đính kèm (141-ndcp.signed.pdf), chưa trích xuất đầy đủ — cần đọc toàn văn trước khi áp dụng vào kịch bản thẩm quyền của Công an cấp xã/phường.
+- **Tác động tới lĩnh vực nào trong data/:** Tác động tới `data/knowledge/PX05/khieu_nai_to_cao.txt` ở khía cạnh xác định thẩm quyền tiếp nhận, giải quyết khiếu nại/tố cáo theo mô hình 2 cấp (bỏ cấp huyện). Cần bổ sung nội dung làm rõ phần việc nào thuộc cấp xã/phường.
+- **Link nguồn chính thống:**
+  - https://vanban.chinhphu.vn/?pageid=27160&docid=213917 (Cổng TTĐT Chính phủ)
+  - https://luatvietnam.vn/co-cau-to-chuc/nghi-dinh-141-2025-nd-cp-phan-dinh-tham-quyen-chinh-quyen-dia-phuong-trong-quan-ly-nha-nuoc-402743-d1.html

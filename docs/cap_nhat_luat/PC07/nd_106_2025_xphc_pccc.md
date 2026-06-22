@@ -1,0 +1,17 @@
+# Nghị định 106/2025/NĐ-CP — Xử phạt vi phạm hành chính lĩnh vực PCCC & CNCH
+- **Số/ký hiệu:** 106/2025/NĐ-CP
+- **Ngày ban hành:** 15/05/2025
+- **Hiệu lực:** 01/07/2025
+- **Cơ quan ban hành:** Chính phủ
+- **Thay thế VB nào:** Bãi bỏ các quy định về xử phạt VPHC trong lĩnh vực PCCC trước đây tại Nghị định 144/2021/NĐ-CP. ⚠️ Cần xác minh phạm vi điều khoản bị bãi bỏ tại điều khoản thi hành của NĐ 106/2025.
+- **Tóm tắt điểm chính:**
+  - Quy định hành vi vi phạm hành chính, hình thức xử phạt, mức phạt, biện pháp khắc phục hậu quả trong lĩnh vực PCCC & CNCH.
+  - Tách riêng nội dung xử phạt VPHC về PCCC & CNCH ra khỏi Nghị định 144/2021/NĐ-CP (xử phạt VPHC lĩnh vực ANTT, xã hội...).
+  - Tăng mạnh mức phạt đối với nhiều nhóm hành vi vi phạm về an toàn PCCC.
+  - Khắc phục bất cập, khoảng trống pháp lý trong xử lý VPHC, nâng cao hiệu quả răn đe.
+  - ⚠️ Cần xác minh mức phạt và số điều cụ thể trước khi đưa con số vào câu trả lời chatbot.
+- **Tác động tới lĩnh vực nào trong data/:** Tác động trực tiếp tới `data/knowledge/PC07/pccc_cnch.txt`. Là căn cứ cho phần nội dung chatbot giải đáp về mức xử phạt VPHC PCCC; cần thay thế mọi dẫn chiếu xử phạt PCCC theo NĐ 144/2021 trước đây.
+- **Link nguồn chính thống:**
+  - Cổng TTĐT Chính phủ (CSDL văn bản): https://vanban.chinhphu.vn/?pageid=27160&docid=213672
+  - Cổng TTĐT Cục Cảnh sát PCCC & CNCH: https://canhsatpccc.gov.vn/vi/news/tuyen-truyen/nghi-dinh-so-1062025nd-cp-ngay-1552025-cua-chinh-phu-quy-dinh-xu-phat-vi-pham-hanh-chinh-trong-linh-vuc-phong-chay-chua-chay-va-cuu-nan-cuu-ho-4600
+  - Cổng Xây dựng chính sách (Chính phủ): https://xaydungchinhsach.chinhphu.vn/nhung-diem-moi-cua-nghi-dinh-106-2025-nd-cp-quy-dinh-xu-phat-vphc-ve-phong-chay-chua-chay-119250522172351967.htm

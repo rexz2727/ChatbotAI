@@ -1,0 +1,16 @@
+# Luật Tố cáo năm 2018
+- **Số/ký hiệu:** 25/2018/QH14
+- **Ngày ban hành:** 12/06/2018
+- **Hiệu lực:** 01/01/2019
+- **Cơ quan ban hành:** Quốc hội (khóa XIV)
+- **Thay thế VB nào:** Thay thế Luật Tố cáo 2011 (03/2011/QH13). Được sửa đổi, bổ sung bởi Luật 136/2025/QH15 (hiệu lực 01/7/2026).
+- **Tóm tắt điểm chính:**
+  - Quy định về tố cáo và giải quyết tố cáo đối với hành vi vi phạm pháp luật trong việc thực hiện nhiệm vụ, công vụ; bảo vệ người tố cáo; quản lý công tác giải quyết tố cáo.
+  - Đơn tố cáo phải ghi rõ họ tên, địa chỉ người tố cáo; nguyên tắc không xử lý tố cáo nặc danh (trừ khi có nội dung, bằng chứng cụ thể rõ ràng).
+  - Bảo vệ bí mật thông tin và bảo vệ người tố cáo (tính mạng, sức khỏe, tài sản, danh dự, vị trí công tác).
+  - Trình tự giải quyết tố cáo gồm các bước: thụ lý, xác minh, kết luận, xử lý kết luận nội dung tố cáo.
+  - Không thu phí, lệ phí khi tiếp nhận và giải quyết tố cáo.
+- **Tác động tới lĩnh vực nào trong data/:** Văn bản nền tảng của `data/knowledge/PX05/khieu_nai_to_cao.txt` (mục 2 — thủ tục nộp đơn tố cáo, bảo vệ người tố cáo, lệ phí). Cần theo dõi sửa đổi từ Luật 136/2025/QH15.
+- **Link nguồn chính thống:**
+  - https://thuvienphapluat.vn/van-ban/Bo-may-hanh-chinh/Nghi-dinh-31-2019-ND-CP-huong-dan-Luat-to-cao-411596.aspx (tham chiếu)
+  - https://congthuong.ninhbinh.gov.vn/noi-dung-co-ban-cua-nghi-dinh-so-312019nd-cp-ngay-1042019-cua-chinh-phu-quy-dinh-chi-tiet-mot-so-dieu-va-bien-phap-to-chuc-thi-hanh-luat-to-cao-nam-2018.html

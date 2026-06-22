@@ -163,6 +163,9 @@ app.post('/webhook/facebook', async (req, res) => {
           if (webhookEvent.message.quick_reply) {
             payload = webhookEvent.message.quick_reply.payload;
           }
+          if (!messageText && !payload && webhookEvent.message.attachments) {
+            messageText = '[Gửi đính kèm/Sticker]';
+          }
         } else if (webhookEvent.postback) {
           payload = webhookEvent.postback.payload;
         }
@@ -216,7 +219,8 @@ async function sendFacebookResponse(recipientId, result) {
         { content_type: "text", title: "An ninh & PCCC", payload: "MENU_AN_NINH" },
         { content_type: "text", title: "Ngoại kiều",     payload: "MENU_NGOAI_KIEU" },
         { content_type: "text", title: "Khiếu nại",      payload: "MENU_KHIEU_NAI" },
-        { content_type: "text", title: "Liên hệ cơ quan", payload: "FLOW_LIEN_HE" }
+        { content_type: "text", title: "Liên hệ cơ quan", payload: "FLOW_LIEN_HE" },
+        { content_type: "text", title: "Góp ý Hệ thống", payload: "MENU_GOP_Y" }
       ]
     };
   } else {
@@ -276,6 +280,11 @@ app.post('/webhook/zalo', async (req, res) => {
       const result = await chatbot.handleUserMessage(senderId, null, payload);
       await sendZaloResponse(senderId, result);
     }
+    else if (body.event_name === 'follow') {
+      const senderId = body.sender.id || body.follower.id;
+      const result = await chatbot.handleUserMessage(senderId, null, 'GET_STARTED');
+      await sendZaloResponse(senderId, result);
+    }
   } catch (error) {
     console.error('Error handling Zalo webhook event:', error);
     res.sendStatus(500);
@@ -302,7 +311,8 @@ async function sendZaloResponse(recipientId, result) {
               buttons: [
                 { title: "Cư trú", type: "oa.query.show", payload: "MENU_CU_TRU" },
                 { title: "Căn cước", type: "oa.query.show", payload: "MENU_CAN_CUOC" },
-                { title: "Giao thông", type: "oa.query.show", payload: "MENU_GIAO_THONG" }
+                { title: "Giao thông", type: "oa.query.show", payload: "MENU_GIAO_THONG" },
+                { title: "Góp ý Hệ thống", type: "oa.query.show", payload: "MENU_GOP_Y" }
               ]
             }, {
               media_type: "image",

@@ -1,0 +1,17 @@
+# Nghị định 105/2025/NĐ-CP — Quy định chi tiết thi hành Luật PCCC & CNCH
+- **Số/ký hiệu:** 105/2025/NĐ-CP
+- **Ngày ban hành:** 15/05/2025
+- **Hiệu lực:** 01/07/2025
+- **Cơ quan ban hành:** Chính phủ
+- **Thay thế VB nào:** Quy định chi tiết và biện pháp thi hành Luật PCCC & CNCH số 55/2024/QH15; thay thế Nghị định 136/2020/NĐ-CP và Nghị định 50/2024/NĐ-CP (sửa đổi NĐ 136/2020). ⚠️ Cần xác minh điều khoản bãi bỏ cụ thể trong điều khoản thi hành của NĐ 105/2025.
+- **Tóm tắt điểm chính:**
+  - Quy định chi tiết một số điều và biện pháp thi hành Luật PCCC & CNCH 2024.
+  - Ban hành Danh mục cơ sở thuộc diện quản lý về PCCC và Danh mục cơ sở có nguy hiểm về cháy, nổ (theo phụ lục kèm theo).
+  - Quy định về nội quy an toàn PCCC & CNCH; lập, lưu giữ hồ sơ quản lý, theo dõi hoạt động PCCC & CNCH; khai báo, cập nhật dữ liệu.
+  - Quy định về quản lý điện, nguồn lửa, nguồn nhiệt, chất dễ cháy nổ tại cơ sở và phương tiện.
+  - Ban hành hệ thống biểu mẫu chuẩn hóa (các mẫu PC01 – PC23): phiếu thông tin cơ sở, biên bản kiểm tra, đề nghị, v.v.
+- **Tác động tới lĩnh vực nào trong data/:** Tác động trực tiếp tới `data/knowledge/PC07/pccc_cnch.txt`. Đây là căn cứ cho phần thủ tục/điều kiện an toàn PCCC, danh mục cơ sở quản lý và biểu mẫu mà chatbot hướng dẫn người dân. Thay thế nội dung dẫn chiếu NĐ 136/2020 và NĐ 50/2024.
+- **Link nguồn chính thống:**
+  - Cổng TTĐT Chính phủ (CSDL văn bản): https://vanban.chinhphu.vn/?pageid=27160&docid=213702
+  - Công báo Chính phủ: https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-105-2025-nd-cp-44912.htm
+  - Cổng TTĐT Cục Cảnh sát PCCC & CNCH: https://canhsatpccc.gov.vn/vi/news/tin-tuc-pccc-va-cnch/nghi-dinh-so-1052025nd-cp-ngay-1552025-cua-chinh-phu-quy-dinh-chi-tiet-mot-so-dieu-va-bien-phap-thi-hanh-luat-phong-chay-chua-chay-va-cuu-nan-cuu-ho-4603

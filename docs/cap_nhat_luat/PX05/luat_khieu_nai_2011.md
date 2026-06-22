@@ -1,0 +1,15 @@
+# Luật Khiếu nại năm 2011
+- **Số/ký hiệu:** 02/2011/QH13
+- **Ngày ban hành:** 11/11/2011
+- **Hiệu lực:** 01/07/2012
+- **Cơ quan ban hành:** Quốc hội (khóa XIII)
+- **Thay thế VB nào:** Thay thế các quy định về khiếu nại trong Luật Khiếu nại, tố cáo 1998 và các luật sửa đổi 2004, 2005. Đã được hợp nhất tại VBHN 03/VBHN-VPQH ngày 06/8/2021; tiếp tục được sửa đổi, bổ sung bởi Luật 136/2025/QH15 (hiệu lực 01/7/2026).
+- **Tóm tắt điểm chính:**
+  - Gồm 8 chương, 70 điều. Quy định về khiếu nại và giải quyết khiếu nại đối với quyết định hành chính, hành vi hành chính; khiếu nại quyết định kỷ luật cán bộ, công chức; tiếp công dân; quản lý, giám sát công tác giải quyết khiếu nại.
+  - Khiếu nại lần đầu gửi đến người/cơ quan đã ra quyết định hành chính, hành vi hành chính; nếu không đồng ý có thể khiếu nại lần hai hoặc khởi kiện hành chính tại tòa án.
+  - Thời hạn giải quyết khiếu nại lần đầu: 30 ngày kể từ ngày thụ lý (vụ việc phức tạp không quá 45 ngày).
+  - Không thu phí, lệ phí khi thực hiện quyền khiếu nại.
+- **Tác động tới lĩnh vực nào trong data/:** Văn bản nền tảng của `data/knowledge/PX05/khieu_nai_to_cao.txt` (mục 1 — thủ tục nộp đơn khiếu nại, thời hạn, lệ phí). Nội dung file hiện hành bám sát luật này; cần theo dõi sửa đổi từ Luật 136/2025/QH15.
+- **Link nguồn chính thống:**
+  - https://vanban.chinhphu.vn/default.aspx?pageid=27160&docid=162374 (Cổng TTĐT Chính phủ)
+  - https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/3/28-vbhn-vpqh.pdf (Văn bản hợp nhất)

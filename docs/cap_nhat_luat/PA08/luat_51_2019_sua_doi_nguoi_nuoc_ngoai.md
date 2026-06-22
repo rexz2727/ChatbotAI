@@ -1,0 +1,12 @@
+# Luật sửa đổi, bổ sung một số điều của Luật Nhập cảnh, xuất cảnh, quá cảnh, cư trú của người nước ngoài tại Việt Nam năm 2019
+- **Số/ký hiệu:** 51/2019/QH14
+- **Ngày ban hành:** 25/11/2019
+- **Hiệu lực:** 01/07/2020
+- **Cơ quan ban hành:** Quốc hội
+- **Thay thế VB nào:** Không thay thế; sửa đổi, bổ sung một số điều của Luật 47/2014/QH13.
+- **Tóm tắt điểm chính:** Luật hóa chính sách cấp thị thực điện tử (e-visa) đã thí điểm từ 01/02/2017; bổ sung ký hiệu và quy định cho một số loại thị thực; quy định thời hạn thị thực, thẻ tạm trú cấp cho nhà đầu tư và người lao động; làm cơ sở để Chính phủ ban hành danh sách các nước được cấp e-visa và danh sách cửa khẩu cho phép xuất nhập cảnh bằng e-visa.
+- **Tác động tới lĩnh vực nào trong data/:** Cập nhật `data/knowledge/PA08/ngoai_kieu.txt` về các loại thị thực và thị thực điện tử. Nội dung cần được đọc hợp nhất với Luật 47/2014 và Luật 23/2023. Các thủ tục cấp/gia hạn thị thực vẫn thuộc thẩm quyền PA08 cấp tỉnh, không thuộc Công an phường.
+- **Link nguồn chính thống:**
+  - Cổng TTĐT Chính phủ: https://vanban.chinhphu.vn/default.aspx?pageid=27160&docid=198545
+  - Tư liệu văn kiện Đảng: https://tulieuvankien.dangcongsan.vn/he-thong-van-ban/van-ban-quy-pham-phap-luat/luat-sua-doi-bo-sung-mot-so-dieu-cua-luat-nhap-canh-xuat-canh-qua-canh-cu-tru-cua-nguoi-nuoc-ngoai-tai-viet-nam-6031
+  - Thư viện pháp luật: https://thuvienphapluat.vn/van-ban/Quyen-dan-su/Luat-Nhap-canh-xuat-canh-qua-canh-cu-tru-cua-nguoi-nuoc-ngoai-tai-Viet-Nam-sua-doi-2019-422706.aspx

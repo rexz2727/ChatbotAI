@@ -116,7 +116,8 @@ const menuMapping = {
   'MENU_NGOAI_KIEU': { state: 'AGENT_NGOAI_KIEU', title: 'Cổng thông tin Ngoại kiều', db: 'db_ngoai_kieu' },
   'MENU_KHIEU_NAI': { state: 'AGENT_KHIEU_NAI', title: 'Cổng thông tin Khiếu nại & Vi phạm', db: 'db_khieu_nai' },
   'MENU_TTHC': { state: 'AGENT_TTHC', title: 'Cổng thông tin Thủ tục Hành chính', db: 'db_thu_tuc_hanh_chinh' },
-  'MENU_LIEN_HE': { state: 'AGENT_LIEN_HE', title: 'Cổng thông tin Liên hệ Cơ quan', db: 'db_lien_he' }
+  'MENU_LIEN_HE': { state: 'AGENT_LIEN_HE', title: 'Cổng thông tin Liên hệ Cơ quan', db: 'db_lien_he' },
+  'MENU_GOP_Y': { state: 'AGENT_GOP_Y', title: 'Góp ý Hệ thống', db: null }
 };
 
 // Helper function for sleeping
@@ -184,8 +185,8 @@ async function processUserMessage(userId, messageText, buttonPayload = null) {
     const userMessageContent = messageText ? messageText : `[Payload: ${buttonPayload}]`;
     await db.saveMessage(userId, 'user', userMessageContent).catch(e => console.error("History log error:", e));
 
-    // 1a. Handle main menu reset
-    if (payload === 'SHOW_MAIN_MENU') {
+    // 1a. Handle main menu reset and GET_STARTED payload
+    if (payload === 'SHOW_MAIN_MENU' || payload === 'GET_STARTED' || payload === 'START') {
       await db.setSession(userId, 'MAIN_MENU');
       return {
         text: WELCOME_TEXT,
@@ -240,6 +241,14 @@ async function processUserMessage(userId, messageText, buttonPayload = null) {
       // If user clicked a button or explicitly just typed a short category name
       if ((payload && menuMapping[payload]) || (messageText && messageText.trim().length <= 15)) {
         await db.setSession(userId, target.state);
+        
+        if (target.state === 'AGENT_GOP_Y') {
+          return {
+            text: "[Chatbot Auto] Mời anh/chị nhập nội dung góp ý. Mọi ý kiến của anh/chị sẽ được lưu vào file để Ban quản trị cải thiện hệ thống. (Gõ 'thoát' hoặc 'quay lại' để hủy)",
+            quickReplies: [{ title: "Hủy và Quay về", payload: "SHOW_MAIN_MENU" }]
+          };
+        }
+        
         return {
           text: `[Chatbot Auto] Anh/chị đang ở mục ${target.title}. Vui lòng chọn chủ đề cần hỗ trợ:`,
           quickReplies: flow.getSubMenu(target.state)
@@ -257,12 +266,17 @@ async function processUserMessage(userId, messageText, buttonPayload = null) {
     const greetings = [
       'menu', 'menh', 'main menu',
       'quay lại', 'quay lai', 'quay về', 'quay ve', 'trở về', 'tro ve',
-      'xin chào', 'chào', 'chao', 'hi', 'hello',
       'start', 'bắt đầu', 'bat dau', 'bắt đầu lại', 'bat dau lai', 'restart',
       'help', 'trợ giúp', 'tro giup', 'hỗ trợ', 'ho tro',
       'thoát', 'thoat', 'về đầu', 've dau'
     ];
-    const isGreeting = messageText && greetings.includes(messageText.trim().toLowerCase());
+    const textLower = messageText ? messageText.trim().toLowerCase() : '';
+    const isGreeting = textLower && (
+      greetings.includes(textLower) ||
+      /^(xin )?(chào|chao|hi|hello|helo|alo|ê|he|hey)( bạn| a| c| anh| chị| ad| admin| bot| mn| mọi người)?$/i.test(textLower) ||
+      /^(có ai không|co ai khong|ai không|ai do|ai đó)$/i.test(textLower) ||
+      textLower === '1 tin nhắn' // Just in case they literally meant the phrase "1 tin nhắn"
+    );
     if (!state || isGreeting) {
       await db.setSession(userId, 'MAIN_MENU');
       return {
@@ -273,7 +287,28 @@ async function processUserMessage(userId, messageText, buttonPayload = null) {
 
     if (state === 'MAIN_MENU') {
       return {
-        text: "[Chatbot Auto] Dạ, anh/chị vui lòng chọn lĩnh vực cần hỗ trợ từ danh sách bên dưới ạ. (Nếu không thấy nút bấm, gõ từ khóa: cư trú, giao thông, căn cước... cũng được nhé.)",
+        text: "[Chatbot Auto] Chào anh/chị! Để Công an Phường hỗ trợ chính xác nhất, anh/chị vui lòng chọn lĩnh vực cần hỏi từ danh sách bên dưới ạ. (Nếu không thấy nút bấm, anh/chị có thể gõ từ khóa: cư trú, giao thông, căn cước...)",
+        showMenu: true
+      };
+    }
+
+    if (state === 'AGENT_GOP_Y') {
+      const fs = require('fs');
+      const path = require('path');
+      const csvPath = path.join(__dirname, '../data/feedback.csv');
+      
+      if (!fs.existsSync(csvPath)) {
+        fs.writeFileSync(csvPath, '"Timestamp","SenderID","Feedback"\n', 'utf8');
+      }
+      
+      const dateStr = new Date().toISOString();
+      const escapedMessage = messageText ? messageText.replace(/"/g, '""') : '[Không có nội dung]';
+      const csvLine = `"${dateStr}","${userId}","${escapedMessage}"\n`;
+      fs.appendFileSync(csvPath, csvLine, 'utf8');
+      
+      await db.setSession(userId, 'MAIN_MENU');
+      return {
+        text: "[Chatbot Auto] Cảm ơn anh/chị đã góp ý! Ý kiến của anh/chị đã được ghi nhận. Hệ thống xin phép quay về Menu chính.",
         showMenu: true
       };
     }

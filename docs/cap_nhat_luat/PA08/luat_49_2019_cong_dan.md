@@ -1,0 +1,12 @@
+# Luật Xuất cảnh, nhập cảnh của công dân Việt Nam năm 2019
+- **Số/ký hiệu:** 49/2019/QH14
+- **Ngày ban hành:** 22/11/2019
+- **Hiệu lực:** 01/07/2020
+- **Cơ quan ban hành:** Quốc hội
+- **Thay thế VB nào:** Là luật chuyên ngành đầu tiên về xuất nhập cảnh của công dân Việt Nam (trước đó điều chỉnh bằng các nghị định, thông tư). Đã được sửa đổi, bổ sung bởi Luật 23/2023/QH15 (hiệu lực 15/08/2023).
+- **Tóm tắt điểm chính:** Luật hóa việc cấp giấy tờ xuất nhập cảnh cho công dân (hộ chiếu ngoại giao, hộ chiếu công vụ, hộ chiếu phổ thông, giấy thông hành); đơn giản hóa thủ tục cấp hộ chiếu, tạo điều kiện thuận lợi tối đa cho công dân; quy định quyền, nghĩa vụ của công dân và trách nhiệm của cơ quan quản lý xuất nhập cảnh; quy định các trường hợp bị tạm hoãn xuất cảnh.
+- **Tác động tới lĩnh vực nào trong data/:** Là văn bản nền tảng cho nội dung về hộ chiếu/xuất nhập cảnh công dân Việt Nam trong `data/knowledge/PA08/ngoai_kieu.txt` (hoặc mục tương ứng). Cần đọc hợp nhất với Luật 23/2023 (bổ sung "nơi sinh" trên hộ chiếu, nộp hồ sơ trực tuyến). **Lưu ý mô hình 2 cấp:** cấp hộ chiếu phổ thông thuộc thẩm quyền Phòng QLXNC (PA08) Công an cấp tỉnh; Công an phường chủ yếu hướng dẫn và hỗ trợ nộp hồ sơ trực tuyến.
+- **Link nguồn chính thống:**
+  - Cổng TTĐT Chính phủ: https://vanban.chinhphu.vn/default.aspx?pageid=27160&docid=198548
+  - Văn bản gốc vbpl.vn: https://vbpl.vn/TW/Pages/vbpq-van-ban-goc.aspx?ItemID=139880
+  - Thư viện pháp luật: https://thuvienphapluat.vn/van-ban/Quyen-dan-su/Luat-Xuat-canh-nhap-canh-cua-cong-dan-Viet-Nam-2019-402073.aspx

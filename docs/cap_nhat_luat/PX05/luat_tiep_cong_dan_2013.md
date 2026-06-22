@@ -1,0 +1,14 @@
+# Luật Tiếp công dân năm 2013
+- **Số/ký hiệu:** 42/2013/QH13
+- **Ngày ban hành:** 25/11/2013
+- **Hiệu lực:** 01/07/2014
+- **Cơ quan ban hành:** Quốc hội (khóa XIII)
+- **Thay thế VB nào:** Văn bản đầu tiên chuyên biệt về tiếp công dân (trước đó nằm rải rác trong Luật Khiếu nại, tố cáo). Được sửa đổi, bổ sung bởi Luật 136/2025/QH15 (hiệu lực 01/7/2026).
+- **Tóm tắt điểm chính:**
+  - Quy định việc tiếp công dân đến khiếu nại, tố cáo, kiến nghị, phản ánh; trách nhiệm tiếp công dân; tổ chức hoạt động tiếp công dân tại trụ sở/địa điểm tiếp công dân.
+  - Quy định trách nhiệm tiếp công dân định kỳ và đột xuất của người đứng đầu cơ quan.
+  - Quyền và nghĩa vụ của người đến khiếu nại, tố cáo, kiến nghị, phản ánh; quy định về từ chối tiếp công dân trong một số trường hợp.
+- **Tác động tới lĩnh vực nào trong data/:** Văn bản nền tảng cho khía cạnh tiếp công dân tại `data/knowledge/PX05/khieu_nai_to_cao.txt`. Hiện file tập trung vào thủ tục khiếu nại/tố cáo; nên bổ sung nội dung tiếp công dân tại Công an cấp xã/phường (gắn với TT 78/2025/TT-BCA về bố trí địa điểm, trực ban tiếp dân).
+- **Link nguồn chính thống:**
+  - https://vbpl.vn/thanhtrachinhphu/Pages/vbpq-luocdo.aspx?ItemID=27325 (Cơ sở dữ liệu VBQPPL)
+  - https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/3/28-vbhn-vpqh.pdf (hợp nhất với Luật Khiếu nại)

@@ -108,9 +108,21 @@ describe('admin.js login rate limiting', () => {
     expect(retry).toBeLessThanOrEqual(LOGIN_WINDOW_MS / 1000);
   });
 
-  test('getClientIp prefers first x-forwarded-for entry, then req.ip, then socket', () => {
-    expect(getClientIp({ headers: { 'x-forwarded-for': '1.2.3.4, 5.6.7.8' } })).toBe('1.2.3.4');
-    expect(getClientIp({ headers: {}, ip: '9.9.9.9' })).toBe('9.9.9.9');
+  test('getClientIp uses real socket address and ignores spoofable X-Forwarded-For', () => {
+    // XFF do client tự đặt → KHÔNG được dùng (chống né rate-limit). Phải lấy IP kết nối thật.
+    expect(getClientIp({ headers: { 'x-forwarded-for': '1.2.3.4' }, socket: { remoteAddress: '8.8.8.8' } })).toBe('8.8.8.8');
     expect(getClientIp({ headers: {}, socket: { remoteAddress: '8.8.8.8' } })).toBe('8.8.8.8');
+    expect(getClientIp({ headers: {} })).toBe('unknown');
+  });
+
+  test('global counter blocks brute-force spread across many spoofed IPs', () => {
+    const t = 5_000_000;
+    // Mỗi lần một IP khác nhau → per-IP không bao giờ chạm ngưỡng, nhưng tổng thể thì có.
+    for (let i = 0; i < LOGIN_GLOBAL_MAX_FAILURES; i++) {
+      recordLoginFailure('192.168.50.' + i, t);
+    }
+    // Một IP hoàn toàn mới vẫn bị chặn vì tổng số lần sai đã vượt ngưỡng toàn cục.
+    expect(isLoginBlocked('203.0.113.9', t)).toBe(true);
+    resetLoginFailures('cleanup'); // dọn bộ đếm toàn cục cho các test khác
   });
 });

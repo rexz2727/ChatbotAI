@@ -60,17 +60,25 @@ function checkPassword(password) {
 
 // Brute-force protection for /api/login. Admin runs as a single process, so an
 // in-memory Map keyed by IP is sufficient (no shared store / extra dependency).
-const LOGIN_MAX_FAILURES = 5;
+// Hai chiều: per-IP + tổng thể (1 tài khoản admin) — tổng thể chặn kẻ đổi IP để né per-IP.
+const LOGIN_MAX_FAILURES = 5;            // mỗi IP nguồn
+const LOGIN_GLOBAL_MAX_FAILURES = 20;    // toàn bộ IP cộng lại
 const LOGIN_WINDOW_MS = 15 * 60 * 1000;
 const loginFailures = new Map();
+let globalFailures = { count: 0, firstAt: 0 };
 
 function getClientIp(req) {
-  const xff = req.headers && req.headers['x-forwarded-for'];
-  if (xff) return String(xff).split(',')[0].trim();
-  return req.ip || (req.socket && req.socket.remoteAddress) || 'unknown';
+  // Admin (port 3001) nhận kết nối TRỰC TIẾP qua LAN/Tailscale — KHÔNG nằm sau proxy tin cậy.
+  // Không dùng X-Forwarded-For (client tự đặt được → né rate-limit). Dùng IP socket thật.
+  return (req.socket && req.socket.remoteAddress) || req.ip || 'unknown';
+}
+
+function globalWindowActive(now) {
+  return globalFailures.count > 0 && now >= globalFailures.firstAt && (now - globalFailures.firstAt) <= LOGIN_WINDOW_MS;
 }
 
 function isLoginBlocked(ip, now = Date.now()) {
+  if (globalWindowActive(now) && globalFailures.count >= LOGIN_GLOBAL_MAX_FAILURES) return true;
   const entry = loginFailures.get(ip);
   if (!entry) return false;
   if (now - entry.firstAt > LOGIN_WINDOW_MS) {
@@ -87,16 +95,24 @@ function recordLoginFailure(ip, now = Date.now()) {
   } else {
     entry.count += 1;
   }
+  if (!globalWindowActive(now)) globalFailures = { count: 1, firstAt: now };
+  else globalFailures.count += 1;
 }
 
 function resetLoginFailures(ip) {
   loginFailures.delete(ip);
+  globalFailures = { count: 0, firstAt: 0 };
 }
 
 function loginRetryAfterSeconds(ip, now = Date.now()) {
+  let end = 0;
   const entry = loginFailures.get(ip);
-  if (!entry) return 0;
-  return Math.max(1, Math.ceil((entry.firstAt + LOGIN_WINDOW_MS - now) / 1000));
+  if (entry) end = entry.firstAt + LOGIN_WINDOW_MS;
+  if (globalWindowActive(now) && globalFailures.count >= LOGIN_GLOBAL_MAX_FAILURES) {
+    end = Math.max(end, globalFailures.firstAt + LOGIN_WINDOW_MS);
+  }
+  if (end === 0) return 0;
+  return Math.max(1, Math.ceil((end - now) / 1000));
 }
 
 function parseCookies(header) {
@@ -451,5 +467,6 @@ module.exports = {
   resetLoginFailures,
   loginRetryAfterSeconds,
   LOGIN_MAX_FAILURES,
+  LOGIN_GLOBAL_MAX_FAILURES,
   LOGIN_WINDOW_MS,
 };

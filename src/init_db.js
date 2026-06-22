@@ -91,7 +91,7 @@ const collectionsConfig = [
   { name: "db_giao_thong", files: ["PC08/giao_thong.txt"] },
   { name: "db_an_ninh", files: ["PC06/an_ninh_trat_tu.txt", "PC07/pccc_cnch.txt", "PA05/an_ninh_mang.txt"] },
   { name: "db_ngoai_kieu", files: ["PA08/ngoai_kieu.txt"] },
-  { name: "db_khieu_nai", files: ["thanh_tra/khieu_nai_to_cao.txt", "cqdt/to_giac_tin_bao_toi_pham.txt"] },
+  { name: "db_khieu_nai", files: ["PX05/khieu_nai_to_cao.txt", "PC01/to_giac_tin_bao_toi_pham.txt"] },
   { name: "db_thu_tuc_hanh_chinh", files: ["_chung/thu_tuc_hanh_chinh.txt"] },
   { name: "db_lien_he", files: ["_chung/lien_he_co_quan.txt"] }
 ];

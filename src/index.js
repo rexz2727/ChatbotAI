@@ -180,7 +180,7 @@ app.post('/webhook/facebook', async (req, res) => {
             continue;
           }
           const result = await chatbot.handleUserMessage(senderId, messageText, payload);
-          await sendFacebookResponse(senderId, result);
+          await sendFacebookResponse(senderId, result, req);
 
           // Mark message as processed after successful handling
           if (webhookEvent.message && webhookEvent.message.mid) {
@@ -202,15 +202,21 @@ app.post('/webhook/facebook', async (req, res) => {
 });
 
 // Facebook Send API Helper
-async function sendFacebookResponse(recipientId, result) {
+async function sendFacebookResponse(recipientId, result, req) {
   const url = `https://graph.facebook.com/v19.0/me/messages?access_token=${process.env.FB_PAGE_ACCESS_TOKEN}`;
   
   let messageData = {};
   if (result.isFile) {
+    let fileUrl = result.fileUrl;
+    if (req && fileUrl.startsWith('/')) {
+      const protocol = req.headers['x-forwarded-proto'] || req.protocol;
+      const host = req.get('host');
+      fileUrl = `${protocol}://${host}${fileUrl}`;
+    }
     messageData = {
       attachment: {
         type: "file",
-        payload: { url: result.fileUrl, is_reusable: true }
+        payload: { url: fileUrl, is_reusable: true }
       }
     };
   } else if (result.quickReplies && result.quickReplies.length > 0) {

@@ -12,7 +12,7 @@ const responses = {
   // === CẤP LẦN ĐẦU ===
   'FLOW_CAN_CUOC_LANDAU_MAIN': {
     agentState: 'AGENT_CAN_CUOC',
-    text: `[CẤP CĂN CƯỚC LẦN ĐẦU]\n\nDành cho công dân đủ 14 tuổi trở lên chưa từng làm Căn cước.\nThời hạn giải quyết: 07 ngày làm việc.\nLệ phí: MIỄN PHÍ hoàn toàn.\n\n📺 *Video Toàn Cảnh Quy Trình:* https://youtube.com/watch?v=CanCuocLanDau`,
+    text: `[CẤP CĂN CƯỚC LẦN ĐẦU]\n\nDành cho công dân đủ 14 tuổi trở lên chưa từng làm Căn cước.\nThời hạn giải quyết: 07 ngày làm việc.\nLệ phí: MIỄN PHÍ hoàn toàn.\n\n📺 *Video Toàn Cảnh Quy Trình:* https://youtube.com/watch?v=oQf7MYWwHJY`,
     afterReplies: [
       { title: "Hồ sơ & Nơi làm", payload: "FLOW_CAN_CUOC_LANDAU_HOSO" },
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }
@@ -39,7 +39,7 @@ const responses = {
   },
   'FLOW_CAN_CUOC_CAPLAI_ONLINE': {
     agentState: 'AGENT_CAN_CUOC',
-    text: `[LÀM LẠI CĂN CƯỚC KHI BỊ MẤT THẺ TRÊN VNeID]\n\n*Tin vui:* Nếu bạn mới làm CCCD chưa quá 5 năm (còn lưu mống mắt/vân tay), bạn không cần đến cơ quan Công an!\n\n📌 *Bước 1:* Mở ứng dụng VNeID, vào mục Dịch vụ công.\n📌 *Bước 2:* Chọn "Cấp lại thẻ Căn cước".\n📌 *Bước 3:* Xác nhận thông tin và thanh toán lệ phí online.\n📌 *Bước 4:* Đăng ký nhận thẻ Căn cước mới qua Bưu điện giao tận nhà.\n\n📺 *Video Hướng Dẫn:* https://youtube.com/watch?v=CapLaiCanCuoc_VNeID`,
+    text: `[LÀM LẠI CĂN CƯỚC KHI BỊ MẤT THẺ TRÊN VNeID]\n\n*Tin vui:* Nếu bạn mới làm CCCD chưa quá 5 năm (còn lưu mống mắt/vân tay), bạn không cần đến cơ quan Công an!\n\n📌 *Bước 1:* Mở ứng dụng VNeID, vào mục Dịch vụ công.\n📌 *Bước 2:* Chọn "Cấp lại thẻ Căn cước".\n📌 *Bước 3:* Xác nhận thông tin và thanh toán lệ phí online.\n📌 *Bước 4:* Đăng ký nhận thẻ Căn cước mới qua Bưu điện giao tận nhà.\n\n📺 *Video Hướng Dẫn:* https://www.youtube.com/watch?v=R0VJjNcalCM`,
     afterReplies: [
       { title: "Quay lại", payload: "FLOW_CAN_CUOC_CAPLAI_MAIN" },
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }
@@ -66,7 +66,7 @@ const responses = {
   },
   'FLOW_CAN_CUOC_TREEM_DUOI6': {
     agentState: 'AGENT_CAN_CUOC',
-    text: `[TRẺ DƯỚI 6 TUỔI]\n\n- Bố/mẹ thao tác 100% qua app VNeID.\n- Không thu nhận vân tay, không chụp ảnh khuôn mặt, không lấy mống mắt.\n- Thẻ sẽ được cấp và gửi về tận nhà.\n\n📺 *Video Hướng Dẫn VNeID:* https://youtube.com/watch?v=CanCuocTreEmDuoi6`,
+    text: `[TRẺ DƯỚI 6 TUỔI]\n\n- Bố/mẹ thao tác 100% qua app VNeID.\n- Không thu nhận vân tay, không chụp ảnh khuôn mặt, không lấy mống mắt.\n- Thẻ sẽ được cấp và gửi về tận nhà.\n\n📺 *Video Hướng Dẫn VNeID:* https://www.youtube.com/watch?v=nv2S49avDhY`,
     afterReplies: [
       { title: "Quay lại", payload: "FLOW_CAN_CUOC_TREEM_MAIN" },
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }

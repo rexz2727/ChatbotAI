@@ -23,7 +23,7 @@ const responses = {
   },
   'FLOW_CU_TRU_TT_HOSO': {
     agentState: 'AGENT_CU_TRU',
-    text: `[HỒ SƠ ĐĂNG KÝ THƯỜNG TRÚ]\n\nBao gồm:\n1. Tờ khai thay đổi thông tin cư trú (Mẫu CT01). Tải mẫu: https://phuongbinhduong.gov.vn/forms/CT01.pdf\n2. Giấy tờ chứng minh chỗ ở hợp pháp (Sổ đỏ, Hợp đồng mua bán, hoặc Hợp đồng thuê nhà có công chứng).\n3. Nếu nhập khẩu vào nhà người thân: Phải có chữ ký đồng ý của Chủ hộ vào Tờ khai CT01.\n\n📺 *Video Hướng Dẫn Cách Viết Tờ Khai CT01:* https://youtube.com/watch?v=HuongDan_CT01`,
+    text: `[HỒ SƠ ĐĂNG KÝ THƯỜNG TRÚ]\n\nBao gồm:\n1. Tờ khai thay đổi thông tin cư trú (Mẫu CT01). Tải mẫu: Xin gõ "xin biểu mẫu CT01"\n2. Giấy tờ chứng minh chỗ ở hợp pháp (Sổ đỏ, Hợp đồng mua bán, hoặc Hợp đồng thuê nhà có công chứng).\n3. Nếu nhập khẩu vào nhà người thân: Phải có chữ ký đồng ý của Chủ hộ vào Tờ khai CT01.\n\n📺 *Video Hướng Dẫn Cách Viết Tờ Khai CT01:* https://www.youtube.com/watch?v=dxzEhyfv750`,
     afterReplies: [
       { title: "Xem cách nộp Online", payload: "FLOW_CU_TRU_TT_ONLINE" },
       { title: "Quay lại Thường trú", payload: "FLOW_CU_TRU_THUONG_TRU_MAIN" },
@@ -32,7 +32,7 @@ const responses = {
   },
   'FLOW_CU_TRU_TT_ONLINE': {
     agentState: 'AGENT_CU_TRU',
-    text: `[NỘP HỒ SƠ ONLINE QUA VNeID/DVC]\n\nKhuyến khích nộp Online để được GIẢM 50% LỆ PHÍ!\n\n📌 *Bước 1:* Đăng nhập VNeID (Mức 2) hoặc Cổng DVC (dichvucong.gov.vn).\n📌 *Bước 2:* Chụp ảnh bản gốc rõ nét các giấy tờ đã chuẩn bị.\n📌 *Bước 3:* Chọn "Đăng ký thường trú", điền form điện tử và đính kèm ảnh chụp.\n📌 *Bước 4:* Thanh toán lệ phí trực tuyến.\n\n📺 *Video Hướng Dẫn Thao Tác Trên VNeID:* https://youtube.com/watch?v=NopCuTruOnline`,
+    text: `[NỘP HỒ SƠ ONLINE QUA VNeID/DVC]\n\nKhuyến khích nộp Online để được GIẢM 50% LỆ PHÍ!\n\n📌 *Bước 1:* Đăng nhập VNeID (Mức 2) hoặc Cổng DVC (dichvucong.gov.vn).\n📌 *Bước 2:* Chụp ảnh bản gốc rõ nét các giấy tờ đã chuẩn bị.\n📌 *Bước 3:* Chọn "Đăng ký thường trú", điền form điện tử và đính kèm ảnh chụp.\n📌 *Bước 4:* Thanh toán lệ phí trực tuyến.\n\n📺 *Video Hướng Dẫn Thao Tác Trên VNeID:* https://www.youtube.com/watch?v=dxzEhyfv750`,
     afterReplies: [
       { title: "Quay lại Thường trú", payload: "FLOW_CU_TRU_THUONG_TRU_MAIN" },
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }
@@ -68,7 +68,7 @@ const responses = {
   },
   'FLOW_CU_TRU_TAMT_HOSO': {
     agentState: 'AGENT_CU_TRU',
-    text: `[HỒ SƠ ĐĂNG KÝ TẠM TRÚ]\n\n1. Tờ khai CT01.\n2. Bản sao CCCD.\n3. Hợp đồng thuê nhà (hoặc văn bản đồng ý cho ở nhờ của chủ nhà).\n\n📺 *Video Hướng Dẫn:* https://youtube.com/watch?v=HuongDan_TamTru`,
+    text: `[HỒ SƠ ĐĂNG KÝ TẠM TRÚ]\n\n1. Tờ khai CT01.\n2. Bản sao CCCD.\n3. Hợp đồng thuê nhà (hoặc văn bản đồng ý cho ở nhờ của chủ nhà).\n\n📺 *Video Hướng Dẫn:* https://www.youtube.com/watch?v=WC_mnMmiqL4`,
     afterReplies: [
       { title: "Quay lại Tạm trú", payload: "FLOW_CU_TRU_TAM_TRU_MAIN" },
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }
@@ -76,7 +76,7 @@ const responses = {
   },
   'FLOW_CU_TRU_TAMT_ONLINE': {
     agentState: 'AGENT_CU_TRU',
-    text: `[NỘP TẠM TRÚ ONLINE]\n\nBạn hoàn toàn có thể ngồi tại nhà khai báo tạm trú qua app VNeID hoặc Cổng Dịch Vụ Công Bộ Công An.\nSau khi duyệt thành công (tối đa 3 ngày), hệ thống sẽ gửi tin nhắn SMS thông báo hoàn tất.\n\n📺 *Video Thao Tác VNeID:* https://youtube.com/watch?v=TamTruVneID`,
+    text: `[NỘP TẠM TRÚ ONLINE]\n\nBạn hoàn toàn có thể ngồi tại nhà khai báo tạm trú qua app VNeID hoặc Cổng Dịch Vụ Công Bộ Công An.\nSau khi duyệt thành công (tối đa 3 ngày), hệ thống sẽ gửi tin nhắn SMS thông báo hoàn tất.\n\n📺 *Video Thao Tác VNeID:* https://www.youtube.com/watch?v=WC_mnMmiqL4`,
     afterReplies: [
       { title: "Quay lại Tạm trú", payload: "FLOW_CU_TRU_TAM_TRU_MAIN" },
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }

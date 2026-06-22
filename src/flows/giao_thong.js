@@ -30,7 +30,7 @@ const responses = {
   },
   'FLOW_GT_DANGKY_QUYTRINH': {
     agentState: 'AGENT_GIAO_THONG',
-    text: `[QUY TRÌNH XÉT XE TẠI PHƯỜNG]\n\n📌 *Bước 1:* Chủ xe kê khai Đăng ký xe trên Cổng DVC Bộ Công an, lấy "Mã hồ sơ".\n📌 *Bước 2:* Đem xe và toàn bộ hồ sơ gốc ra Trụ sở Công an Phường.\n📌 *Bước 3:* Cán bộ tiến hành cà số khung, số máy và đối chiếu xe thực tế.\n📌 *Bước 4:* Bấm biển số ngẫu nhiên trên hệ thống và nộp lệ phí biển số.\n📌 *Bước 5:* Nhận biển số ngay và chờ giấy chứng nhận đăng ký xe.\n\n📺 *Video Hướng dẫn:* https://youtube.com/watch?v=DangKyXeMayPhuong`,
+    text: `[QUY TRÌNH XÉT XE TẠI PHƯỜNG]\n\n📌 *Bước 1:* Chủ xe kê khai Đăng ký xe trên Cổng DVC Bộ Công an, lấy "Mã hồ sơ".\n📌 *Bước 2:* Đem xe và toàn bộ hồ sơ gốc ra Trụ sở Công an Phường.\n📌 *Bước 3:* Cán bộ tiến hành cà số khung, số máy và đối chiếu xe thực tế.\n📌 *Bước 4:* Bấm biển số ngẫu nhiên trên hệ thống và nộp lệ phí biển số.\n📌 *Bước 5:* Nhận biển số ngay và chờ giấy chứng nhận đăng ký xe.\n\n*(Video hướng dẫn chi tiết đang được cập nhật)*`,
     afterReplies: [
       { title: "Quay lại Giao thông", payload: "FLOW_GT_DANGKY_MAIN" },
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }
@@ -48,7 +48,7 @@ const responses = {
   // === PHẠT NGUỘI ===
   'FLOW_GT_PHATNGUOI_MAIN': {
     agentState: 'AGENT_GIAO_THONG',
-    text: `[TRA CỨU & NỘP PHẠT NGUỘI]\n\nBạn có thể tự tra cứu và nộp phạt online tại nhà mà không cần ra cơ quan Công an.\n\n📺 *Video Tra Cứu và Nộp Phạt:* https://youtube.com/watch?v=TraCuuPhatNguoi`,
+    text: `[TRA CỨU & NỘP PHẠT NGUỘI]\n\nBạn có thể tự tra cứu và nộp phạt online tại nhà mà không cần ra cơ quan Công an.\n\n*(Video hướng dẫn nộp phạt đang được cập nhật)*`,
     afterReplies: [
       { title: "Link Tra Cứu Vi Phạm", payload: "FLOW_GT_PHATNGUOI_LINK" },
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }
@@ -66,7 +66,7 @@ const responses = {
   // === ĐỔI BẰNG LÁI ===
   'FLOW_GT_GPLX_MAIN': {
     agentState: 'AGENT_GIAO_THONG',
-    text: `[ĐỔI GIẤY PHÉP LÁI XE (GPLX)]\n\n- Cơ quan cấp: Sở Giao thông Vận tải (Công an Phường không cấp GPLX).\n- Đổi Online toàn quốc qua Cổng DVC Quốc gia (yêu cầu có Giấy khám sức khỏe điện tử).\n- Lệ phí đổi GPLX: 135.000đ.\n\n📺 *Video Hướng Dẫn Nộp Online:* https://youtube.com/watch?v=DoiGPLX_Online`,
+    text: `[ĐỔI GIẤY PHÉP LÁI XE (GPLX)]\n\n- Cơ quan cấp: Sở Giao thông Vận tải (Công an Phường không cấp GPLX).\n- Đổi Online toàn quốc qua Cổng DVC Quốc gia (yêu cầu có Giấy khám sức khỏe điện tử).\n- Lệ phí đổi GPLX: 135.000đ.\n\n📺 *Video Hướng Dẫn Nộp Online:* https://www.youtube.com/watch?v=vwwSydJlWao`,
     afterReplies: [
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }
     ]

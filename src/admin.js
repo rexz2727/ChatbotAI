@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const db = require('./db');
+const multer = require('multer');
 
 const app = express();
 const PORT = 3001;
@@ -61,6 +62,69 @@ app.get('/api/feedback', (req, res) => {
     res.json(feedbackList.reverse());
   } catch (error) {
     res.status(500).json({ error: 'Failed to read feedback' });
+  }
+});
+
+const formsDir = path.join(__dirname, '../data/forms');
+
+if (!fs.existsSync(formsDir)) {
+  fs.mkdirSync(formsDir, { recursive: true });
+}
+
+// Serve forms statically so they can be downloaded by the frontend
+app.use('/forms', express.static(formsDir));
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, formsDir);
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  }
+});
+const upload = multer({ storage });
+
+// List forms
+app.get('/api/forms', (req, res) => {
+  try {
+    const files = fs.readdirSync(formsDir).filter(f => !f.startsWith('.'));
+    const fileList = files.map(file => {
+      const stats = fs.statSync(path.join(formsDir, file));
+      return {
+        name: file,
+        size: stats.size,
+        updatedAt: stats.mtime
+      };
+    });
+    res.json(fileList);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to list forms' });
+  }
+});
+
+// Upload form
+app.post('/api/forms', upload.single('formFile'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
+  res.json({ message: 'File uploaded successfully', file: req.file.originalname });
+});
+
+// Delete form
+app.delete('/api/forms/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(formsDir, filename);
+  
+  // Security check to prevent directory traversal
+  if (filePath.indexOf(formsDir) !== 0) {
+    return res.status(403).json({ error: 'Invalid path' });
+  }
+  
+  if (fs.existsSync(filePath)) {
+    fs.unlinkSync(filePath);
+    res.json({ message: 'File deleted successfully' });
+  } else {
+    res.status(404).json({ error: 'File not found' });
   }
 });
 

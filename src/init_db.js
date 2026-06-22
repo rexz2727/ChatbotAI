@@ -86,21 +86,21 @@ const geminiEmbeddingFunction = {
 };
 
 const collectionsConfig = [
-  { name: "db_cu_tru", file: "cu_tru.txt" },
-  { name: "db_can_cuoc", file: "can_cuoc.txt" },
-  { name: "db_giao_thong", file: "giao_thong.txt" },
-  { name: "db_an_ninh", file: "an_ninh.txt" },
-  { name: "db_ngoai_kieu", file: "ngoai_kieu.txt" },
-  { name: "db_khieu_nai", file: "khieu_nai.txt" },
-  { name: "db_thu_tuc_hanh_chinh", file: "thu_tuc_hanh_chinh.txt" },
-  { name: "db_lien_he", file: "lien_he_co_quan.txt" }
+  { name: "db_cu_tru", files: ["PC06/cu_tru.txt"] },
+  { name: "db_can_cuoc", files: ["PC06/can_cuoc.txt"] },
+  { name: "db_giao_thong", files: ["PC08/giao_thong.txt"] },
+  { name: "db_an_ninh", files: ["PC06/an_ninh_trat_tu.txt", "PC07/pccc_cnch.txt", "PA05/an_ninh_mang.txt"] },
+  { name: "db_ngoai_kieu", files: ["PA08/ngoai_kieu.txt"] },
+  { name: "db_khieu_nai", files: ["thanh_tra/khieu_nai_to_cao.txt", "cqdt/to_giac_tin_bao_toi_pham.txt"] },
+  { name: "db_thu_tuc_hanh_chinh", files: ["_chung/thu_tuc_hanh_chinh.txt"] },
+  { name: "db_lien_he", files: ["_chung/lien_he_co_quan.txt"] }
 ];
 
 async function seed() {
   console.log("Starting database seeding process...");
   for (const config of collectionsConfig) {
     console.log(`\n--------------------------------------------`);
-    console.log(`Processing collection: ${config.name} from ${config.file}...`);
+    console.log(`Processing collection: ${config.name} from files: ${config.files.join(', ')}...`);
     
     // Delete existing collection if it exists
     try {
@@ -116,36 +116,40 @@ async function seed() {
       embeddingFunction: geminiEmbeddingFunction
     });
 
-    const filePath = path.join(__dirname, '..', 'data', config.file);
-    if (!fs.existsSync(filePath)) {
-      console.error(`File not found: ${filePath}`);
-      continue;
-    }
-
-    const rawText = fs.readFileSync(filePath, 'utf-8');
-    
-    // Chunking by double newlines or empty lines
-    const paragraphs = rawText
-      .split(/\r?\n\r?\n/)
-      .map(p => p.trim())
-      .filter(p => p.length > 10); // Ignore small lines or title headers without body
-
-    if (paragraphs.length === 0) {
-      console.warn(`No valid content found to seed in ${config.file}`);
-      continue;
-    }
-
-    console.log(`Split ${config.file} into ${paragraphs.length} paragraphs/chunks.`);
-
     const documents = [];
     const ids = [];
     const metadatas = [];
+    let globalChunkIndex = 0;
 
-    paragraphs.forEach((para, index) => {
-      documents.push(para);
-      ids.push(`${config.name}_chunk_${index}`);
-      metadatas.push({ source: config.file, chunk_index: index });
-    });
+    for (const file of config.files) {
+      const filePath = path.join(__dirname, '..', 'data', file);
+      if (!fs.existsSync(filePath)) {
+        console.error(`File not found: ${filePath}`);
+        continue;
+      }
+
+      const rawText = fs.readFileSync(filePath, 'utf-8');
+      
+      // Chunking by double newlines or empty lines
+      const paragraphs = rawText
+        .split(/\r?\n\r?\n/)
+        .map(p => p.trim())
+        .filter(p => p.length > 10); // Ignore small lines or title headers without body
+
+      if (paragraphs.length === 0) {
+        console.warn(`No valid content found to seed in ${file}`);
+        continue;
+      }
+
+      console.log(`Split ${file} into ${paragraphs.length} paragraphs/chunks.`);
+
+      paragraphs.forEach((para) => {
+        documents.push(para);
+        ids.push(`${config.name}_chunk_${globalChunkIndex}`);
+        metadatas.push({ source: file, chunk_index: globalChunkIndex });
+        globalChunkIndex++;
+      });
+    }
 
     // Insert documents in batches to avoid overwhelming embedding APIs
     const batchSize = 10;

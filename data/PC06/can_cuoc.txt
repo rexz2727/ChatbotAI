@@ -3,13 +3,19 @@ CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
 Độc lập - Tự do - Hạnh phúc
 ----------------
 
-CÔNG AN PHƯỜNG TRUNG TÂM
+CÔNG AN PHƯỜNG BÌNH DƯƠNG
 BỘ PHẬN TIẾP NHẬN VÀ TRẢ KẾT QUẢ CẤP CĂN CƯỚC
 
 TÀI LIỆU HƯỚNG DẪN THỦ TỤC HÀNH CHÍNH VỀ CĂN CƯỚC VÀ ĐỊNH DANH ĐIỆN TỬ
 (Cập nhật mới nhất theo Luật Căn cước số 26/2023/QH15, Nghị định số 70/2024/NĐ-CP, Nghị định số 58/2026/NĐ-CP của Chính phủ và các Thông tư hướng dẫn của Bộ Công an)
 
 ========================================================================
+
+LƯU Ý — NƠI TIẾP NHẬN THỦ TỤC CĂN CƯỚC (ÁP DỤNG 2 MỐC THỜI GIAN):
+- Đến hết 30/6/2026: tiếp nhận tại điểm cấp căn cước hiện hành (do cơ quan Công an cấp tỉnh/khu vực bố trí theo từng địa bàn).
+- Từ 01/7/2026: chuyển về Công an cấp xã/phường, tiếp nhận liên thông toàn tỉnh (người dân được nộp hồ sơ tại bất kỳ Công an xã/phường nào trong cùng tỉnh/thành phố).
+Các mục hướng dẫn bên dưới ghi "cơ quan Công an có thẩm quyền cấp căn cước" đều áp dụng 2 mốc trên.
+------------------------------------------------------------------------
 
 MỤC I. THỦ TỤC CẤP THẺ CĂN CƯỚC LẦN ĐẦU CHO NGƯỜI TỪ ĐỦ 14 TUỔI TRỞ LÊN
 
@@ -49,7 +55,7 @@ MỤC I. THỦ TỤC CẤP THẺ CĂN CƯỚC LẦN ĐẦU CHO NGƯỜI TỪ Đ�
 
 6. Trình tự thực hiện (từng bước):
 
-- Bước 1: Công dân đăng ký lịch hẹn cấp thẻ Căn cước qua Cổng dịch vụ công Bộ Công an hoặc ứng dụng VNeID để chủ động thời gian, hoặc trực tiếp đến trụ sở Công an quận/huyện hoặc Đội Cảnh sát QLHC về TTXH Công an cấp huyện có thẩm quyền (hoặc điểm cấp lưu động tại Công an phường Trung Tâm theo kế hoạch công tác).
+- Bước 1: Công dân đăng ký lịch hẹn cấp thẻ Căn cước qua Cổng dịch vụ công Bộ Công an hoặc ứng dụng VNeID để chủ động thời gian, hoặc trực tiếp đến cơ quan Công an có thẩm quyền cấp căn cước (xem mốc chuyển đổi từ 01/7/2026) hoặc điểm cấp lưu động tại Công an phường Bình Dương theo kế hoạch công tác.
 
 - Bước 2: Cán bộ tiếp nhận đối chiếu thông tin công dân trên Cơ sở dữ liệu quốc gia về dân cư. Nếu thông tin đầy đủ và chính xác, tiến hành in Phiếu thu nhận thông tin căn cước (CC01).
 
@@ -109,7 +115,7 @@ MỤC II. THỦ TỤC CẤP THẺ CĂN CƯỚC LẦN ĐẦU CHO NGƯỜI DƯỚI
   + Trẻ em từ đủ 6 tuổi đến dưới 14 tuổi bắt buộc phải đi cùng cha, mẹ hoặc người giám hộ hợp pháp đến cơ quan Công an để thu nhận sinh trắc học.
 - Lệ phí: Miễn lệ phí cấp lần đầu.
 - Trình tự thực hiện:
-  + Bước 1: Cha, mẹ hoặc người giám hộ đưa trẻ đến trụ sở Công an cấp huyện hoặc điểm cấp Căn cước lưu động.
+  + Bước 1: Cha, mẹ hoặc người giám hộ đưa trẻ đến cơ quan Công an có thẩm quyền cấp căn cước (xem mốc chuyển đổi từ 01/7/2026) hoặc điểm cấp Căn cước lưu động.
   + Bước 2: Cán bộ kiểm tra thông tin của trẻ và người đại diện đi cùng trên hệ thống dữ liệu.
   + Bước 3: Tiến hành thu nhận sinh trắc học cho trẻ gồm: Ảnh khuôn mặt trực tiếp, vân tay 10 ngón và quét mống mắt của trẻ.
   + Bước 4: Cha, mẹ hoặc người giám hộ kiểm tra thông tin trên Phiếu thu nhận thông tin (CC01) và ký xác nhận thay cho trẻ.
@@ -163,7 +169,7 @@ MỤC III. THỦ TỤC CẤP ĐỔI THẺ CĂN CƯỚC
 
 6. Trình tự thực hiện (từng bước):
 
-- Bước 1: Công dân nộp hồ sơ trực tiếp tại cơ quan Công an cấp huyện hoặc đăng ký hồ sơ cấp đổi trên Cổng dịch vụ công Bộ Công an/ứng dụng VNeID.
+- Bước 1: Công dân nộp hồ sơ trực tiếp tại cơ quan Công an có thẩm quyền cấp căn cước (xem mốc chuyển đổi từ 01/7/2026) hoặc đăng ký hồ sơ cấp đổi trên Cổng dịch vụ công Bộ Công an/ứng dụng VNeID.
 
 - Bước 2: Cán bộ tiếp nhận kiểm tra hồ sơ, đối chiếu thông tin thay đổi. Thu hồi thẻ Căn cước/CCCD cũ đang sử dụng của công dân để thực hiện cắt góc/hủy theo quy định.
 
@@ -216,7 +222,7 @@ MỤC IV. THỦ TỤC CẤP LẠI THẺ CĂN CƯỚC TRỰC TUYẾN QUA VNeID KH
 - Bước 3: Kê khai các thông tin yêu cầu và chọn lý do cấp lại (Bị mất hoặc Bị hỏng). Hệ thống tự động truy xuất dữ liệu cá nhân từ Cơ sở dữ liệu quốc gia về dân cư.
 
 - Bước 4: Lựa chọn hình thức nhận thẻ Căn cước mới:
-  + Nhận trực tiếp tại cơ quan Công an cấp huyện (nơi nộp hồ sơ).
+  + Nhận trực tiếp tại cơ quan Công an có thẩm quyền cấp căn cước (nơi nộp hồ sơ).
   + Nhận tại địa chỉ đăng ký thông qua dịch vụ bưu chính công ích.
 
 - Bước 5: Thực hiện xác thực khuôn mặt (FaceID) trên ứng dụng VNeID để xác nhận chính chủ gửi hồ sơ.
@@ -272,7 +278,7 @@ MỤC VI. TÍCH HỢP THÔNG TIN SINH TRẮC HỌC ADN, GIỌNG NÓI VÀO CƠ S�
   + Bản chính hoặc bản sao có chứng thực Phiếu kết quả xét nghiệm, phân tích, xác định kiểu gen ADN của công dân.
 
 - Trình tự thực hiện:
-  + Bước 1: Công dân mang theo thẻ Căn cước và Phiếu kết quả xét nghiệm ADN đến cơ quan Công an cấp huyện.
+  + Bước 1: Công dân mang theo thẻ Căn cước và Phiếu kết quả xét nghiệm ADN đến cơ quan Công an có thẩm quyền cấp căn cước (xem mốc chuyển đổi từ 01/7/2026).
   + Bước 2: Cán bộ kiểm tra tính pháp lý của giấy tờ xét nghiệm ADN.
   + Bước 3: Thực hiện quét dữ liệu kiểu gen ADN và cập nhật trực tiếp vào hệ thống Cơ sở dữ liệu căn cước của công dân. Dữ liệu này sẽ được mã hóa và bảo mật ở mức độ cao nhất.
 
@@ -281,7 +287,7 @@ MỤC VI. TÍCH HỢP THÔNG TIN SINH TRẮC HỌC ADN, GIỌNG NÓI VÀO CƠ S�
 - Điều kiện: Công dân trực tiếp đến cơ quan Công an đề nghị tích hợp giọng nói.
 
 - Trình tự thực hiện:
-  + Bước 1: Công dân đến cơ quan Công an cấp huyện làm thủ tục tích hợp.
+  + Bước 1: Công dân đến cơ quan Công an có thẩm quyền cấp căn cước (xem mốc chuyển đổi từ 01/7/2026) làm thủ tục tích hợp.
   + Bước 2: Cán bộ sử dụng thiết bị thu âm chuyên dụng đầu vào chuẩn để ghi âm giọng nói của công dân theo đoạn văn bản mẫu quy định (thường là đọc một đoạn văn ngắn hoặc chuỗi số ngẫu nhiên để ghi nhận các đặc trưng âm sắc, tần số giọng nói).
   + Bước 3: Dữ liệu giọng nói sau khi thu âm đạt chuẩn sẽ được số hóa, tạo lập vân phổ giọng nói và tích hợp vào Cơ sở dữ liệu căn cước.
 
@@ -298,7 +304,7 @@ MỤC VII. CÀI ĐẶT, KÍCH HOẠT TÀI KHOẢN ĐỊNH DANH ĐIỆN TỬ MỨ
 - Điều kiện thực hiện: Công dân đã được cấp thẻ Căn cước hoặc thẻ CCCD gắn chíp. Công dân trực tiếp đến cơ quan Công an để thực hiện do cần xác thực sinh trắc học trực tiếp.
 
 - Trình tự thực hiện:
-  + Bước 1: Công dân mang theo thẻ Căn cước đến Công an phường Trung Tâm hoặc Công an cấp huyện.
+  + Bước 1: Công dân mang theo thẻ Căn cước đến Công an phường Bình Dương hoặc cơ quan Công an có thẩm quyền cấp căn cước (xem mốc chuyển đổi từ 01/7/2026).
   + Bước 2: Công dân thông báo số điện thoại chính chủ sử dụng để đăng ký tài khoản định danh điện tử.
   + Bước 3: Cán bộ thực hiện quét mã QR trên thẻ Căn cước, tiến hành chụp ảnh khuôn mặt và thu nhận vân tay của công dân để đối chiếu với Cơ sở dữ liệu quốc gia về dân cư.
   + Bước 4: Sau khi đối chiếu trùng khớp, hệ thống gửi yêu cầu kích hoạt tài khoản Mức 2 lên Bộ Công an phê duyệt.
@@ -342,9 +348,9 @@ MỤC IX. CÁC CÂU HỎI THƯỜNG GẶP (FAQ) VỀ THẺ CĂN CƯỚC
 - Trả lời: Không cần. Đối với trẻ em dưới 6 tuổi, cha mẹ hoặc người giám hộ thực hiện đăng ký cấp thẻ hoàn toàn trực tuyến qua Cổng dịch vụ công hoặc VNeID. Cơ quan Công an sẽ sản xuất thẻ dựa trên thông tin dữ liệu dân cư và khai sinh liên thông mà không thu nhận bất kỳ dữ liệu sinh trắc học nào (vân tay, ảnh chân dung, mống mắt) của trẻ dưới 6 tuổi.
 
 ------------------------------------------------------------------------
-Đường dây nóng hỗ trợ giải quyết thủ tục căn cước Công an Phường Trung Tâm: 0243.xxx.xxxx
-Địa chỉ trụ sở tiếp dân trực tiếp: Số 12, Đường Lý Tự Trọng, Phường Trung Tâm.
-Đội Cảnh sát QLHC về TTXH Công an Quận tiếp nhận hồ sơ cấp Căn cước các ngày làm việc trong tuần.
+Đường dây nóng hỗ trợ giải quyết thủ tục căn cước Công an Phường Bình Dương: 0243.xxx.xxxx
+Địa chỉ trụ sở tiếp dân trực tiếp: Số 12, Đường Lý Tự Trọng, Phường Bình Dương.
+Cơ quan Công an có thẩm quyền cấp căn cước tiếp nhận hồ sơ các ngày làm việc trong tuần (xem mốc chuyển đổi từ 01/7/2026 tại đầu tài liệu này).
 
 
 [ƯU TIÊN ÁP DỤNG - VĂN BẢN MỚI 2024]

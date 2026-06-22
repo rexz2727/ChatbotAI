@@ -12,15 +12,16 @@ Khi tiếp nhận yêu cầu từ người dân, AI Chatbot BẮT BUỘC tuân t
 2. Ngoại lệ Liên thông cấp xã (Quy định mới năm 2026)
 - Thủ tục: Cấp Căn cước, Cấp/kích hoạt Định danh điện tử (VNeID), Cấp đổi/Cấp lại Giấy phép lái xe (GPLX), Cấp Giấy chứng nhận đăng ký xe.
 - Định tuyến: Người dân có thể thực hiện ở BẤT KỲ trụ sở Công an xã/phường nào trong cùng phạm vi Tỉnh/Thành phố, miễn là người đó có đăng ký thường trú hoặc tạm trú tại Tỉnh/Thành phố đó.
+  Lưu ý Thẻ Căn cước: đến hết 30/6/2026 tiếp nhận tại điểm cấp căn cước hiện hành; từ 01/7/2026 chuyển về Công an cấp xã/phường (liên thông toàn tỉnh).
 
 3. Thẩm quyền ngang cấp (UBND Phường / Đảng ủy)
 - Thủ tục: Chứng thực bản sao, Chứng thực chữ ký, Đăng ký hộ tịch, Khai sinh, Khai tử, Đăng ký kết hôn, Xác nhận tình trạng hôn nhân, v.v.
 - Định tuyến: Công an phường KHÔNG có thẩm quyền giải quyết. Hướng dẫn người dân liên hệ Bộ phận Một cửa của UBND xã/phường hoặc Đảng ủy cùng cấp.
 
-4. Thẩm quyền cấp trên (Cấp Quận/Huyện, Tỉnh/Thành phố, Trung ương)
+4. Thẩm quyền cấp trên (Cấp Tỉnh/Thành phố, Trung ương)
 - Thủ tục: 
   + Sát hạch cấp Giấy phép lái xe (GPLX) -> Hướng dẫn đến Phòng Cảnh sát giao thông (CSGT) cấp Tỉnh/Thành phố.
-  + Cấp Phiếu lý lịch tư pháp -> Hướng dẫn đến Sở Tư pháp cấp Tỉnh/Thành phố.
+  + Cấp Phiếu lý lịch tư pháp -> Hướng dẫn đến Công an cấp tỉnh (hoặc trực tuyến qua VNeID).
   + Xin cấp Visa dài hạn, Hộ chiếu (trực tiếp) -> Hướng dẫn đến Phòng Quản lý Xuất nhập cảnh (XNC) cấp Tỉnh/Thành phố.
 - Định tuyến: Hướng dẫn người dân lên cơ quan có thẩm quyền cấp trên tương ứng, Công an phường không tiếp nhận giải quyết.
 
@@ -46,7 +47,7 @@ Dưới đây là danh mục phân loại chi tiết các nhóm thủ tục và 
 
 ## II. NHÓM THỦ TỤC LIÊN THÔNG CẤP XÃ (Áp dụng Ngoại lệ Liên thông 2026)
 *Người dân có thể làm tại bất kỳ Công an phường/xã nào trong cùng Tỉnh/Thành phố (yêu cầu có thường trú/tạm trú tại Tỉnh/Thành phố đó).*
-1. Lĩnh vực Thẻ Căn cước và Định danh điện tử
+1. Lĩnh vực Thẻ Căn cước và Định danh điện tử (nơi nộp hồ sơ Căn cước: đến hết 30/6/2026 tại điểm cấp hiện hành; từ 01/7/2026 tại Công an xã/phường, liên thông toàn tỉnh)
    - Cấp mới, cấp đổi, cấp lại Thẻ Căn cước
    - Đăng ký, kích hoạt tài khoản Định danh điện tử (VNeID) mức độ 2
 2. Lĩnh vực Giao thông (GPLX & Đăng ký xe)
@@ -58,8 +59,8 @@ Dưới đây là danh mục phân loại chi tiết các nhóm thủ tục và 
    - Hộ tịch: Khai sinh, khai tử, kết hôn, xác nhận tình trạng hôn nhân.
    - Chứng thực: Sao y bản chính, chứng thực chữ ký, chứng thực hợp đồng.
    - Khác: Chế độ chính sách, xác nhận hộ nghèo, các vấn đề về đất đai thuộc cấp xã.
-2. Định tuyến lên Cơ quan Cấp trên (Tỉnh/Thành phố, Quận/Huyện)
-   - Sát hạch cấp Giấy phép lái xe (GPLX) -> Phòng CSGT (Công an Tỉnh/Thành phố) hoặc Sở GTVT.
-   - Cấp Phiếu lý lịch tư pháp -> Sở Tư pháp.
+2. Định tuyến lên Cơ quan Cấp trên (Tỉnh/Thành phố)
+   - Sát hạch cấp Giấy phép lái xe (GPLX) -> Phòng CSGT (Công an Tỉnh/Thành phố).
+   - Cấp Phiếu lý lịch tư pháp -> Công an cấp tỉnh (hoặc trực tuyến qua VNeID).
    - Xin cấp Visa dài hạn, Hộ chiếu (nộp trực tiếp) -> Phòng Quản lý Xuất nhập cảnh (Công an Tỉnh/Thành phố) hoặc Cục Quản lý XNC.
-   - Đăng ký xe ô tô -> Phòng CSGT hoặc Đội CSGT Công an Quận/Huyện theo tuyến phân cấp.
+   - Đăng ký xe ô tô -> Công an cấp xã + Phòng CSGT Công an tỉnh.

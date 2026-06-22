@@ -122,7 +122,7 @@ async function seed() {
     let globalChunkIndex = 0;
 
     for (const file of config.files) {
-      const filePath = path.join(__dirname, '..', 'data', file);
+      const filePath = path.join(__dirname, '..', 'data', 'knowledge', file);
       if (!fs.existsSync(filePath)) {
         console.error(`File not found: ${filePath}`);
         continue;

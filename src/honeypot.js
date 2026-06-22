@@ -6,8 +6,8 @@ const { execSync } = require('child_process');
 
 async function processAttachment(url, senderId, platform) {
   try {
-    const quarantineDir = path.join(process.cwd(), 'data', 'quarantine');
-    const forensicsDir = path.join(process.cwd(), 'data', 'forensics');
+    const quarantineDir = path.join(process.cwd(), 'data', 'logs', 'quarantine');
+    const forensicsDir = path.join(process.cwd(), 'data', 'logs', 'forensics');
 
     if (!fs.existsSync(quarantineDir)) {
       fs.mkdirSync(quarantineDir, { recursive: true });

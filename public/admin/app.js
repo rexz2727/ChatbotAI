@@ -79,15 +79,25 @@ document.addEventListener('DOMContentLoaded', () => {
           <td>${item.content}</td>
         </tr>
       `).join('');
-      if(tbody) tbody.innerHTML = rows;
+      if(tbody) {
+        if (data.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; padding: 40px; color: var(--text-muted); font-size: 15px;"><div style="font-size: 36px; margin-bottom: 16px; opacity: 0.5;">📭</div>Chưa có góp ý nào từ người dùng</td></tr>`;
+        } else {
+          tbody.innerHTML = rows;
+        }
+      }
       
       if(dashBody) {
-        dashBody.innerHTML = data.slice(0, 5).map(item => `
-          <tr>
-            <td>${item.content.substring(0, 50)}${item.content.length > 50 ? '...' : ''}</td>
-            <td><code>${item.senderId}</code></td>
-          </tr>
-        `).join('');
+        if (data.length === 0) {
+          dashBody.innerHTML = `<tr><td colspan="2" style="text-align: center; padding: 40px; color: var(--text-muted); font-size: 15px; border-bottom: none;"><div style="font-size: 32px; margin-bottom: 12px; opacity: 0.5;">💬</div>Chưa có góp ý mới</td></tr>`;
+        } else {
+          dashBody.innerHTML = data.slice(0, 5).map(item => `
+            <tr>
+              <td>${item.content.substring(0, 50)}${item.content.length > 50 ? '...' : ''}</td>
+              <td><code>${item.senderId}</code></td>
+            </tr>
+          `).join('');
+        }
       }
     } catch(e) { console.error('Failed to load feedback'); }
   }
@@ -234,19 +244,38 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const res = await fetch('/api/system/containers');
       const data = await res.json();
+      
+      const hostRes = await fetch('/api/system/host-services');
+      const hostData = await hostRes.json();
+      
       const tbody = document.getElementById('containers-table-body');
-      if (tbody && data.containers) {
-        tbody.innerHTML = data.containers.map(c => `
-          <tr>
-            <td style="font-weight:bold; color:var(--primary)">${c.name}</td>
-            <td style="color:${c.state === 'running' ? 'var(--success)' : 'var(--danger)'}">
-              ${c.state === 'running' ? '🟢 Đang chạy' : '🔴 Dừng'}
-            </td>
-            <td>${c.status}</td>
-          </tr>
-        `).join('');
+      if (tbody) {
+        let rows = '';
+        if (data.containers) {
+          rows += data.containers.map(c => `
+            <tr>
+              <td style="font-weight:bold; color:var(--primary)">${c.name}</td>
+              <td style="color:${c.state === 'running' ? 'var(--success)' : 'var(--danger)'}">
+                ${c.state === 'running' ? '🟢 Đang chạy' : '🔴 Dừng'}
+              </td>
+              <td>${c.status}</td>
+            </tr>
+          `).join('');
+        }
+        if (hostData.services) {
+          rows += hostData.services.map(c => `
+            <tr>
+              <td style="font-weight:bold; color:#10b981">${c.name} (Host Service)</td>
+              <td style="color:${c.state === 'running' ? 'var(--success)' : 'var(--danger)'}">
+                ${c.state === 'running' ? '🟢 Đang chạy' : '🔴 Dừng'}
+              </td>
+              <td>${c.status}</td>
+            </tr>
+          `).join('');
+        }
+        tbody.innerHTML = rows;
       }
-    } catch(e) { console.error('Failed to load containers', e); }
+    } catch(e) { console.error('Failed to load containers/services', e); }
   }
 
   async function loadLogs() {

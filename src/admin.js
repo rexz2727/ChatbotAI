@@ -400,9 +400,26 @@ app.get('/api/system/security', (req, res) => {
 });
 
 const http = require('http');
+
+function getContainerSocketPath() {
+  if (process.env.DOCKER_HOST && process.env.DOCKER_HOST.startsWith('unix://')) {
+    return process.env.DOCKER_HOST.replace('unix://', '');
+  }
+  const paths = [
+    '/var/run/docker.sock',
+    '/var/run/podman/podman.sock',
+    `/run/user/${os.userInfo().uid}/podman/podman.sock`,
+    `/run/user/${os.userInfo().uid}/docker.sock`
+  ];
+  for (const p of paths) {
+    if (fs.existsSync(p)) return p;
+  }
+  return '/var/run/docker.sock'; // fallback
+}
+
 app.get('/api/system/containers', (req, res) => {
   const options = {
-    socketPath: '/var/run/docker.sock',
+    socketPath: getContainerSocketPath(),
     path: '/v1.40/containers/json?all=true',
     method: 'GET'
   };
@@ -429,6 +446,22 @@ app.get('/api/system/containers', (req, res) => {
     res.json({ containers: [] });
   });
   request.end();
+});
+
+const { exec } = require('child_process');
+app.get('/api/system/host-services', (req, res) => {
+  exec('pgrep cloudflared', (error, stdout, stderr) => {
+    const isRunning = !error && stdout.trim().length > 0;
+    res.json({
+      services: [
+        { 
+          name: 'Cloudflare Tunnel', 
+          state: isRunning ? 'running' : 'stopped',
+          status: isRunning ? 'Up' : 'Down'
+        }
+      ]
+    });
+  });
 });
 
 

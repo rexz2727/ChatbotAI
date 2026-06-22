@@ -58,7 +58,9 @@
         <h3 style="margin-bottom: 16px; color: var(--primary);">TẦNG 2: XU HƯỚNG TƯƠNG TÁC</h3>
         <div class="card chart-container" style="height: 400px; margin-bottom: 32px;">
           <h3>Lưu lượng truy cập theo ngày</h3>
-          <canvas id="messagesChart"></canvas>
+          <div style="flex: 1; position: relative; width: 100%; min-height: 0;">
+            <canvas id="messagesChart"></canvas>
+          </div>
         </div>
 
         <!-- TẦNG 3: CHI TIẾT -->
@@ -66,7 +68,9 @@
         <div class="stats-grid" style="grid-template-columns: 1fr 1fr;">
           <div class="card chart-container" style="height: 350px;">
             <h3>Tỉ lệ chuyên mục được hỏi</h3>
-            <canvas id="topicsChart"></canvas>
+            <div style="flex: 1; position: relative; width: 100%; min-height: 0;">
+              <canvas id="topicsChart"></canvas>
+            </div>
           </div>
           <div class="card" style="height: 350px; overflow-y: auto;">
             <h3>Góp ý mới nhất</h3>
@@ -141,11 +145,15 @@
         <div class="stats-grid" style="grid-template-columns: 1fr 1fr; margin-top: 32px;">
           <div class="card chart-container" style="height: 350px;">
             <h3>CPU Load</h3>
-            <canvas id="cpuChart"></canvas>
+            <div style="flex: 1; position: relative; width: 100%; min-height: 0;">
+              <canvas id="cpuChart"></canvas>
+            </div>
           </div>
           <div class="card chart-container" style="height: 350px;">
             <h3>RAM Usage</h3>
-            <canvas id="ramChart"></canvas>
+            <div style="flex: 1; position: relative; width: 100%; min-height: 0;">
+              <canvas id="ramChart"></canvas>
+            </div>
           </div>
         </div>
 

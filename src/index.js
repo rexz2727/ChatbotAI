@@ -47,15 +47,6 @@ const { isMessageProcessed, markMessageProcessed } = db;
 
 const app = express();
 app.use('/forms', express.static(path.join(__dirname, '../data/forms')));
-app.use('/images', express.static(path.join(__dirname, '../public/images')));
-
-let currentPublicHost = null;
-app.use((req, res, next) => {
-  const protocol = req.headers['x-forwarded-proto'] || req.protocol;
-  currentPublicHost = `${protocol}://${req.get('host')}`;
-  next();
-});
-
 app.use(express.json({
   verify: (req, res, buf) => {
     req.rawBody = buf;
@@ -354,17 +345,9 @@ async function sendFacebookResponse(recipientId, result, req) {
     if (attachment) {
       await postToFacebook(url, recipientId, { attachment });
     } else {
-      if (result.images && result.images.length > 0) {
-        for (const imgUrl of result.images) {
-          await postToFacebook(url, recipientId, { attachment: { type: "image", payload: { url: imgUrl, is_reusable: true } } });
-        }
-      }
-
       // Quick replies ride on the LAST chunk only, so the rating buttons appear at the end.
       const chunks = splitMessageText(text);
-      if (chunks.length === 0 && result.images) return; // if text is empty after removing images
       for (let i = 0; i < chunks.length; i++) {
-        if (!chunks[i]) continue;
         const messageData = { text: chunks[i] };
         if (quickReplies && i === chunks.length - 1) messageData.quick_replies = quickReplies;
         await postToFacebook(url, recipientId, messageData);
@@ -519,30 +502,6 @@ async function sendZaloResponse(recipientId, result) {
       return;
     }
 
-    if (result.images && result.images.length > 0) {
-      for (const imgUrl of result.images) {
-        const imgMessageData = {
-          recipient: { user_id: recipientId },
-          message: {
-            attachment: {
-              type: "template",
-              payload: {
-                template_type: "media",
-                elements: [{ media_type: "image", url: imgUrl }]
-              }
-            }
-          }
-        };
-        await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'access_token': process.env.ZALO_ACCESS_TOKEN },
-          body: JSON.stringify(imgMessageData)
-        });
-      }
-    }
-
-    if (!messageData.message.text && !messageData.message.attachment) return;
-
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -637,28 +596,12 @@ async function processOne(msg) {
 
     // Simulate req object for relative URL parsing if needed
     const dummyReq = {
-      protocol: currentPublicHost ? currentPublicHost.split(':')[0] : 'https',
-      get: () => currentPublicHost ? currentPublicHost.split('://')[1] : (process.env.PUBLIC_URL || 'trycloudflare.com'),
+      protocol: 'https',
+      get: () => process.env.PUBLIC_URL || 'trycloudflare.com', // fallback
       headers: {}
     };
 
     const result = await chatbot.handleUserMessage(msg.sender_id, msg.message_text, msg.payload);
-
-    if (result.text) {
-      const baseUrl = currentPublicHost || (process.env.PUBLIC_URL ? `https://${process.env.PUBLIC_URL}` : 'http://localhost:3000');
-      const imageRegex = /!\[.*?\]\([^)]*docs\/Image\/([^)]+)\)/gi;
-      const imageUrls = [];
-      
-      result.text = result.text.replace(imageRegex, (match, filename) => {
-        const url = `${baseUrl}/images/${filename}`;
-        imageUrls.push(url);
-        return ``; // Remove from text since we'll send it as attachment
-      }).trim();
-      
-      if (imageUrls.length > 0) {
-        result.images = imageUrls;
-      }
-    }
 
     if (msg.platform === 'facebook') {
       await sendFacebookResponse(msg.sender_id, result, dummyReq);

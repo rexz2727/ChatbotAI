@@ -6,7 +6,6 @@
   <title>Admin - Công an Phường Chatbot</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -15,56 +14,92 @@
     <aside class="sidebar">
       <h2><span class="shield">🛡️</span> CA Phường</h2>
       <nav>
-        <button class="nav-btn active" data-target="dashboard-view">Bảng điều khiển chung</button>
-        <button class="nav-btn" data-target="system-view">Hệ thống & Giám sát APM</button>
+        <button class="nav-btn active" data-target="dashboard-view">📊 Bảng điều khiển chung</button>
+        <button class="nav-btn" data-target="system-view">🖥️ Hệ thống & Giám sát APM</button>
       </nav>
     </aside>
     <button id="sidebar-toggle" class="sidebar-toggle-btn">❮</button>
     <main class="content">
       <header>
-        <div style="display: flex; align-items: center;">
+        <div>
+          <div class="header-breadcrumb">Dashboard / Tổng quan</div>
           <h1>Hệ thống Quản trị Nội bộ</h1>
         </div>
-        <div style="display: flex; align-items: center; gap: 16px;">
+        <div class="header-meta">
+          <span class="header-synced"><span class="pulse-dot"></span> Cập nhật: <span id="last-synced">vừa xong</span></span>
+          <span class="header-clock" id="realtime-clock">--:--:--</span>
           <div class="status-badge">Đang hoạt động</div>
           <button id="logout-btn" class="btn danger">Đăng xuất</button>
         </div>
       </header>
-      
+
       <!-- Master Dashboard View -->
       <section id="dashboard-view" class="view active">
         <!-- TẦNG 1: TỔNG QUAN -->
-        <h3 style="margin-bottom: 16px; color: var(--primary);">TẦNG 1: CHỈ SỐ TỔNG QUAN</h3>
+        <h3 class="section-title">Chỉ số tổng quan</h3>
         <div class="stats-grid">
           <div class="stat-card">
-            <h3>Tổng người dùng</h3>
-            <p class="stat-value" id="stat-users">...</p>
+            <div class="stat-header">
+              <div class="stat-icon" style="background: linear-gradient(135deg, #00f2fe, #4facfe);">👥</div>
+              <div>
+                <div class="stat-label">Tổng người dùng</div>
+                <p class="stat-value" id="stat-users">...</p>
+              </div>
+            </div>
+            <div class="stat-trend up" id="trend-users"></div>
+            <div class="stat-sparkline"><canvas id="spark-users"></canvas></div>
           </div>
           <div class="stat-card">
-            <h3>Tổng lượt nhắn AI</h3>
-            <p class="stat-value" id="stat-messages">...</p>
+            <div class="stat-header">
+              <div class="stat-icon" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);">💬</div>
+              <div>
+                <div class="stat-label">Tổng lượt nhắn AI</div>
+                <p class="stat-value" id="stat-messages">...</p>
+              </div>
+            </div>
+            <div class="stat-trend up" id="trend-messages"></div>
+            <div class="stat-sparkline"><canvas id="spark-messages"></canvas></div>
           </div>
           <div class="stat-card">
-            <h3>Uptime Hệ thống</h3>
-            <p class="stat-value" id="health-uptime-dash" style="font-size:28px">...</p>
+            <div class="stat-header">
+              <div class="stat-icon" style="background: linear-gradient(135deg, #10b981, #34d399);">⏱</div>
+              <div>
+                <div class="stat-label">Uptime Hệ thống</div>
+                <p class="stat-value" id="health-uptime-dash" style="font-size:28px">...</p>
+              </div>
+            </div>
+            <div class="stat-trend" id="trend-uptime">99.9% SLA</div>
           </div>
           <div class="stat-card">
-            <h3>Trạng thái DB</h3>
-            <p class="stat-value" id="health-db-dash" style="font-size:28px">...</p>
+            <div class="stat-header">
+              <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">🗄️</div>
+              <div>
+                <div class="stat-label">Trạng thái DB</div>
+                <p class="stat-value" id="health-db-dash" style="font-size:28px">...</p>
+              </div>
+            </div>
+            <div class="stat-trend" id="trend-db"><span class="pulse-dot"></span> Realtime</div>
           </div>
         </div>
 
         <!-- TẦNG 2: XU HƯỚNG -->
-        <h3 style="margin-bottom: 16px; color: var(--primary);">TẦNG 2: XU HƯỚNG TƯƠNG TÁC</h3>
+        <h3 class="section-title">Xu hướng tương tác</h3>
         <div class="card chart-container" style="height: 400px; margin-bottom: 32px;">
-          <h3>Lưu lượng truy cập theo ngày</h3>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3>Lưu lượng truy cập theo ngày</h3>
+            <div class="time-filter">
+              <button class="time-filter-btn active" data-days="7">7 ngày</button>
+              <button class="time-filter-btn" data-days="30">30 ngày</button>
+              <button class="time-filter-btn" data-days="90">90 ngày</button>
+            </div>
+          </div>
           <div style="flex: 1; position: relative; width: 100%; min-height: 0;">
             <canvas id="messagesChart"></canvas>
           </div>
         </div>
 
         <!-- TẦNG 3: CHI TIẾT -->
-        <h3 style="margin-bottom: 16px; color: var(--primary);">TẦNG 3: PHÂN TÍCH NHÂN KHẨU & TƯƠNG TÁC</h3>
+        <h3 class="section-title">Phân tích nhân khẩu & tương tác</h3>
         <div class="stats-grid" style="grid-template-columns: 1fr 1fr;">
           <div class="card chart-container" style="height: 350px;">
             <h3>Tỉ lệ chuyên mục được hỏi</h3>
@@ -87,7 +122,7 @@
         </div>
 
         <!-- TẦNG 4: BIỂU MẪU VÀ TOÀN BỘ GÓP Ý -->
-        <h3 style="margin-top: 32px; margin-bottom: 16px; color: var(--primary);">TẦNG 4: QUẢN TRỊ DỮ LIỆU</h3>
+        <h3 class="section-title">Quản trị dữ liệu</h3>
         <div class="stats-grid" style="grid-template-columns: 1fr 1fr;">
           <div class="card" style="height: 400px; overflow-y: auto;">
             <h2>Tất cả Góp ý</h2>
@@ -124,24 +159,47 @@
       </section>
 
       <section id="system-view" class="view">
+        <h3 class="section-title">Trạng thái hệ thống</h3>
         <div class="stats-grid">
           <div class="stat-card">
-            <h3>Thời gian hoạt động</h3>
-            <p class="stat-value" id="health-uptime">...</p>
+            <div class="stat-header">
+              <div class="stat-icon" style="background: linear-gradient(135deg, #00f2fe, #4facfe);">🖥️</div>
+              <div>
+                <div class="stat-label">Thời gian hoạt động</div>
+                <p class="stat-value" id="health-uptime">...</p>
+              </div>
+            </div>
           </div>
           <div class="stat-card">
-            <h3>Sử dụng RAM</h3>
-            <p class="stat-value" id="health-memory">...</p>
+            <div class="stat-header">
+              <div class="stat-icon" style="background: linear-gradient(135deg, #10b981, #34d399);">🧠</div>
+              <div>
+                <div class="stat-label">Sử dụng RAM</div>
+                <p class="stat-value" id="health-memory">...</p>
+              </div>
+            </div>
           </div>
           <div class="stat-card">
-            <h3>Trạng thái DB</h3>
-            <p class="stat-value" id="health-db">...</p>
+            <div class="stat-header">
+              <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">🗄️</div>
+              <div>
+                <div class="stat-label">Trạng thái DB</div>
+                <p class="stat-value" id="health-db">...</p>
+              </div>
+            </div>
           </div>
           <div class="stat-card">
-            <h3>Trạng thái Chroma</h3>
-            <p class="stat-value" id="health-chroma">...</p>
+            <div class="stat-header">
+              <div class="stat-icon" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);">🔍</div>
+              <div>
+                <div class="stat-label">Trạng thái Chroma</div>
+                <p class="stat-value" id="health-chroma">...</p>
+              </div>
+            </div>
           </div>
         </div>
+
+        <h3 class="section-title">Biểu đồ hiệu suất</h3>
         <div class="stats-grid" style="grid-template-columns: 1fr 1fr; margin-top: 32px;">
           <div class="card chart-container" style="height: 350px;">
             <h3>CPU Load</h3>
@@ -157,7 +215,7 @@
           </div>
         </div>
 
-        <h3 style="margin-top: 32px; margin-bottom: 16px; color: var(--primary);">PODMAN RADAR (CONTAINERS)</h3>
+        <h3 class="section-title">Podman Radar (Containers)</h3>
         <table class="data-table" style="margin-bottom: 32px;">
           <thead>
             <tr>
@@ -169,10 +227,18 @@
           <tbody id="containers-table-body"></tbody>
         </table>
 
-        <h3 style="margin-top: 32px; margin-bottom: 16px; color: var(--primary);">SYSTEM LOGS (DATADOG REPLICA)</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 32px; margin-bottom: 16px;">
+          <h3 class="section-title" style="margin: 0;">System Logs</h3>
+          <div class="log-filter-bar">
+            <button class="log-filter-btn active" data-level="all">Tất cả</button>
+            <button class="log-filter-btn" data-level="error">Error</button>
+            <button class="log-filter-btn" data-level="warn">Warning</button>
+            <button class="log-filter-btn" data-level="info">Info</button>
+          </div>
+        </div>
         <div id="log-terminal" class="terminal-log"></div>
         
-        <h3 style="margin-top: 32px; margin-bottom: 16px; color: var(--danger);">SECURITY INCIDENTS (HONEYPOT)</h3>
+        <h3 class="section-title">Security Incidents (Honeypot)</h3>
         <table class="data-table">
           <thead>
             <tr>
@@ -182,23 +248,43 @@
           <tbody id="security-table-body"></tbody>
         </table>
 
-        <h3 style="margin-top: 32px; margin-bottom: 16px; color: var(--danger);">GIÁM SÁT MÃ ĐỘC</h3>
+        <h3 class="section-title">Giám sát mã độc</h3>
         <div class="stats-grid">
           <div class="stat-card">
-            <h3>Đã quét</h3>
-            <p class="stat-value" id="sec-scanned" style="font-size:32px">...</p>
+            <div class="stat-header">
+              <div class="stat-icon" style="background: linear-gradient(135deg, #00f2fe, #4facfe);">🔍</div>
+              <div>
+                <div class="stat-label">Đã quét</div>
+                <p class="stat-value" id="sec-scanned" style="font-size:32px">...</p>
+              </div>
+            </div>
           </div>
           <div class="stat-card">
-            <h3>Mã độc</h3>
-            <p class="stat-value" id="sec-malicious" style="font-size:32px; color: var(--danger)">...</p>
+            <div class="stat-header">
+              <div class="stat-icon" style="background: linear-gradient(135deg, #ef4444, #f87171);">🔴</div>
+              <div>
+                <div class="stat-label">Mã độc</div>
+                <p class="stat-value" id="sec-malicious" style="font-size:32px; color: var(--danger)">...</p>
+              </div>
+            </div>
           </div>
           <div class="stat-card">
-            <h3>Nghi ngờ</h3>
-            <p class="stat-value" id="sec-suspicious" style="font-size:32px; color: var(--warning)">...</p>
+            <div class="stat-header">
+              <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">⚠️</div>
+              <div>
+                <div class="stat-label">Nghi ngờ</div>
+                <p class="stat-value" id="sec-suspicious" style="font-size:32px; color: var(--warning)">...</p>
+              </div>
+            </div>
           </div>
           <div class="stat-card">
-            <h3>An toàn</h3>
-            <p class="stat-value" id="sec-safe" style="font-size:32px; color: var(--success)">...</p>
+            <div class="stat-header">
+              <div class="stat-icon" style="background: linear-gradient(135deg, #10b981, #34d399);">✅</div>
+              <div>
+                <div class="stat-label">An toàn</div>
+                <p class="stat-value" id="sec-safe" style="font-size:32px; color: var(--success)">...</p>
+              </div>
+            </div>
           </div>
         </div>
         <table class="data-table" style="margin-bottom: 32px;">

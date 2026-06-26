@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ override: true });
 const db = require('./db');
 const flow = require('./flow');
 const donvi = require('../config/donvi');
@@ -52,38 +52,48 @@ function sanitizeLogText(text) {
 }
 
 // Custom Embedding Helper matching init_db.js
+const EMBEDDING_MODELS = ["gemini-embedding-2", "gemini-embedding-001"];
+
+// Embed one text with retry + cross-model failover. A WRONG query vector is worse than none:
+// the mock hash-embedding lands in a different space and retrieves garbage (e.g. "-- 8 of 30 --"
+// page markers), which the LLM then answers from. So on total failure we THROW — the caller's
+// catch yields empty context and the bot politely defers to the hotline instead of hallucinating.
+async function embedQueryText(genAI, text) {
+  let lastErr;
+  for (const modelName of EMBEDDING_MODELS) {
+    const model = genAI.getGenerativeModel({ model: modelName });
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const result = await model.embedContent(text);
+        return result.embedding.values;
+      } catch (err) {
+        lastErr = err;
+        const overloaded = err.status === 429 || err.status >= 500 ||
+          (err.message && /429|RESOURCE_EXHAUSTED|503|500/.test(err.message));
+        console.error(`[${modelName}] embedding failed for "${sanitizeLogText(text).substring(0, 30)}...": ${err.status || err.message}`);
+        if (overloaded && attempt === 0) { await sleep(800); continue; }
+        break; // try next embedding model
+      }
+    }
+  }
+  throw lastErr || new Error('All embedding models failed');
+}
+
 const geminiEmbeddingFunction = {
   generate: async (texts) => {
     const apiKey = process.env.GEMINI_API_KEY;
     const isDefaultKey = !apiKey || apiKey === 'your_gemini_api_key_here' || apiKey.trim() === '';
 
     if (isDefaultKey) {
-      return texts.map(text => getMockEmbedding(text));
+      return texts.map(text => getMockEmbedding(text)); // dev/test only — never used in production
     }
 
-    try {
-      const genAI = new GoogleGenerativeAI(apiKey);
-      const model = genAI.getGenerativeModel({ model: "gemini-embedding-2" });
-      const embeddings = [];
-
-      for (const text of texts) {
-        let success = false;
-        try {
-          const result = await model.embedContent(text);
-          embeddings.push(result.embedding.values);
-          success = true;
-        } catch (err) {
-          console.error(`Query embedding failed for text: "${sanitizeLogText(text).substring(0, 30)}...", error:`, err);
-        }
-        if (!success) {
-          embeddings.push(getMockEmbedding(text));
-        }
-      }
-      return embeddings;
-    } catch (error) {
-      console.error('General error in query embedding:', error);
-      return texts.map(text => getMockEmbedding(text));
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const embeddings = [];
+    for (const text of texts) {
+      embeddings.push(await embedQueryText(genAI, text));
     }
+    return embeddings;
   }
 };
 
@@ -102,8 +112,16 @@ const menuMapping = {
 // Helper function for sleeping
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-// Gemini API call with Exponential Backoff
-async function callGeminiWithBackoff(prompt, retries = 4, delay = 2000, genConfig = {}, modelName = "gemini-2.5-flash") {
+// Shared model-health cooldown (circuit breaker), process-wide. When a model returns 503/429 it is
+// parked for MODEL_COOLDOWN_MS so concurrent and subsequent messages SKIP it instead of each
+// re-discovering the outage. The app runs as a single Node process, so this Map is truly shared
+// across every message — one request's failure protects the next 9 in a burst.
+const modelCooldownUntil = new Map();
+const MODEL_COOLDOWN_MS = 15000;
+const isModelCoolingDown = (m) => (modelCooldownUntil.get(m) || 0) > Date.now();
+
+// Gemini API call with breadth-first failover + shared circuit breaker
+async function callGeminiWithBackoff(prompt, retries = 4, delay = 2000, genConfig = {}, modelNames = ["gemini-2.5-flash-lite", "gemini-3.1-flash-lite", "gemini-flash-lite-latest", "gemini-3-flash-preview", "gemini-2.5-flash", "gemini-3.5-flash", "gemini-flash-latest"]) {
   const apiKey = process.env.GEMINI_API_KEY;
   const isDefaultKey = !apiKey || apiKey === 'your_gemini_api_key_here' || apiKey.trim() === '';
 
@@ -115,41 +133,53 @@ Công an Phường ghi nhận câu hỏi của anh/chị. Để giải quyết t
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: modelName });
+  const modelsToTry = Array.isArray(modelNames) ? modelNames : [modelNames];
+  let lastError;
+  const dead = new Set(); // models that returned a hard error (400/403/404) — don't retry them
 
-  for (let i = 0; i < retries; i++) {
-    try {
-      const response = await model.generateContent({
-        contents: [{ role: 'user', parts: [{ text: prompt }] }],
-        generationConfig: genConfig
-      });
-      return response.response.text();
-    } catch (error) {
-      const isRateLimit = error.status === 429 || 
-                          (error.message && error.message.includes('429')) ||
-                          (error.message && error.message.includes('RESOURCE_EXHAUSTED'));
-      const isServerError = error.status >= 500 || 
-                            (error.message && (error.message.includes('503') || error.message.includes('500')));
-      
-      if ((isRateLimit || isServerError) && i < retries - 1) {
-        // Wait/sleep dynamically using exponential formula: 2000 * (retryIndex + 1) ms
-        const currentDelay = delay * (i + 1);
-        console.warn(`Gemini API busy or rate limited. Retrying in ${currentDelay}ms (Attempt ${i + 1}/${retries})...`);
-        await sleep(currentDelay);
-        continue;
-      }
-      
-      // Fallback for invalid API key or model not found
-      if (error.status === 400 || error.status === 403 || error.status === 404 || 
-          (error.message && (error.message.includes('400') || error.message.includes('403') || error.message.includes('404')))) {
-        console.warn("Gemini API Key is invalid or model not found. Falling back to placeholder response.");
-        return `[MÔ PHỎNG PHẢN HỒI] Xin chào! Hiện tại hệ thống đang chạy ở chế độ thử nghiệm do API Key không hợp lệ. Dưới đây là câu trả lời mô phỏng dựa trên tài liệu pháp luật tham chiếu.
+  // Breadth-first failover: try each model ONCE per round, switching IMMEDIATELY on overload.
+  // A shared circuit breaker (modelCooldownUntil) makes the whole process skip models that another
+  // request just saw fail, so under a burst we don't pay the failed-attempt cost 10× per dead model.
+  for (let round = 0; round < retries; round++) {
+    const live = modelsToTry.filter(m => !dead.has(m));
+    if (live.length === 0) break;
+    // Prefer models not cooling down; if every live model is cooling, try them anyway (they may have recovered).
+    const fresh = live.filter(m => !isModelCoolingDown(m));
+    const candidates = fresh.length > 0 ? fresh : live;
 
-Công an Phường ghi nhận câu hỏi của anh/chị. Để giải quyết thủ tục, anh/chị cần chuẩn bị đầy đủ hồ sơ theo quy định, bao gồm các giấy tờ chứng minh chỗ ở hoặc nhân thân hợp lệ. Đối với biểu mẫu trực tuyến, anh/chị có thể đăng nhập ứng dụng VNeID mức độ 2 để xác thực và tiến hành nộp hồ sơ.`;
+    for (const currentModelName of candidates) {
+      try {
+        const model = genAI.getGenerativeModel({ model: currentModelName });
+        const response = await model.generateContent({
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: genConfig
+        });
+        modelCooldownUntil.delete(currentModelName); // healthy again — clear any cooldown
+        return response.response.text();
+      } catch (error) {
+        lastError = error;
+        const isOverload = error.status === 429 || error.status >= 500 ||
+                           (error.message && /429|RESOURCE_EXHAUSTED|503|500/.test(error.message));
+        if (isOverload) {
+          modelCooldownUntil.set(currentModelName, Date.now() + MODEL_COOLDOWN_MS);
+          console.warn(`[${currentModelName}] Overloaded (${error.status || '5xx/429'}). Cooling down ${MODEL_COOLDOWN_MS}ms; failing over immediately.`);
+          continue; // try the next model right away, no sleep
+        }
+        // Non-retryable (400/403/404): mark dead so future rounds skip it.
+        console.warn(`[${currentModelName}] Unrecoverable error (${error.status || error.message?.slice(0, 60)}). Dropping this model.`);
+        dead.add(currentModelName);
       }
-      throw error;
+    }
+
+    if (dead.size >= modelsToTry.length) break; // every model returned a hard error; stop retrying
+    if (round < retries - 1) {
+      const backoff = delay * (round + 1);
+      console.warn(`All models busy (round ${round + 1}/${retries}). Backing off ${backoff}ms before retrying cycle...`);
+      await sleep(backoff);
     }
   }
+
+  console.error("All models failed after all rounds. Last error:", lastError);
   return "Hệ thống tra cứu hiện đang bận do quá tải. Xin vui lòng gửi lại câu hỏi sau ít phút.";
 }
 
@@ -379,26 +409,37 @@ Dữ kiện:`;
     let replyText = await db.getCachedResponse(cacheKey);
     
     if (!replyText) {
-      // PASS 1: Extract Facts (Fast using 1.5-flash-8b, strictly precise)
+      // PASS 1: Extract Facts (Fast, strictly precise). Order chosen for STABILITY + high quota:
+      // flash-lite models first (4M TPM, Unlimited RPD) so we never run out of daily quota mid-flow.
       const rawFacts = await geminiLimit(() => callGeminiWithBackoff(
-        pass1Prompt, 4, 2000, 
+        pass1Prompt, 4, 2000,
         { temperature: 0.1 },
-        "gemini-1.5-flash-8b"
+        ["gemini-2.5-flash-lite", "gemini-3.1-flash-lite", "gemini-flash-lite-latest", "gemini-3-flash-preview", "gemini-2.5-flash", "gemini-3.5-flash", "gemini-flash-latest"]
       ));
       
       // PASS 2: Humanize Tone (Normal configuration)
-      const pass2Prompt = `Bạn là một cán bộ tiếp dân tận tâm, kiên nhẫn, gần gũi của Công an Phường. Bạn vừa tra cứu được các dữ kiện pháp lý sau:
+      const pass2Prompt = `Bạn là một cán bộ tiếp dân tận tâm, kiên nhẫn, gần gũi của Công an phường Bình Dương.
+Thông tin đơn vị của bạn (TUYỆT ĐỐI TUÂN THỦ, KHÔNG ĐƯỢC BỊA ĐẶT ĐỊA CHỈ KHÁC NHƯ LÝ TỰ TRỌNG, LÊ LỢI...):
+- Tên cơ quan: Công an phường Bình Dương.
+- Trụ sở chính: Số 01, đường D27, khu phố Hòa Phú 1, phường Bình Dương, Thành phố Hồ Chí Minh.
+- Số điện thoại trực ban (24/7): 02743 515 097.
+- Thời gian tiếp dân giải quyết thủ tục hành chính: Từ Thứ Hai đến Thứ Bảy (Sáng: 07h30 – 11h30, Chiều: 13h30 – 17h00). Thứ Ba và Thứ Năm có tiếp dân thêm Buổi Tối: 18h00 – 22h00.
+
+NẾU TRONG CÂU TRẢ LỜI CÓ HƯỚNG DẪN NGƯỜI DÂN ĐẾN TRỤ SỞ, BẮT BUỘC PHẢI DÙNG CHÍNH XÁC ĐỊA CHỈ: "Số 01, đường D27, khu phố Hòa Phú 1, phường Bình Dương, TP.HCM". TUYỆT ĐỐI KHÔNG DÙNG ĐỊA CHỈ GIẢ ĐỊNH.
+
+Bạn vừa tra cứu được các dữ kiện pháp lý sau:
 ===
 ${rawFacts}
 ===
 
 Nhiệm vụ: Viết lại các dữ kiện trên thành một câu trả lời hoàn chỉnh cho người dân.
 QUY TẮC:
-1. Xưng "Công an Phường", gọi "anh/chị/cô/bác". Dùng từ "ạ", "dạ" tự nhiên.
-2. Cấu trúc 3 nhịp: (1) Đồng cảm/ghi nhận → (2) Trả lời trọng tâm bằng gạch đầu dòng → (3) Mời hỗ trợ thêm.
-3. Nếu dữ kiện báo "Không có tài liệu", hãy từ chối lịch sự và mời gọi số trực ban.
-4. GIỮ NGUYÊN các trích dẫn pháp lý (Điều/Khoản) từ dữ kiện. KHÔNG TỰ BỊA THÊM.
+1. Xưng "Công an phường", gọi "anh/chị/cô/bác". Dùng từ "ạ", "dạ" tự nhiên.
+2. Cấu trúc 3 nhịp NGẮN GỌN: (1) 1 câu đồng cảm/ghi nhận → (2) Trả lời trọng tâm bằng gạch đầu dòng → (3) 1 câu mời hỗ trợ thêm.
+3. Nếu dữ kiện báo "Không có tài liệu" và câu hỏi KHÔNG nằm trong phần thông tin đơn vị ở trên, hãy từ chối lịch sự và mời gọi số trực ban.
+4. GIỮ NGUYÊN các trích dẫn pháp lý (Điều/Khoản) từ dữ kiện. KHÔNG TỰ BỊA THÊM luật.
 5. ĐA NGÔN NGỮ: Tự động nhận diện ngôn ngữ trong câu hỏi của người dân. Nếu người dân hỏi bằng ngôn ngữ khác (Tiếng Anh, Tiếng Hàn, Tiếng Trung...), hãy dịch toàn bộ câu trả lời sang ngôn ngữ đó một cách chuyên nghiệp.
+6. SÚC TÍCH: Tối đa ~5 gạch đầu dòng, mỗi ý 1-2 dòng. KHÔNG mở bài dài dòng, KHÔNG lặp lại ý. Ưu tiên ngắn gọn, dễ đọc trên điện thoại — chỉ nêu thông tin người dân thật sự cần.
 
 Câu hỏi của người dân: ${messageText}
 Cán bộ trả lời:`;

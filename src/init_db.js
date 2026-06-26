@@ -27,7 +27,38 @@ function getMockEmbedding(text) {
   return embedding;
 }
 
-// Custom Embedding Helper using Gemini with Fallback
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const EMBEDDING_MODELS = ["gemini-embedding-2", "gemini-embedding-001"];
+
+// Embed one chunk with retry (429 AND 503) + cross-model failover. During seeding a wrong vector
+// silently POISONS the collection (it ranks for unrelated queries forever), so on total failure we
+// THROW to abort the seed loudly rather than fall back to a meaningless mock embedding.
+async function embedTextWithFailover(genAI, text) {
+  let lastErr;
+  for (const modelName of EMBEDDING_MODELS) {
+    const model = genAI.getGenerativeModel({ model: modelName });
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        const result = await model.embedContent(text);
+        return result.embedding.values;
+      } catch (err) {
+        lastErr = err;
+        const overloaded = err.status === 429 || err.status >= 500 ||
+          (err.message && /429|RESOURCE_EXHAUSTED|503|500/.test(err.message));
+        if (overloaded && attempt < 2) {
+          const delay = 2000 * (attempt + 1);
+          console.warn(`[${modelName}] embedding busy (${err.status || '5xx/429'}). Retrying in ${delay}ms...`);
+          await sleep(delay);
+          continue;
+        }
+        break; // try next embedding model
+      }
+    }
+  }
+  throw lastErr || new Error('All embedding models failed');
+}
+
+// Custom Embedding Helper using Gemini with cross-model failover
 const geminiEmbeddingFunction = {
   generate: async (texts) => {
     const apiKey = process.env.GEMINI_API_KEY;
@@ -38,50 +69,12 @@ const geminiEmbeddingFunction = {
       return texts.map(text => getMockEmbedding(text));
     }
 
-    try {
-      const genAI = new GoogleGenerativeAI(apiKey);
-      const model = genAI.getGenerativeModel({ model: "gemini-embedding-2" });
-      const embeddings = [];
-
-      for (const text of texts) {
-        let success = false;
-        let retries = 3;
-        let lastError = null;
-
-        for (let attempt = 0; attempt < retries; attempt++) {
-          try {
-            const result = await model.embedContent(text);
-            embeddings.push(result.embedding.values);
-            success = true;
-            break;
-          } catch (err) {
-            lastError = err;
-            const isRateLimit = err.status === 429 || 
-                                (err.message && err.message.includes('429')) ||
-                                (err.message && err.message.includes('RESOURCE_EXHAUSTED'));
-            if (isRateLimit && attempt < retries - 1) {
-              const delay = 2000 * (attempt + 1);
-              console.warn(`Gemini Embedding API rate limited. Retrying in ${delay}ms...`);
-              await new Promise(resolve => setTimeout(resolve, delay));
-            } else {
-              break;
-            }
-          }
-        }
-
-        if (!success) {
-          console.error(`Failed to embed text: "${text.substring(0, 50)}...". Error:`, lastError);
-          console.warn("Falling back to deterministic mock embedding for this chunk.");
-          embeddings.push(getMockEmbedding(text));
-        }
-      }
-
-      return embeddings;
-    } catch (error) {
-      console.error('General error in Gemini embedding generation:', error);
-      console.warn("Falling back to deterministic mock embeddings for all remaining texts.");
-      return texts.map(text => getMockEmbedding(text));
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const embeddings = [];
+    for (const text of texts) {
+      embeddings.push(await embedTextWithFailover(genAI, text));
     }
+    return embeddings;
   }
 };
 
@@ -141,8 +134,11 @@ async function seed() {
         continue;
       }
 
-      const rawText = fs.readFileSync(filePath, 'utf-8');
-      
+      const rawText = fs.readFileSync(filePath, 'utf-8')
+        // Strip PDF page-break markers ("-- 8 of 30 --"): they survive chunking as noise chunks
+        // that pollute retrieval (the RAG "chỉ có mục lục trang" bug, 2026-06-24).
+        .replace(/^[ \t]*-+[ \t]*\d+[ \t]+of[ \t]+\d+[ \t]*-+[ \t]*$/gm, '');
+
       // Chunking by double newlines or empty lines
       const paragraphs = rawText
         .split(/\r?\n\r?\n/)

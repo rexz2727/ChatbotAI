@@ -50,7 +50,12 @@ async function processAttachment(url, senderId, platform) {
     const hash = crypto.createHash('sha256').update(buffer).digest('hex');
     const quarantinedFilePath = path.join(quarantineDir, `${hash}.quarantined`);
 
-    fs.writeFileSync(quarantinedFilePath, buffer, { mode: 0o400 });
+    // Same sha256 == identical bytes already quarantined. The file is written mode 0o400
+    // (read-only), so re-writing the same hash (e.g. a common FB sticker many users send)
+    // fails with EACCES. Skip the write when it already exists.
+    if (!fs.existsSync(quarantinedFilePath)) {
+      fs.writeFileSync(quarantinedFilePath, buffer, { mode: 0o400 });
+    }
 
     const apiKey = process.env.VIRUSTOTAL_API_KEY;
     if (apiKey && apiKey !== 'your_virustotal_api_key_here') {

@@ -420,7 +420,10 @@ Cán bộ trả lời:`;
       'ubnd': 'ủy ban nhân dân',
       'cap': 'công an phường',
       'cshs': 'cảnh sát hình sự',
-      'vneid': 'ứng dụng định danh điện tử VNeID'
+      'vneid': 'ứng dụng định danh điện tử VNeID',
+      'trẻ em': 'trẻ em, người dưới 14 tuổi, từ 0 đến 6 tuổi, từ 6 đến 14 tuổi',
+      'cấp đổi': 'cấp đổi thẻ căn cước',
+      'cấp lại': 'cấp lại thẻ căn cước'
     };
 
     let expandedMessageText = messageText || "";
@@ -435,7 +438,7 @@ Cán bộ trả lời:`;
       const collectionPromise = client.getCollection({
         name: matchedConfig.db,
         embeddingFunction: geminiEmbeddingFunction
-      }).then(col => col.query({ queryTexts: [expandedMessageText], nResults: 3 }));
+      }).then(col => col.query({ queryTexts: [expandedMessageText], nResults: 10 }));
       
       const historyPromise = db.getConversationHistory(userId, 3);
       

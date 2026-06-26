@@ -6,7 +6,7 @@ const menus = {
 };
 
 const responses = {
-  'FLOW_TTHC_AI': { agentState: 'AGENT_TTHC', text: `Xin mời đặt câu hỏi về TTHC khác.`, openChat: true }
+  'FLOW_TTHC_AI': { agentState: 'AGENT_TTHC', text: `Dạ, anh/chị cứ đặt câu hỏi về các thủ tục hành chính khác, bot giải đáp ngay ạ.`, openChat: true }
 };
 
 module.exports = { menus, responses };

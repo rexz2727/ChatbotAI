@@ -12,7 +12,7 @@ const responses = {
   // === THƯỜNG TRÚ ===
   'FLOW_CU_TRU_THUONG_TRU_MAIN': {
     agentState: 'AGENT_CU_TRU',
-    text: `[CHUYÊN ĐỀ ĐĂNG KÝ THƯỜNG TRÚ (NHẬP HỘ KHẨU)]\n\n(Căn cứ: Luật Cư trú 2020 & Nghị định 58/2026/NĐ-CP)\n\nChào bạn, để thủ tục được nhanh chóng, vui lòng chọn thông tin bạn cần tìm hiểu bên dưới:`,
+    text: `Dạ, Công an phường xin hướng dẫn anh/chị thủ tục đăng ký thường trú (nhập hộ khẩu) ạ.\n\n📌 Căn cứ: Luật Cư trú 2020 & Nghị định 58/2026/NĐ-CP.\n\nAnh/chị muốn tìm hiểu nội dung nào, mời chọn giúp bên dưới ạ:`,
     afterReplies: [
       { title: "1. Hồ sơ cần chuẩn bị", payload: "FLOW_CU_TRU_TT_HOSO" },
       { title: "2. Quy trình Nộp Online", payload: "FLOW_CU_TRU_TT_ONLINE" },
@@ -23,7 +23,7 @@ const responses = {
   },
   'FLOW_CU_TRU_TT_HOSO': {
     agentState: 'AGENT_CU_TRU',
-    text: `[HỒ SƠ ĐĂNG KÝ THƯỜNG TRÚ]\n\n(Căn cứ: Thông tư 53/2025/TT-BCA)\n\nBao gồm:\n1. Tờ khai thay đổi thông tin cư trú (Mẫu CT01). Tải mẫu: Xin gõ "xin biểu mẫu CT01"\n2. Giấy tờ chứng minh chỗ ở hợp pháp (Sổ đỏ, Hợp đồng mua bán, hoặc Hợp đồng thuê nhà có công chứng).\n3. Nếu nhập khẩu vào nhà người thân: Phải có chữ ký đồng ý của Chủ hộ vào Tờ khai CT01.\n\n📺 *Video Hướng Dẫn Cách Viết Tờ Khai CT01:* https://www.youtube.com/watch?v=dxzEhyfv750`,
+    text: `Dạ, hồ sơ đăng ký thường trú anh/chị cần chuẩn bị gồm:\n\n📌 Tờ khai thay đổi thông tin cư trú (Mẫu CT01) — tải mẫu bằng cách gõ "xin biểu mẫu CT01".\n📌 Giấy tờ chứng minh chỗ ở hợp pháp (Sổ đỏ, Hợp đồng mua bán, hoặc Hợp đồng thuê nhà có công chứng).\n📌 Nếu nhập khẩu vào nhà người thân: cần chữ ký đồng ý của Chủ hộ trên Tờ khai CT01.\n\n(Căn cứ: Thông tư 53/2025/TT-BCA)\n📺 Video hướng dẫn viết Tờ khai CT01: https://www.youtube.com/watch?v=dxzEhyfv750`,
     afterReplies: [
       { title: "Xem cách nộp Online", payload: "FLOW_CU_TRU_TT_ONLINE" },
       { title: "Quay lại Thường trú", payload: "FLOW_CU_TRU_THUONG_TRU_MAIN" },
@@ -32,7 +32,7 @@ const responses = {
   },
   'FLOW_CU_TRU_TT_ONLINE': {
     agentState: 'AGENT_CU_TRU',
-    text: `[NỘP HỒ SƠ ONLINE QUA VNeID/DVC]\n\nKhuyến khích nộp Online để được GIẢM 50% LỆ PHÍ!\n\n📌 *Bước 1:* Đăng nhập VNeID (Mức 2) hoặc Cổng DVC (dichvucong.gov.vn).\n📌 *Bước 2:* Chụp ảnh bản gốc rõ nét các giấy tờ đã chuẩn bị.\n📌 *Bước 3:* Chọn "Đăng ký thường trú", điền form điện tử và đính kèm ảnh chụp.\n📌 *Bước 4:* Thanh toán lệ phí trực tuyến.\n\n📺 *Video Hướng Dẫn Thao Tác Trên VNeID:* https://www.youtube.com/watch?v=dxzEhyfv750`,
+    text: `Dạ, anh/chị có thể nộp hồ sơ thường trú online ngay tại nhà, lại được GIẢM 50% lệ phí ạ:\n\n📌 Bước 1: Đăng nhập VNeID (Mức 2) hoặc Cổng DVC (dichvucong.gov.vn).\n📌 Bước 2: Chụp ảnh bản gốc các giấy tờ đã chuẩn bị, rõ nét.\n📌 Bước 3: Chọn "Đăng ký thường trú", điền form điện tử và đính kèm ảnh.\n📌 Bước 4: Thanh toán lệ phí trực tuyến.\n\n📺 Video hướng dẫn thao tác trên VNeID: https://www.youtube.com/watch?v=dxzEhyfv750`,
     afterReplies: [
       { title: "Quay lại Thường trú", payload: "FLOW_CU_TRU_THUONG_TRU_MAIN" },
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }
@@ -40,7 +40,7 @@ const responses = {
   },
   'FLOW_CU_TRU_TT_OFFLINE': {
     agentState: 'AGENT_CU_TRU',
-    text: `[NỘP TRỰC TIẾP TẠI CÔNG AN PHƯỜNG]\n\n- Nơi nộp: Bộ phận Một cửa - Công an Phường Bình Dương.\n- Giờ làm việc: Sáng 07h30 - 11h30; Chiều 13h30 - 17h00 (Từ Thứ 2 đến sáng Thứ 7).\n- Lưu ý: Mang theo Căn cước công dân và toàn bộ BẢN GỐC giấy tờ nhà đất để cán bộ đối chiếu (Công an không giữ bản gốc của bạn).`,
+    text: `Dạ, nếu muốn nộp trực tiếp, anh/chị vui lòng đến Công an phường ạ:\n\n📌 Nơi nộp: Bộ phận Một cửa - Công an Phường Bình Dương.\n📌 Giờ làm việc: Sáng 07h30 - 11h30; Chiều 13h30 - 17h00 (Từ Thứ 2 đến sáng Thứ 7).\n📌 Mang theo Căn cước công dân và toàn bộ BẢN GỐC giấy tờ nhà đất để cán bộ đối chiếu (Công an không giữ bản gốc của anh/chị).\n\nAnh/chị cứ đến, cán bộ sẽ hỗ trợ tận tình ạ.`,
     afterReplies: [
       { title: "Quay lại Thường trú", payload: "FLOW_CU_TRU_THUONG_TRU_MAIN" },
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }
@@ -48,7 +48,7 @@ const responses = {
   },
   'FLOW_CU_TRU_TT_FEE': {
     agentState: 'AGENT_CU_TRU',
-    text: `[BẢNG CHI TIẾT LỆ PHÍ THƯỜNG TRÚ]\n\nCăn cứ Thông tư 75/2022/TT-BTC:\n- 💵 *Nộp trực tuyến (VNeID/DVC):* Giảm 50%, chỉ còn 10.000 đồng/lần.\n- 💵 *Nộp trực tiếp tại phường:* 20.000 đồng/lần.\n\n🌟 *Trường hợp MIỄN PHÍ 100%:*\n- Hộ nghèo, hộ cận nghèo.\n- Trẻ em dưới 16 tuổi.\n- Người cao tuổi (từ đủ 60 tuổi).\n- Người khuyết tật, người có công với cách mạng.`,
+    text: `Dạ, lệ phí đăng ký thường trú như sau ạ:\n\n💵 Nộp trực tuyến (VNeID/DVC): giảm 50%, chỉ còn 10.000 đồng/lần.\n💵 Nộp trực tiếp tại phường: 20.000 đồng/lần.\n\n🌟 Miễn phí 100% với: hộ nghèo, hộ cận nghèo; trẻ em dưới 16 tuổi; người cao tuổi (từ đủ 60 tuổi); người khuyết tật, người có công với cách mạng.\n\n(Căn cứ: Thông tư 75/2022/TT-BTC)`,
     afterReplies: [
       { title: "Quay lại Thường trú", payload: "FLOW_CU_TRU_THUONG_TRU_MAIN" },
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }
@@ -58,7 +58,7 @@ const responses = {
   // === TẠM TRÚ ===
   'FLOW_CU_TRU_TAM_TRU_MAIN': {
     agentState: 'AGENT_CU_TRU',
-    text: `[CHUYÊN ĐỀ ĐĂNG KÝ TẠM TRÚ]\n\n(Căn cứ: Luật Cư trú 2020 & Nghị định 58/2026/NĐ-CP)\n\nNgười dân đến sinh sống từ 30 ngày trở lên phải đăng ký tạm trú (thời hạn tạm trú tối đa 2 năm). Bạn muốn xem nội dung nào?`,
+    text: `Dạ, Công an phường xin hướng dẫn anh/chị thủ tục đăng ký tạm trú ạ.\n\n📌 Ai cần đăng ký: người đến sinh sống từ 30 ngày trở lên.\n📌 Thời hạn tạm trú tối đa 2 năm.\n\n(Căn cứ: Luật Cư trú 2020 & Nghị định 58/2026/NĐ-CP)\n\nAnh/chị muốn xem nội dung nào ạ?`,
     afterReplies: [
       { title: "1. Hồ sơ tạm trú", payload: "FLOW_CU_TRU_TAMT_HOSO" },
       { title: "2. Quy trình Online", payload: "FLOW_CU_TRU_TAMT_ONLINE" },
@@ -68,7 +68,7 @@ const responses = {
   },
   'FLOW_CU_TRU_TAMT_HOSO': {
     agentState: 'AGENT_CU_TRU',
-    text: `[HỒ SƠ ĐĂNG KÝ TẠM TRÚ]\n\n(Căn cứ: Thông tư 53/2025/TT-BCA)\n\n1. Tờ khai CT01.\n2. Bản sao CCCD.\n3. Hợp đồng thuê nhà (hoặc văn bản đồng ý cho ở nhờ của chủ nhà).\n\n📺 *Video Hướng Dẫn:* https://www.youtube.com/watch?v=WC_mnMmiqL4`,
+    text: `Dạ, hồ sơ đăng ký tạm trú gồm có:\n\n📌 Tờ khai CT01.\n📌 Bản sao CCCD.\n📌 Hợp đồng thuê nhà (hoặc văn bản đồng ý cho ở nhờ của chủ nhà).\n\n(Căn cứ: Thông tư 53/2025/TT-BCA)\n📺 Video hướng dẫn: https://www.youtube.com/watch?v=WC_mnMmiqL4`,
     afterReplies: [
       { title: "Quay lại Tạm trú", payload: "FLOW_CU_TRU_TAM_TRU_MAIN" },
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }
@@ -76,7 +76,7 @@ const responses = {
   },
   'FLOW_CU_TRU_TAMT_ONLINE': {
     agentState: 'AGENT_CU_TRU',
-    text: `[NỘP TẠM TRÚ ONLINE]\n\nBạn hoàn toàn có thể ngồi tại nhà khai báo tạm trú qua app VNeID hoặc Cổng Dịch Vụ Công Bộ Công An.\nSau khi duyệt thành công (tối đa 3 ngày), hệ thống sẽ gửi tin nhắn SMS thông báo hoàn tất.\n\n📺 *Video Thao Tác VNeID:* https://www.youtube.com/watch?v=WC_mnMmiqL4`,
+    text: `Dạ, anh/chị có thể ngồi tại nhà khai báo tạm trú, không cần ra phường ạ:\n\n📌 Khai báo qua app VNeID hoặc Cổng Dịch vụ công Bộ Công an.\n📌 Sau khi duyệt (tối đa 3 ngày), hệ thống gửi tin nhắn SMS báo hoàn tất.\n\n📺 Video thao tác VNeID: https://www.youtube.com/watch?v=WC_mnMmiqL4`,
     afterReplies: [
       { title: "Quay lại Tạm trú", payload: "FLOW_CU_TRU_TAM_TRU_MAIN" },
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }
@@ -84,7 +84,7 @@ const responses = {
   },
   'FLOW_CU_TRU_TAMT_FEE': {
     agentState: 'AGENT_CU_TRU',
-    text: `[LỆ PHÍ TẠM TRÚ]\n\n- 💵 *Nộp trực tuyến (VNeID/DVC):* 7.000 đồng/lần.\n- 💵 *Nộp trực tiếp tại phường:* 15.000 đồng/lần.\n\nTrẻ em, người cao tuổi, người khuyết tật được miễn phí 100%.`,
+    text: `Dạ, lệ phí đăng ký tạm trú như sau ạ:\n\n💵 Nộp trực tuyến (VNeID/DVC): 7.000 đồng/lần.\n💵 Nộp trực tiếp tại phường: 15.000 đồng/lần.\n\n🌟 Miễn phí 100% với trẻ em, người cao tuổi, người khuyết tật.`,
     afterReplies: [
       { title: "Quay lại Tạm trú", payload: "FLOW_CU_TRU_TAM_TRU_MAIN" },
       { title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }
@@ -94,7 +94,7 @@ const responses = {
   // === TẠM VẮNG ===
   'FLOW_CU_TRU_TAM_VANG_MAIN': {
     agentState: 'AGENT_CU_TRU',
-    text: `[KHAI BÁO TẠM VẮNG]\n\nChỉ áp dụng bắt buộc khi bạn là Bị can, Bị cáo, Người đang chấp hành án, hoặc Nam thanh niên trong độ tuổi nghĩa vụ quân sự đi khỏi địa phương.\nLệ phí: Miễn phí hoàn toàn.`,
+    text: `Dạ, Công an phường xin lưu ý anh/chị về khai báo tạm vắng ạ:\n\n📌 Bắt buộc với: bị can, bị cáo, người đang chấp hành án, hoặc nam thanh niên trong độ tuổi nghĩa vụ quân sự khi đi khỏi địa phương.\n📌 Lệ phí: miễn phí hoàn toàn.\n\nAnh/chị cần hỗ trợ thêm, cứ nhắn cho phường nhé.`,
     afterReplies: [
       { title: "Quay lại", payload: "SHOW_MAIN_MENU" }
     ]
@@ -103,7 +103,7 @@ const responses = {
   // === HỎI ĐÁP AI ===
   'FLOW_CU_TRU_AI': {
     agentState: 'AGENT_CU_TRU',
-    text: `Chế độ [Hỏi đáp bằng AI] đã bật.\nAnh/chị cứ nhập câu hỏi tình huống thực tế của mình nhé. Bot sẽ tra cứu luật và giải đáp ngay!`,
+    text: `Dạ, chế độ Hỏi đáp bằng AI đã bật.\nAnh/chị cứ nhập câu hỏi tình huống thực tế của mình, bot sẽ tra cứu luật và giải đáp ngay ạ!`,
     openChat: true
   }
 };

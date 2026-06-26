@@ -10,15 +10,15 @@ const menus = {
 const responses = {
   'FLOW_KN_HANHCHINH': {
     agentState: 'AGENT_KHIEU_NAI',
-    text: `[KHIẾU NẠI HÀNH CHÍNH]\n\nBạn có thể nộp đơn khiếu nại quyết định/hành vi hành chính của cán bộ trực tiếp tại trực ban Công an Phường. Miễn phí hoàn toàn.`,
+    text: `Dạ, Công an phường xin hướng dẫn anh/chị về khiếu nại hành chính ạ.\n\n📌 Anh/chị có thể nộp đơn khiếu nại quyết định/hành vi hành chính của cán bộ trực tiếp tại trực ban Công an Phường.\n📌 Lệ phí: miễn phí hoàn toàn.\n\nAnh/chị cần hỗ trợ thêm, cứ nhắn cho phường nhé.`,
     afterReplies: [{ title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }]
   },
   'FLOW_KN_TOGIAC': {
     agentState: 'AGENT_KHIEU_NAI',
-    text: `[TỐ GIÁC TỘI PHẠM]\n\nNếu phát hiện trộm cắp, ma túy, đánh bạc... xin vui lòng gọi ngay Hotline trực ban hoặc nhắn tin trực tiếp vào Zalo này. Mọi thông tin của bạn được BẢO MẬT TUYỆT ĐỐI.`,
+    text: `Dạ, nếu anh/chị phát hiện trộm cắp, ma túy, đánh bạc... xin báo cho Công an phường ngay ạ.\n\n📌 Gọi ngay Hotline trực ban, hoặc nhắn tin trực tiếp vào Zalo này.\n📌 Mọi thông tin của anh/chị được BẢO MẬT TUYỆT ĐỐI.\n\nCông an phường cảm ơn anh/chị đã đồng hành giữ gìn an ninh.`,
     afterReplies: [{ title: "Quay về Menu chính", payload: "SHOW_MAIN_MENU" }]
   },
-  'FLOW_KN_AI': { agentState: 'AGENT_KHIEU_NAI', text: `Chế độ Hỏi đáp Khiếu nại. Xin mời đặt câu hỏi.`, openChat: true }
+  'FLOW_KN_AI': { agentState: 'AGENT_KHIEU_NAI', text: `Dạ, chế độ Hỏi đáp Khiếu nại đã mở. Anh/chị cứ đặt câu hỏi, bot giải đáp ngay ạ.`, openChat: true }
 };
 
 module.exports = { menus, responses };

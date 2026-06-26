@@ -14,6 +14,7 @@ const {
   loginRetryAfterSeconds,
   LOGIN_MAX_FAILURES,
   LOGIN_WINDOW_MS,
+  LOGIN_GLOBAL_MAX_FAILURES,
 } = require('../src/admin');
 
 describe('admin.js auth tokens', () => {

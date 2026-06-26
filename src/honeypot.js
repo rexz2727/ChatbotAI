@@ -53,8 +53,16 @@ async function processAttachment(url, senderId, platform) {
     // Same sha256 == identical bytes already quarantined. The file is written mode 0o400
     // (read-only), so re-writing the same hash (e.g. a common FB sticker many users send)
     // fails with EACCES. Skip the write when it already exists.
-    if (!fs.existsSync(quarantinedFilePath)) {
-      fs.writeFileSync(quarantinedFilePath, buffer, { mode: 0o400 });
+    try {
+      if (!fs.existsSync(quarantinedFilePath)) {
+        fs.writeFileSync(quarantinedFilePath, buffer, { mode: 0o400 });
+      }
+    } catch (writeErr) {
+      if (writeErr.code !== 'EACCES') {
+        throw writeErr;
+      }
+      // If EACCES, the file was likely created by a concurrent request and made read-only.
+      // Since the filename is a SHA-256 hash, we can safely ignore the error.
     }
 
     const apiKey = process.env.VIRUSTOTAL_API_KEY;

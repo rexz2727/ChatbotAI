@@ -219,10 +219,53 @@ async function processUserMessage(userId, messageText, buttonPayload = null) {
       const flowResponse = flow.getStaticResponse(payload);
       if (flowResponse) {
         await db.setSession(userId, flowResponse.agentState);
-        if (flowResponse.openChat) {
-          return { text: flowResponse.text, showMenu: false };
+        let replyText = flowResponse.text;
+
+        // Bổ sung xử lý câu trả lời tĩnh qua AI để format 3 nhịp (có cache)
+        const crypto = require('crypto');
+        const textHash = crypto.createHash('md5').update(replyText).digest('hex');
+        const cacheKey = `STATIC_AI::${payload}::${textHash}`;
+        
+        let cachedStatic = await db.getCachedResponse(cacheKey);
+        
+        if (!cachedStatic) {
+          const pass2Prompt = `Bạn là một cán bộ tiếp dân tận tâm, kiên nhẫn, gần gũi của Công an phường Bình Dương.
+Thông tin đơn vị của bạn (TUYỆT ĐỐI TUÂN THỦ):
+- Tên cơ quan: Công an phường Bình Dương.
+- Trụ sở chính: Số 01, đường D27, khu phố Hòa Phú 1, phường Bình Dương, Thành phố Hồ Chí Minh.
+- Số điện thoại trực ban (24/7): 02743 515 097.
+- Thời gian tiếp dân: Từ Thứ Hai đến Thứ Bảy (Sáng: 07h30 – 11h30, Chiều: 13h30 – 17h00). Thứ Ba và Thứ Năm có tiếp dân thêm Buổi Tối: 18h00 – 22h00.
+
+Nhiệm vụ: Viết lại (làm mượt) thông tin hướng dẫn sau đây thành một câu trả lời hoàn chỉnh, thân thiện cho người dân.
+THÔNG TIN HƯỚNG DẪN GỐC:
+===
+${replyText}
+===
+
+QUY TẮC:
+1. Xưng "Công an phường", gọi "anh/chị". Dùng từ "ạ", "dạ" tự nhiên.
+2. Cấu trúc 3 nhịp: (1) Câu đồng cảm/ghi nhận → (2) Trình bày trọng tâm bằng gạch đầu dòng (GIỮ NGUYÊN thông tin pháp lý, số liệu, link web/video nếu có) → (3) Câu mời hỗ trợ thêm.
+3. KHÔNG tự bịa thêm luật hay quy định ngoài thông tin gốc.
+4. SÚC TÍCH, dễ đọc trên điện thoại.
+
+Cán bộ trả lời:`;
+
+          try {
+            const humanizedReply = await geminiLimit(() => callGeminiWithBackoff(pass2Prompt, 4, 2000, { temperature: 0.5 }));
+            cachedStatic = humanizedReply.trim().startsWith("[Chatbot Auto]") ? humanizedReply.trim() : "[Chatbot Auto] " + humanizedReply.trim();
+            await db.setCachedResponse(cacheKey, cachedStatic);
+          } catch (err) {
+            console.error("AI formatting for static response failed, using original.", err);
+            cachedStatic = "[Chatbot Auto] " + replyText; // fallback to original if AI fails
+          }
         }
-        return { text: flowResponse.text, quickReplies: flowResponse.afterReplies };
+        
+        replyText = cachedStatic;
+
+        if (flowResponse.openChat) {
+          return { text: replyText, showMenu: false };
+        }
+        return { text: replyText, quickReplies: flowResponse.afterReplies };
       }
     }
 
@@ -235,14 +278,14 @@ async function processUserMessage(userId, messageText, buttonPayload = null) {
       const lowerText = messageText.trim().toLowerCase().normalize('NFC');
       
       const keywords = {
-        'AGENT_CU_TRU': ['cư trú', 'tạm trú', 'thường trú', 'hộ khẩu', 'lưu trú', 'khai báo tạm vắng'],
-        'AGENT_CAN_CUOC': ['căn cước', 'cccd', 'cmnd', 'định danh', 'vneid', 'mã định danh'],
-        'AGENT_GIAO_THONG': ['giao thông', 'xe máy', 'ô tô', 'phạt nguội', 'tai nạn', 'bằng lái'],
-        'AGENT_AN_NINH': ['an ninh', 'pccc', 'cháy', 'trật tự', 'đánh nhau', 'trộm cắp', 'báo công an'],
-        'AGENT_NGOAI_KIEU': ['ngoại kiều', 'nước ngoài', 'người nước ngoài', 'visa', 'hộ chiếu'],
-        'AGENT_KHIEU_NAI': ['khiếu nại', 'tố cáo', 'vi phạm', 'phản ánh'],
-        'AGENT_TTHC': ['thủ tục hành chính', 'tthc', 'thủ tục', 'dịch vụ công', 'hành chính'],
-        'AGENT_LIEN_HE': ['liên hệ', 'địa chỉ', 'số điện thoại', 'đường dây nóng', 'hotline', 'ubnd', 'công an thành phố', 'trụ sở']
+        'AGENT_CU_TRU': ['cư trú', 'tạm trú', 'thường trú', 'hộ khẩu', 'lưu trú', 'khai báo tạm vắng', 'kt3', 'hk', 'hktt', 'nhập khẩu', 'cắt khẩu', 'chuyển khẩu', 'đktt', 'tách hộ', 'sổ hộ khẩu', 'shk'],
+        'AGENT_CAN_CUOC': ['căn cước', 'cccd', 'cmnd', 'định danh', 'vneid', 'mã định danh', 'cc', 'cmt', 'chứng minh thư', 'chứng minh nhân dân', 'cấp lại cccd', 'làm cccd', 'đdcn', 'cấp cccd'],
+        'AGENT_GIAO_THONG': ['giao thông', 'xe máy', 'ô tô', 'phạt nguội', 'tai nạn', 'bằng lái', 'gt', 'gtđb', 'csgt', 'cảnh sát giao thông', 'cavet', 'cà vẹt', 'đăng ký xe', 'giấy phép lái xe', 'gplx', 'mất bằng', 'sang tên xe', 'kẹt xe', 'phân khối'],
+        'AGENT_AN_NINH': ['an ninh', 'pccc', 'cháy', 'trật tự', 'đánh nhau', 'trộm cắp', 'báo công an', 'antt', '113', '114', 'cấp cứu', 'cứu hỏa', 'phòng cháy chữa cháy', 'đánh bạc', 'ma túy', 'cướp', 'bạo hành', 'gây rối', 'công an phường', 'cap', 'cshs', 'lừa đảo'],
+        'AGENT_NGOAI_KIEU': ['ngoại kiều', 'nước ngoài', 'người nước ngoài', 'visa', 'hộ chiếu', 'nnn', 'xnc', 'xuất nhập cảnh', 'thẻ xanh', 'trục xuất', 'passport', 'thẻ tạm trú', 'việt kiều', 'gia hạn visa'],
+        'AGENT_KHIEU_NAI': ['khiếu nại', 'tố cáo', 'vi phạm', 'phản ánh', 'kn', 'tc', 'kntc', 'kiện', 'đơn kiện', 'tố giác', 'tội phạm', 'tham nhũng', 'hối lộ', 'pakn'],
+        'AGENT_TTHC': ['thủ tục hành chính', 'tthc', 'thủ tục', 'dịch vụ công', 'hành chính', 'dvc', 'dvctt', 'hành chính công', 'một cửa', 'ủy ban', 'ubnd', 'sao y', 'công chứng', 'chứng thực', 'giấy khai sinh', 'khai sinh', 'kết hôn', 'khai tử'],
+        'AGENT_LIEN_HE': ['liên hệ', 'địa chỉ', 'số điện thoại', 'đường dây nóng', 'hotline', 'ubnd', 'công an thành phố', 'trụ sở', 'sđt', 'liên lạc', 'địa điểm', 'gọi công an', 'ban chỉ huy']
       };
 
       for (const [stateKey, words] of Object.entries(keywords)) {
@@ -350,11 +393,49 @@ async function processUserMessage(userId, messageText, buttonPayload = null) {
     let context = "";
     let historySection = "";
     
+    // Bổ sung: Xử lý từ viết tắt để ChromaDB và Gemini hiểu rõ hơn
+    const abbreviationMap = {
+      'cccd': 'căn cước công dân',
+      'cmnd': 'chứng minh nhân dân',
+      'cmt': 'chứng minh thư',
+      'đktt': 'đăng ký thường trú',
+      'đktt2': 'đăng ký tạm trú',
+      'kt3': 'sổ tạm trú',
+      'hk': 'hộ khẩu',
+      'hktt': 'hộ khẩu thường trú',
+      'shk': 'sổ hộ khẩu',
+      'csgt': 'cảnh sát giao thông',
+      'gplx': 'giấy phép lái xe',
+      'pccc': 'phòng cháy chữa cháy',
+      'bhyt': 'bảo hiểm y tế',
+      'bhxh': 'bảo hiểm xã hội',
+      'xnc': 'xuất nhập cảnh',
+      'nnn': 'người nước ngoài',
+      'kntc': 'khiếu nại tố cáo',
+      'kn': 'khiếu nại',
+      'tc': 'tố cáo',
+      'dvc': 'dịch vụ công',
+      'dvctt': 'dịch vụ công trực tuyến',
+      'tthc': 'thủ tục hành chính',
+      'ubnd': 'ủy ban nhân dân',
+      'cap': 'công an phường',
+      'cshs': 'cảnh sát hình sự',
+      'vneid': 'ứng dụng định danh điện tử VNeID'
+    };
+
+    let expandedMessageText = messageText || "";
+    if (expandedMessageText) {
+      for (const [abbr, full] of Object.entries(abbreviationMap)) {
+        const regex = new RegExp(`(?<=^|\\s|[.,!?])${abbr}(?=[.,!?\\s]|$)`, 'gi');
+        expandedMessageText = expandedMessageText.replace(regex, full);
+      }
+    }
+    
     try {
       const collectionPromise = client.getCollection({
         name: matchedConfig.db,
         embeddingFunction: geminiEmbeddingFunction
-      }).then(col => col.query({ queryTexts: [messageText], nResults: 3 }));
+      }).then(col => col.query({ queryTexts: [expandedMessageText], nResults: 3 }));
       
       const historyPromise = db.getConversationHistory(userId, 3);
       
@@ -401,11 +482,11 @@ ${historySection}TÀI LIỆU PHÁP LUẬT THAM CHIẾU:
 ${context || "Không có tài liệu tham chiếu nào được tìm thấy cho câu hỏi này."}
 ===
 
-Câu hỏi của người dân: ${messageText}
+Câu hỏi của người dân: ${expandedMessageText}
 
 Dữ kiện:`;
 
-    const cacheKey = `${state}::${messageText.toLowerCase().trim()}`;
+    const cacheKey = `${state}::${expandedMessageText.toLowerCase().trim()}`;
     let replyText = await db.getCachedResponse(cacheKey);
     
     if (!replyText) {
@@ -441,7 +522,7 @@ QUY TẮC:
 5. ĐA NGÔN NGỮ: Tự động nhận diện ngôn ngữ trong câu hỏi của người dân. Nếu người dân hỏi bằng ngôn ngữ khác (Tiếng Anh, Tiếng Hàn, Tiếng Trung...), hãy dịch toàn bộ câu trả lời sang ngôn ngữ đó một cách chuyên nghiệp.
 6. SÚC TÍCH: Tối đa ~5 gạch đầu dòng, mỗi ý 1-2 dòng. KHÔNG mở bài dài dòng, KHÔNG lặp lại ý. Ưu tiên ngắn gọn, dễ đọc trên điện thoại — chỉ nêu thông tin người dân thật sự cần.
 
-Câu hỏi của người dân: ${messageText}
+Câu hỏi của người dân: ${expandedMessageText}
 Cán bộ trả lời:`;
 
       const humanizedReply = await geminiLimit(() => callGeminiWithBackoff(pass2Prompt, 4, 2000, { temperature: 0.6 }));

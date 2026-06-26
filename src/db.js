@@ -311,15 +311,37 @@ const enqueueMessage = (platform, senderId, messageText, payload) => {
   });
 };
 
-const dequeueMessage = () => {
+// Atomic claim via compare-and-swap: SELECT a candidate id, then conditionally
+// UPDATE only if it is still 'pending'. The this.changes===1 check is the race
+// guard — two concurrent dequeues targeting the same row see exactly one win.
+// excludeSenders keeps per-user ordering: senders already in-flight are skipped
+// so a user's 2nd message is not claimed until their 1st completes.
+const dequeueMessage = (excludeSenders = []) => {
   return new Promise((resolve, reject) => {
-    db.get('SELECT * FROM message_queue WHERE status = ? ORDER BY created_at ASC LIMIT 1', ['pending'], (err, row) => {
+    let selectSql = 'SELECT id FROM message_queue WHERE status = ?';
+    const params = ['pending'];
+    if (excludeSenders.length > 0) {
+      const placeholders = excludeSenders.map(() => '?').join(', ');
+      selectSql += ` AND sender_id NOT IN (${placeholders})`;
+      params.push(...excludeSenders);
+    }
+    selectSql += ' ORDER BY created_at ASC LIMIT 1';
+
+    db.get(selectSql, params, (err, row) => {
       if (err) return reject(err);
       if (!row) return resolve(null);
-      db.run('UPDATE message_queue SET status = ? WHERE id = ?', ['processing', row.id], (updateErr) => {
-        if (updateErr) return reject(updateErr);
-        resolve(row);
-      });
+      db.run(
+        'UPDATE message_queue SET status = ? WHERE id = ? AND status = ?',
+        ['processing', row.id, 'pending'],
+        function (updateErr) {
+          if (updateErr) return reject(updateErr);
+          if (this.changes !== 1) return resolve(null); // lost the race
+          db.get('SELECT * FROM message_queue WHERE id = ?', [row.id], (getErr, fullRow) => {
+            if (getErr) return reject(getErr);
+            resolve(fullRow || null);
+          });
+        }
+      );
     });
   });
 };

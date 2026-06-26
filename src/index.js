@@ -1,9 +1,14 @@
-require('dotenv').config();
+require('dotenv').config({ override: true });
 const express = require('express');
 // Using native fetch instead of axios
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
+
+// graph.facebook.com (and generativelanguage) return both AAAA + A records, but IPv6 egress
+// is unreachable in this rootless/pasta netns (ENETUNREACH). undici's verbatim DNS order then
+// lands on the dead IPv6 path ~half the time -> intermittent "fetch failed". Prefer IPv4.
+require('dns').setDefaultResultOrder('ipv4first');
 
 // Đảm bảo thư mục data tồn tại
 const dataDir = path.join(process.cwd(), 'data');
@@ -249,10 +254,57 @@ async function sendFacebookTypingOn(recipientId) {
 }
 
 // Facebook Send API Helper
+// Facebook hard-limits message.text to 2000 chars; longer replies are rejected with error #100.
+// Split on the nearest paragraph/sentence/word boundary so chunks read naturally.
+function splitMessageText(text, maxLen = 1990) {
+  if (!text || text.length <= maxLen) return [text || ''];
+  const chunks = [];
+  let rest = text;
+  while (rest.length > maxLen) {
+    const slice = rest.slice(0, maxLen);
+    let cut = slice.lastIndexOf('\n\n');
+    if (cut < maxLen * 0.5) cut = slice.lastIndexOf('\n');
+    if (cut < maxLen * 0.5) cut = slice.lastIndexOf('. ');
+    if (cut < maxLen * 0.5) cut = slice.lastIndexOf(' ');
+    if (cut <= 0) cut = maxLen;
+    chunks.push(rest.slice(0, cut).trim());
+    rest = rest.slice(cut).trim();
+  }
+  if (rest) chunks.push(rest);
+  return chunks;
+}
+
+async function postToFacebook(url, recipientId, messageData) {
+  const body = JSON.stringify({ recipient: { id: recipientId }, message: messageData });
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body
+      });
+      if (!response.ok) {
+        // Graph API HTTP error (e.g. #100): not transient, surface it without retrying.
+        throw new Error(`HTTP ${response.status}: ${await response.text()}`);
+      }
+      return;
+    } catch (error) {
+      const code = String(error.cause?.code || '');
+      const transient = error.message.startsWith('fetch failed') ||
+        /ETIMEDOUT|ECONNRESET|ECONNREFUSED|ENETUNREACH|EAI_AGAIN|UND_ERR/.test(code);
+      if (!transient || attempt === 3) throw error;
+      await new Promise(r => setTimeout(r, 300 * attempt));
+    }
+  }
+}
+
 async function sendFacebookResponse(recipientId, result, req) {
   const url = `https://graph.facebook.com/v19.0/me/messages?access_token=${process.env.FB_PAGE_ACCESS_TOKEN}`;
-  
-  let messageData = {};
+
+  let attachment = null;
+  let text = '';
+  let quickReplies = null;
+
   if (result.isFile) {
     let fileUrl = result.fileUrl;
     if (req && fileUrl.startsWith('/')) {
@@ -260,59 +312,46 @@ async function sendFacebookResponse(recipientId, result, req) {
       const host = req.get('host');
       fileUrl = `${protocol}://${host}${fileUrl}`;
     }
-    messageData = {
-      attachment: {
-        type: "file",
-        payload: { url: fileUrl, is_reusable: true }
-      }
-    };
+    attachment = { type: "file", payload: { url: fileUrl, is_reusable: true } };
   } else if (result.quickReplies && result.quickReplies.length > 0) {
-    messageData = {
-      text: result.text,
-      quick_replies: result.quickReplies.map(r => ({
-        content_type: "text",
-        title: r.title,
-        payload: r.payload
-      }))
-    };
-    messageData.text += '\n(Không thấy nút? Gõ: ' +
+    text = result.text + '\n(Không thấy nút? Gõ: ' +
       result.quickReplies.map(r => r.title).join(' · ') + ')';
+    quickReplies = result.quickReplies.map(r => ({
+      content_type: "text", title: r.title, payload: r.payload
+    }));
   } else if (result.showMenu) {
-    messageData = {
-      text: result.text,
-      quick_replies: [
-        { content_type: "text", title: "Cư trú",        payload: "MENU_CU_TRU" },
-        { content_type: "text", title: "Căn cước",       payload: "MENU_CAN_CUOC" },
-        { content_type: "text", title: "Giao thông",     payload: "MENU_GIAO_THONG" },
-        { content_type: "text", title: "An ninh & PCCC", payload: "MENU_AN_NINH" },
-        { content_type: "text", title: "Ngoại kiều",     payload: "MENU_NGOAI_KIEU" },
-        { content_type: "text", title: "Khiếu nại",      payload: "MENU_KHIEU_NAI" },
-        { content_type: "text", title: "Liên hệ cơ quan", payload: "FLOW_LIEN_HE" },
-        { content_type: "text", title: "Góp ý Hệ thống", payload: "MENU_GOP_Y" }
-      ]
-    };
+    text = result.text;
+    quickReplies = [
+      { content_type: "text", title: "Cư trú",        payload: "MENU_CU_TRU" },
+      { content_type: "text", title: "Căn cước",       payload: "MENU_CAN_CUOC" },
+      { content_type: "text", title: "Giao thông",     payload: "MENU_GIAO_THONG" },
+      { content_type: "text", title: "An ninh & PCCC", payload: "MENU_AN_NINH" },
+      { content_type: "text", title: "Ngoại kiều",     payload: "MENU_NGOAI_KIEU" },
+      { content_type: "text", title: "Khiếu nại",      payload: "MENU_KHIEU_NAI" },
+      { content_type: "text", title: "Liên hệ cơ quan", payload: "FLOW_LIEN_HE" },
+      { content_type: "text", title: "Góp ý Hệ thống", payload: "MENU_GOP_Y" }
+    ];
   } else {
-    messageData = { text: result.text };
+    text = result.text;
   }
 
   try {
     const isPlaceholderToken = !process.env.FB_PAGE_ACCESS_TOKEN || process.env.FB_PAGE_ACCESS_TOKEN === 'your_fb_page_access_token_here';
     if (isPlaceholderToken) {
-      console.log(`[FB SIMULATOR] Sent response to user ${recipientId}:`, messageData);
+      console.log(`[FB SIMULATOR] Sent response to user ${recipientId}:`, attachment || { text, quickReplies });
       return;
     }
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        recipient: { id: recipientId },
-        message: messageData
-      })
-    });
-    if (!response.ok) {
-      const errData = await response.text();
-      throw new Error(`HTTP ${response.status}: ${errData}`);
+    if (attachment) {
+      await postToFacebook(url, recipientId, { attachment });
+    } else {
+      // Quick replies ride on the LAST chunk only, so the rating buttons appear at the end.
+      const chunks = splitMessageText(text);
+      for (let i = 0; i < chunks.length; i++) {
+        const messageData = { text: chunks[i] };
+        if (quickReplies && i === chunks.length - 1) messageData.quick_replies = quickReplies;
+        await postToFacebook(url, recipientId, messageData);
+      }
     }
     console.log(`Facebook message sent to ${recipientId}`);
   } catch (error) {
@@ -544,38 +583,66 @@ app.listen(PORT, HOST, () => {
   startQueueWorker();
 });
 
-// Queue Worker
+// Queue Worker — bounded concurrency. Matches geminiLimit pLimit(3) in chatbot.js
+// so we never push more than 3 messages onto the model at once.
+const WORKER_CONCURRENCY = 3;
+
+// Process one message end-to-end. On any error we still completeMessage so the
+// row is not left stuck in 'processing' forever (preserves prior fire-and-forget
+// behavior: a failed message is dropped, never retried/duplicated).
+async function processOne(msg) {
+  try {
+    console.log(`[Queue Worker] Processing message ID: ${msg.id} for ${msg.platform} user ${msg.sender_id}`);
+
+    // Simulate req object for relative URL parsing if needed
+    const dummyReq = {
+      protocol: 'https',
+      get: () => process.env.PUBLIC_URL || 'trycloudflare.com', // fallback
+      headers: {}
+    };
+
+    const result = await chatbot.handleUserMessage(msg.sender_id, msg.message_text, msg.payload);
+
+    if (msg.platform === 'facebook') {
+      await sendFacebookResponse(msg.sender_id, result, dummyReq);
+    } else if (msg.platform === 'zalo') {
+      await sendZaloResponse(msg.sender_id, result);
+    }
+  } catch (err) {
+    console.error(`[Queue Worker] Error processing message ID ${msg.id}:`, err);
+  } finally {
+    try {
+      await db.completeMessage(msg.id);
+    } catch (completeErr) {
+      console.error(`[Queue Worker] Error completing message ID ${msg.id}:`, completeErr);
+    }
+  }
+}
+
 async function startQueueWorker() {
   console.log('[Queue Worker] Started and listening for messages...');
+  const inFlightSenders = new Set();
+
   while (true) {
     try {
-      const msg = await db.dequeueMessage();
-      if (!msg) {
-        await new Promise(resolve => setTimeout(resolve, 1000)); // Sleep 1s if queue empty
+      if (inFlightSenders.size >= WORKER_CONCURRENCY) {
+        await new Promise(resolve => setTimeout(resolve, 200));
         continue;
       }
-      
-      console.log(`[Queue Worker] Processing message ID: ${msg.id} for ${msg.platform} user ${msg.sender_id}`);
-      
-      // Simulate req object for relative URL parsing if needed
-      const dummyReq = {
-        protocol: 'https',
-        get: () => process.env.PUBLIC_URL || 'trycloudflare.com', // fallback
-        headers: {}
-      };
-      
-      const result = await chatbot.handleUserMessage(msg.sender_id, msg.message_text, msg.payload);
-      
-      if (msg.platform === 'facebook') {
-        await sendFacebookResponse(msg.sender_id, result, dummyReq);
-      } else if (msg.platform === 'zalo') {
-        await sendZaloResponse(msg.sender_id, result);
+
+      // Exclude senders already in-flight to preserve per-user ordering.
+      const msg = await db.dequeueMessage([...inFlightSenders]);
+      if (!msg) {
+        await new Promise(resolve => setTimeout(resolve, 300));
+        continue;
       }
-      
-      await db.completeMessage(msg.id);
-      
+
+      inFlightSenders.add(msg.sender_id);
+      // Fire-and-forget: do NOT await, so up to WORKER_CONCURRENCY run in parallel.
+      processOne(msg).finally(() => inFlightSenders.delete(msg.sender_id));
+
     } catch (err) {
-      console.error('[Queue Worker] Error processing message:', err);
+      console.error('[Queue Worker] Error in dequeue loop:', err);
       await new Promise(resolve => setTimeout(resolve, 2000)); // Backoff on error
     }
   }

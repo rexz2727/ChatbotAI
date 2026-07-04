@@ -201,7 +201,16 @@ app.post('/webhook/facebook', async (req, res) => {
             payload = webhookEvent.message.quick_reply.payload;
           }
           if (!messageText && !payload && webhookEvent.message.attachments) {
-            messageText = '[Gửi đính kèm/Sticker]';
+            const locAtt = webhookEvent.message.attachments.find(a => a.type === 'location');
+            const fileAtt = webhookEvent.message.attachments.find(a => a.payload && a.payload.url);
+            if (locAtt && locAtt.payload && locAtt.payload.coordinates) {
+              payload = `LOCATION_${locAtt.payload.coordinates.lat}_${locAtt.payload.coordinates.long}`;
+            } else if (fileAtt) {
+              payload = JSON.stringify({ type: 'attachment', url: fileAtt.payload.url });
+              messageText = '[Gửi đính kèm/Sticker]';
+            } else {
+              messageText = '[Gửi đính kèm/Sticker]';
+            }
           }
         } else if (webhookEvent.postback) {
           payload = webhookEvent.postback.payload;
@@ -430,6 +439,20 @@ app.post('/webhook/zalo', async (req, res) => {
       if (!isAllowed) {
         console.log(`[Rate Limit] Blocked user ${senderId}`);
         // return res.sendStatus(429);
+        return;
+      }
+      
+      await db.enqueueMessage('zalo', senderId, null, payload);
+    }
+    else if (body.event_name === 'user_send_location') {
+      const senderId = body.sender.id;
+      const lat = body.message.location ? body.message.location.latitude : '0';
+      const lng = body.message.location ? body.message.location.longitude : '0';
+      const payload = `LOCATION_${lat}_${lng}`;
+      
+      const isAllowed = await db.checkRateLimit(senderId);
+      if (!isAllowed) {
+        console.log(`[Rate Limit] Blocked user ${senderId}`);
         return;
       }
       

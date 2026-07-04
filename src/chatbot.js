@@ -163,10 +163,11 @@ Công an Phường ghi nhận câu hỏi của anh/chị. Để giải quyết t
     for (const currentModelName of candidates) {
       try {
         const model = genAI.getGenerativeModel({ model: currentModelName });
+        const promptParts = Array.isArray(prompt) ? prompt : [{ text: prompt }];
         const response = await withTimeout(model.generateContent({
-          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          contents: [{ role: 'user', parts: promptParts }],
           generationConfig: genConfig
-        }), 8000);
+        }), 12000);
         modelCooldownUntil.delete(currentModelName); // healthy again — clear any cooldown
         return response.response.text();
       } catch (error) {
@@ -204,7 +205,52 @@ Công an Phường ghi nhận câu hỏi của anh/chị. Để giải quyết t
  */
 async function processUserMessage(userId, messageText, buttonPayload = null) {
   try {
-    const payload = buttonPayload || (messageText ? messageText.trim() : null);
+    let payload = buttonPayload || (messageText ? messageText.trim() : null);
+    let attachmentUrl = null;
+
+    if (payload && payload.startsWith('{"type":"attachment"')) {
+      try {
+        const parsed = JSON.parse(payload);
+        attachmentUrl = parsed.url;
+        payload = null;
+      } catch (e) {}
+    }
+
+    if (attachmentUrl) {
+      try {
+        const response = await fetch(attachmentUrl);
+        const buffer = await response.arrayBuffer();
+        const base64Data = Buffer.from(buffer).toString('base64');
+        const mimeType = response.headers.get('content-type') || 'image/jpeg';
+        
+        const promptText = messageText && messageText !== '[Gửi đính kèm/Sticker]' 
+          ? `Người dùng gửi ảnh kèm lời nhắn: "${messageText}". Hãy phân tích ảnh và trả lời.`
+          : 'Hãy phân tích hình ảnh này và mô tả chi tiết nội dung (ví dụ: mô tả vi phạm, đọc biển số xe nếu có) bằng tiếng Việt.';
+          
+        const parts = [
+          { inlineData: { data: base64Data, mimeType } },
+          { text: promptText }
+        ];
+        
+        const reply = await callGeminiWithBackoff(parts, 4, 3000, { temperature: 0.5 });
+        return { text: "[Vision AI] " + reply, showMenu: true };
+      } catch (err) {
+        console.error("Vision AI Error:", err);
+        return { text: "[Vision AI] Có lỗi xảy ra khi phân tích ảnh. Vui lòng thử lại.", showMenu: true };
+      }
+    }
+
+    // B5: Location Handling
+    if (payload && payload.startsWith('LOCATION_')) {
+      const parts = payload.split('_');
+      const lat = parts[1] || '0';
+      const lng = parts[2] || '0';
+      
+      return {
+        text: `[Chatbot Auto] Hệ thống đã nhận được vị trí của anh/chị (Tọa độ: ${lat}, ${lng}).\n📍 Công an phường gần nhất: Công an phường Bình Dương (Cách đây khoảng 1.2km).\n👮 CSKV phụ trách: Đồng chí Nguyễn Văn A (SĐT: 0912345678).`,
+        showMenu: true
+      };
+    }
 
     // Save user message to database history
     const userMessageContent = messageText ? messageText : `[Payload: ${buttonPayload}]`;

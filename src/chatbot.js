@@ -121,7 +121,7 @@ const MODEL_COOLDOWN_MS = 15000;
 const isModelCoolingDown = (m) => (modelCooldownUntil.get(m) || 0) > Date.now();
 
 // Gemini API call with breadth-first failover + shared circuit breaker
-async function callGeminiWithBackoff(prompt, retries = 4, delay = 2000, genConfig = {}, modelNames = ["gemini-2.5-flash-lite", "gemini-3.1-flash-lite", "gemini-flash-lite-latest", "gemini-3-flash-preview", "gemini-2.5-flash", "gemini-3.5-flash", "gemini-flash-latest"]) {
+async function callGeminiWithBackoff(prompt, retries = 4, delay = 2000, genConfig = {}, modelNames = ["gemini-2.5-flash-lite", "gemini-3.1-flash-lite", "gemini-flash-lite-latest", "gemini-3-flash-preview", "gemini-2.5-flash", "gemini-3.5-flash", "gemini-flash-latest"], meta = null) {
   const apiKey = process.env.GEMINI_API_KEY;
   const isDefaultKey = !apiKey || apiKey === 'your_gemini_api_key_here' || apiKey.trim() === '';
 
@@ -148,6 +148,7 @@ Công an Phường ghi nhận câu hỏi của anh/chị. Để giải quyết t
     const candidates = fresh.length > 0 ? fresh : live;
 
     for (const currentModelName of candidates) {
+      if (meta) meta.modelsTried = (meta.modelsTried || 0) + 1;
       try {
         const model = genAI.getGenerativeModel({ model: currentModelName });
         const response = await model.generateContent({
@@ -155,6 +156,7 @@ Công an Phường ghi nhận câu hỏi của anh/chị. Để giải quyết t
           generationConfig: genConfig
         });
         modelCooldownUntil.delete(currentModelName); // healthy again — clear any cooldown
+        if (meta) meta.modelUsed = currentModelName;
         return response.response.text();
       } catch (error) {
         lastError = error;
@@ -495,11 +497,15 @@ Dữ kiện:`;
     if (!replyText) {
       // PASS 1: Extract Facts (Fast, strictly precise). Order chosen for STABILITY + high quota:
       // flash-lite models first (4M TPM, Unlimited RPD) so we never run out of daily quota mid-flow.
+      const meta1 = {};
+      const tPass1 = Date.now();
       const rawFacts = await geminiLimit(() => callGeminiWithBackoff(
         pass1Prompt, 4, 2000,
         { temperature: 0.1 },
-        ["gemini-2.5-flash-lite", "gemini-3.1-flash-lite", "gemini-flash-lite-latest", "gemini-3-flash-preview", "gemini-2.5-flash", "gemini-3.5-flash", "gemini-flash-latest"]
+        ["gemini-2.5-flash-lite", "gemini-3.1-flash-lite", "gemini-flash-lite-latest", "gemini-3-flash-preview", "gemini-2.5-flash", "gemini-3.5-flash", "gemini-flash-latest"],
+        meta1
       ));
+      timing.pass1 = Date.now() - tPass1;
       
       // PASS 2: Humanize Tone (Normal configuration)
       const pass2Prompt = `Bạn là một cán bộ tiếp dân tận tâm, kiên nhẫn, gần gũi của Công an phường Bình Dương.
@@ -528,11 +534,17 @@ QUY TẮC:
 Câu hỏi của người dân: ${expandedMessageText}
 Cán bộ trả lời:`;
 
-      const humanizedReply = await geminiLimit(() => callGeminiWithBackoff(pass2Prompt, 4, 2000, { temperature: 0.6 }));
+      const meta2 = {};
+      const tPass2 = Date.now();
+      const humanizedReply = await geminiLimit(() => callGeminiWithBackoff(pass2Prompt, 4, 2000, { temperature: 0.6 }, undefined, meta2));
+      timing.pass2 = Date.now() - tPass2;
+      timing.models_tried = (meta1.modelsTried || 0) + (meta2.modelsTried || 0);
+      timing.model_used = meta2.modelUsed || meta1.modelUsed || null;
       
       replyText = humanizedReply.trim().startsWith("[Chatbot Auto]") ? humanizedReply.trim() : "[Chatbot Auto] " + humanizedReply.trim();
       await db.setCachedResponse(cacheKey, replyText);
     } else {
+      timing.cache_hit = true;
       console.log(`[CACHE HIT] ${cacheKey.substring(0, 60)}`);
     }
 
@@ -540,6 +552,7 @@ Cán bộ trả lời:`;
     return {
       text: replyText,
       showMenu: false,
+      _timing: timing,
       quickReplies: [
         { title: "1 Sao", payload: "CSAT_1" },
         { title: "2 Sao", payload: "CSAT_2" },

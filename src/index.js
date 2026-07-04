@@ -601,7 +601,7 @@ app.get('/privacy', (req, res) => {
 });
 
 // Start Server
-app.listen(PORT, HOST, () => {
+const server = app.listen(PORT, HOST, () => {
   console.log(`Express webhook server is listening on ${HOST}:${PORT}`);
   startQueueWorker();
 });
@@ -627,14 +627,14 @@ async function processOne(msg) {
 
     let timeoutTimer = null;
     if (msg.platform === 'facebook') {
-      // Bật typing_on ngay khi bắt đầu (F3 Task 1)
-      await sendFacebookAction(msg.sender_id, 'typing_on', dummyReq);
+      // Bật typing_on ngay khi bắt đầu (F3 Task 1) — không chặn xử lý nếu lỗi
+      sendFacebookTypingOn(msg.sender_id).catch(err => console.error("Typing Error:", err.message));
       
       // Timer 5s gửi tin nhắn chờ (F3 Task 2)
       // Chỉ đặt nếu là tin nhắn (không phải payload menu/tĩnh vốn nhanh)
       if (!msg.payload) {
         timeoutTimer = setTimeout(() => {
-          sendFacebookMessage(msg.sender_id, {
+          sendFacebookResponse(msg.sender_id, {
             text: "Công an phường đang tra cứu thông tin, anh/chị vui lòng chờ trong giây lát ạ…"
           }, dummyReq).catch(e => console.error("Error sending waiting message:", e.message));
         }, 5000);
@@ -672,11 +672,13 @@ async function processOne(msg) {
   }
 }
 
+const inFlightSenders = new Set();
+let shuttingDown = false;
+
 async function startQueueWorker() {
   console.log('[Queue Worker] Started and listening for messages...');
-  const inFlightSenders = new Set();
 
-  while (true) {
+  while (!shuttingDown) {
     try {
       if (inFlightSenders.size >= WORKER_CONCURRENCY) {
         await new Promise(resolve => setTimeout(resolve, 200));
@@ -700,3 +702,22 @@ async function startQueueWorker() {
     }
   }
 }
+
+// Graceful shutdown: ngừng nhận webhook mới, chờ tin đang xử lý xong rồi mới thoát.
+// Deadline 8s vì podman stop chỉ chờ SIGTERM 10s trước khi SIGKILL.
+async function shutdown(signal) {
+  if (shuttingDown) return;
+  shuttingDown = true;
+  console.log(`[Shutdown] Received ${signal}. Closing server, draining ${inFlightSenders.size} in-flight message(s)...`);
+  server.close();
+
+  const deadline = Date.now() + 8000;
+  while (inFlightSenders.size > 0 && Date.now() < deadline) {
+    await new Promise(resolve => setTimeout(resolve, 200));
+  }
+  console.log(`[Shutdown] Done. ${inFlightSenders.size} message(s) still in flight.`);
+  process.exit(0);
+}
+
+process.on('SIGTERM', () => shutdown('SIGTERM'));
+process.on('SIGINT', () => shutdown('SIGINT'));

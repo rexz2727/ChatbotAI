@@ -591,6 +591,7 @@ const WORKER_CONCURRENCY = 3;
 // row is not left stuck in 'processing' forever (preserves prior fire-and-forget
 // behavior: a failed message is dropped, never retried/duplicated).
 async function processOne(msg) {
+  const t0 = Date.now();
   try {
     console.log(`[Queue Worker] Processing message ID: ${msg.id} for ${msg.platform} user ${msg.sender_id}`);
 
@@ -601,12 +602,41 @@ async function processOne(msg) {
       headers: {}
     };
 
+    let timeoutTimer = null;
+    if (msg.platform === 'facebook') {
+      // Bật typing_on ngay khi bắt đầu (F3 Task 1)
+      await sendFacebookAction(msg.sender_id, 'typing_on', dummyReq);
+      
+      // Timer 5s gửi tin nhắn chờ (F3 Task 2)
+      // Chỉ đặt nếu là tin nhắn (không phải payload menu/tĩnh vốn nhanh)
+      if (!msg.payload) {
+        timeoutTimer = setTimeout(() => {
+          sendFacebookMessage(msg.sender_id, {
+            text: "Công an phường đang tra cứu thông tin, anh/chị vui lòng chờ trong giây lát ạ…"
+          }, dummyReq).catch(e => console.error("Error sending waiting message:", e.message));
+        }, 5000);
+      }
+    }
+
     const result = await chatbot.handleUserMessage(msg.sender_id, msg.message_text, msg.payload);
 
+    if (timeoutTimer) clearTimeout(timeoutTimer);
+
+    const tSend = Date.now();
     if (msg.platform === 'facebook') {
       await sendFacebookResponse(msg.sender_id, result, dummyReq);
     } else if (msg.platform === 'zalo') {
       await sendZaloResponse(msg.sender_id, result);
+    }
+
+    // F1: đúng 1 dòng [TIMING] cho mỗi tin đi qua luồng RAG (kể cả cache-hit)
+    if (result && result._timing) {
+      const t = result._timing;
+      console.log('[TIMING] ' + JSON.stringify({
+        rag: t.rag, pass1: t.pass1, pass2: t.pass2,
+        send: Date.now() - tSend, total: Date.now() - t0,
+        models_tried: t.models_tried, model_used: t.model_used, cache_hit: t.cache_hit
+      }));
     }
   } catch (err) {
     console.error(`[Queue Worker] Error processing message ID ${msg.id}:`, err);

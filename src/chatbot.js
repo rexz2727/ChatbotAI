@@ -64,12 +64,12 @@ async function embedQueryText(genAI, text) {
     const model = genAI.getGenerativeModel({ model: modelName });
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
-        const result = await model.embedContent(text);
+        const result = await withTimeout(model.embedContent(text), 8000);
         return result.embedding.values;
       } catch (err) {
         lastErr = err;
-        const overloaded = err.status === 429 || err.status >= 500 ||
-          (err.message && /429|RESOURCE_EXHAUSTED|503|500/.test(err.message));
+        const overloaded = err.status === 429 || err.status >= 500 || err.status === 504 ||
+          (err.message && /429|RESOURCE_EXHAUSTED|503|500|Timeout/.test(err.message));
         console.error(`[${modelName}] embedding failed for "${sanitizeLogText(text).substring(0, 30)}...": ${err.status || err.message}`);
         if (overloaded && attempt === 0) { await sleep(800); continue; }
         break; // try next embedding model
@@ -106,11 +106,24 @@ const menuMapping = {
   'MENU_KHIEU_NAI': { state: 'AGENT_KHIEU_NAI', title: 'Cổng thông tin Khiếu nại & Vi phạm', db: 'db_px05_khieu_nai_to_cao' },
   'MENU_TTHC': { state: 'AGENT_TTHC', title: 'Cổng thông tin Thủ tục Hành chính', db: 'db__chung_thu_tuc_hanh_chinh' },
   'MENU_LIEN_HE': { state: 'AGENT_LIEN_HE', title: 'Cổng thông tin Liên hệ Cơ quan', db: 'db__chung_lien_he_co_quan' },
-  'MENU_GOP_Y': { state: 'AGENT_GOP_Y', title: 'Góp ý Hệ thống', db: null }
+  'MENU_GOP_Y': { state: 'AGENT_GOP_Y', title: 'Góp ý Hệ thống', db: null },
+  'MENU_DAT_LICH': { state: 'AGENT_BOOKING_PROCEDURE', title: 'Đặt lịch hẹn', db: null }
 };
 
 // Helper function for sleeping
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+const withTimeout = (promise, ms) => {
+  let timeoutId;
+  const timeoutPromise = new Promise((_, reject) => {
+    timeoutId = setTimeout(() => {
+      const err = new Error('Gemini Timeout');
+      err.status = 504;
+      reject(err);
+    }, ms);
+  });
+  return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timeoutId));
+};
 
 // Shared model-health cooldown (circuit breaker), process-wide. When a model returns 503/429 it is
 // parked for MODEL_COOLDOWN_MS so concurrent and subsequent messages SKIP it instead of each
@@ -150,16 +163,16 @@ Công an Phường ghi nhận câu hỏi của anh/chị. Để giải quyết t
     for (const currentModelName of candidates) {
       try {
         const model = genAI.getGenerativeModel({ model: currentModelName });
-        const response = await model.generateContent({
+        const response = await withTimeout(model.generateContent({
           contents: [{ role: 'user', parts: [{ text: prompt }] }],
           generationConfig: genConfig
-        });
+        }), 8000);
         modelCooldownUntil.delete(currentModelName); // healthy again — clear any cooldown
         return response.response.text();
       } catch (error) {
         lastError = error;
-        const isOverload = error.status === 429 || error.status >= 500 ||
-                           (error.message && /429|RESOURCE_EXHAUSTED|503|500/.test(error.message));
+        const isOverload = error.status === 429 || error.status >= 500 || error.status === 504 ||
+                           (error.message && /429|RESOURCE_EXHAUSTED|503|500|Timeout/.test(error.message));
         if (isOverload) {
           modelCooldownUntil.set(currentModelName, Date.now() + MODEL_COOLDOWN_MS);
           console.warn(`[${currentModelName}] Overloaded (${error.status || '5xx/429'}). Cooling down ${MODEL_COOLDOWN_MS}ms; failing over immediately.`);
@@ -203,6 +216,37 @@ async function processUserMessage(userId, messageText, buttonPayload = null) {
         text: `[Chatbot Auto] Cảm ơn bạn đã đánh giá ${rating} Sao! Ý kiến của bạn giúp chúng tôi cải thiện chất lượng dịch vụ.`,
         showMenu: true
       };
+    }
+
+    // B2: SOS Routing
+    const sosWords = ['cứu', 'cháy', 'đánh nhau', 'giết', 'cướp', 'tự tử', 'cấp cứu'];
+    if (messageText && sosWords.some(w => messageText.toLowerCase().includes(w))) {
+      console.warn(`\n[ALERT] PHÁT HIỆN TÌNH HUỐNG KHẨN CẤP TỪ USER ${userId}: "${messageText}"\n`);
+      return {
+        text: `[CẢNH BÁO KHẨN CẤP] Hệ thống ghi nhận thông tin khẩn cấp từ anh/chị. Cán bộ trực ban đã được thông báo.\n\nTrường hợp nguy hiểm, VUI LÒNG GỌI NGAY:\n📞 Trực ban Công an: ${donvi.trucBan}\n📞 Cứu hỏa: 114\n📞 Cấp cứu: 115`,
+        showMenu: false
+      };
+    }
+
+    // B1: Human Handoff
+    const humanKeywords = ['gặp người thật', 'gặp cán bộ', 'chuyển cán bộ', 'trực ban', 'người thật', 'tư vấn viên', 'nhân viên'];
+    if (messageText && humanKeywords.some(kw => messageText.toLowerCase().includes(kw))) {
+      await db.setSession(userId, 'PAUSED_FOR_HUMAN');
+      return {
+        text: "[Chatbot Auto] Hệ thống đã tạm dừng AI. Cán bộ trực ban sẽ trả lời anh/chị trong thời gian sớm nhất. Xin vui lòng chờ...",
+        showMenu: false
+      };
+    }
+
+    const currentSession = await db.getSession(userId);
+    const currentState = currentSession ? currentSession.agent_state : null;
+    if (currentState === 'PAUSED_FOR_HUMAN') {
+      const resetKeywords = ['menu', 'thoát', 'quay lại', 'bắt đầu lại', 'restart'];
+      if (messageText && resetKeywords.some(kw => messageText.toLowerCase().includes(kw))) {
+        await db.setSession(userId, 'MAIN_MENU');
+        return { text: WELCOME_TEXT, showMenu: true };
+      }
+      return { text: null }; // block AI
     }
 
     // 1a. Handle main menu reset and GET_STARTED payload
@@ -285,7 +329,8 @@ Cán bộ trả lời:`;
         'AGENT_NGOAI_KIEU': ['ngoại kiều', 'nước ngoài', 'người nước ngoài', 'visa', 'hộ chiếu', 'nnn', 'xnc', 'xuất nhập cảnh', 'thẻ xanh', 'trục xuất', 'passport', 'thẻ tạm trú', 'việt kiều', 'gia hạn visa'],
         'AGENT_KHIEU_NAI': ['khiếu nại', 'tố cáo', 'vi phạm', 'phản ánh', 'kn', 'tc', 'kntc', 'kiện', 'đơn kiện', 'tố giác', 'tội phạm', 'tham nhũng', 'hối lộ', 'pakn'],
         'AGENT_TTHC': ['thủ tục hành chính', 'tthc', 'thủ tục', 'dịch vụ công', 'hành chính', 'dvc', 'dvctt', 'hành chính công', 'một cửa', 'ủy ban', 'ubnd', 'sao y', 'công chứng', 'chứng thực', 'giấy khai sinh', 'khai sinh', 'kết hôn', 'khai tử'],
-        'AGENT_LIEN_HE': ['liên hệ', 'địa chỉ', 'số điện thoại', 'đường dây nóng', 'hotline', 'ubnd', 'công an thành phố', 'trụ sở', 'sđt', 'liên lạc', 'địa điểm', 'gọi công an', 'ban chỉ huy']
+        'AGENT_LIEN_HE': ['liên hệ', 'địa chỉ', 'số điện thoại', 'đường dây nóng', 'hotline', 'ubnd', 'công an thành phố', 'trụ sở', 'sđt', 'liên lạc', 'địa điểm', 'gọi công an', 'ban chỉ huy'],
+        'AGENT_BOOKING_PROCEDURE': ['đặt lịch', 'lịch hẹn', 'hẹn lịch', 'booking', 'đăng ký gặp', 'đặt hẹn', 'xin lịch', 'lấy số']
       };
 
       for (const [stateKey, words] of Object.entries(keywords)) {
@@ -308,6 +353,13 @@ Cán bộ trả lời:`;
         if (target.state === 'AGENT_GOP_Y') {
           return {
             text: "[Chatbot Auto] Mời anh/chị nhập nội dung góp ý. Mọi ý kiến của anh/chị sẽ được lưu vào file để Ban quản trị cải thiện hệ thống. (Gõ 'thoát' hoặc 'quay lại' để hủy)",
+            quickReplies: [{ title: "Hủy và Quay về", payload: "SHOW_MAIN_MENU" }]
+          };
+        }
+        
+        if (target.state === 'AGENT_BOOKING_PROCEDURE') {
+          return {
+            text: "[Chatbot Auto] Mời anh/chị nhập nội dung thủ tục hoặc vấn đề cần đặt lịch hẹn. (Gõ 'thoát' hoặc 'quay lại' để hủy)",
             quickReplies: [{ title: "Hủy và Quay về", payload: "SHOW_MAIN_MENU" }]
           };
         }
@@ -373,6 +425,59 @@ Cán bộ trả lời:`;
       return {
         text: "[Chatbot Auto] Cảm ơn anh/chị đã góp ý! Ý kiến của anh/chị đã được ghi nhận. Hệ thống xin phép quay về Menu chính.",
         showMenu: true
+      };
+    }
+
+    if (state === 'AGENT_BOOKING_PROCEDURE') {
+      const procedure = messageText ? messageText.replace(/\|\|/g, '') : 'Không rõ';
+      await db.setSession(userId, `AGENT_BOOKING_DATE||${procedure}`);
+      return {
+         text: `[Chatbot Auto] Anh/chị muốn đặt lịch hẹn vào ngày nào? (VD: 15/10/2026)`,
+         showMenu: false,
+         quickReplies: [{ title: "Hôm nay", payload: "HOM_NAY" }, { title: "Ngày mai", payload: "NGAY_MAI" }]
+      };
+    }
+    
+    if (state && state.startsWith('AGENT_BOOKING_DATE||')) {
+      const procedure = state.split('||')[1] || 'Không rõ';
+      let date = messageText || '';
+      if (payload === 'HOM_NAY') date = new Date().toLocaleDateString('vi-VN');
+      if (payload === 'NGAY_MAI') {
+         const tmr = new Date(); tmr.setDate(tmr.getDate()+1); 
+         date = tmr.toLocaleDateString('vi-VN');
+      }
+      await db.setSession(userId, `AGENT_BOOKING_TIME||${procedure}||${date}`);
+      return {
+         text: `[Chatbot Auto] Anh/chị muốn đến vào khoảng thời gian nào? (VD: 09:00 Sáng, 14:00 Chiều)`,
+         showMenu: false,
+         quickReplies: [{ title: "Sáng (08:00 - 11:30)", payload: "SANG" }, { title: "Chiều (13:30 - 17:00)", payload: "CHIEU" }]
+      };
+    }
+    
+    if (state && state.startsWith('AGENT_BOOKING_TIME||')) {
+      const parts = state.split('||');
+      const procedure = parts[1] || 'Không rõ';
+      const date = parts[2] || 'Không rõ';
+      let time = messageText || '';
+      if (payload === 'SANG') time = "Buổi sáng (08:00 - 11:30)";
+      if (payload === 'CHIEU') time = "Buổi chiều (13:30 - 17:00)";
+      
+      const fs = require('fs');
+      const path = require('path');
+      const csvPath = path.join(__dirname, '../data/bookings.csv');
+      
+      if (!fs.existsSync(csvPath)) {
+        fs.writeFileSync(csvPath, '"Timestamp","UserID","Procedure","Date","Time"\n', 'utf8');
+      }
+      
+      const ts = new Date().toISOString();
+      const csvLine = `"${ts}","${userId}","${procedure.replace(/"/g, '""')}","${date.replace(/"/g, '""')}","${time.replace(/"/g, '""')}"\n`;
+      fs.appendFileSync(csvPath, csvLine, 'utf8');
+      
+      await db.setSession(userId, 'MAIN_MENU');
+      return {
+         text: `[Chatbot Auto] Đặt lịch thành công! Anh/chị đã đặt lịch hẹn giải quyết "${procedure}" vào ${time} ngày ${date}. Cán bộ sẽ chuẩn bị hồ sơ đón tiếp anh/chị. Xin cảm ơn!`,
+         showMenu: true
       };
     }
 

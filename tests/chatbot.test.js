@@ -64,39 +64,7 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 function resetDbMocks() {
   mockDb.setSession.mockResolvedValue({});
-  // ── F1: timing instrumentation ─────────────────────────────────────────────
 
-  test('RAG message attaches _timing with stage durations and model metadata', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result._timing).toBeDefined();
-    expect(typeof result._timing.rag).toBe('number');
-    expect(typeof result._timing.pass1).toBe('number');
-    expect(typeof result._timing.pass2).toBe('number');
-    expect(result._timing.cache_hit).toBe(false);
-    // Pass-1 + Pass-2, mỗi pass mock thành công ngay model đầu tiên
-    expect(result._timing.models_tried).toBe(2);
-    expect(result._timing.model_used).toBe('gemini-2.5-flash-lite');
-  });
-
-  test('cache hit sets cache_hit=true and zero pass durations', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-    mockDb.getCachedResponse.mockResolvedValue('[Chatbot Auto] Trả lời từ cache.');
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result.text).toBe('[Chatbot Auto] Trả lời từ cache.');
-    expect(result._timing.cache_hit).toBe(true);
-    expect(result._timing.pass1).toBe(0);
-    expect(result._timing.pass2).toBe(0);
-  });
-
-  test('menu/static path returns no _timing', async () => {
-    const result = await handleUserMessage(userId, null, 'MENU_CU_TRU');
-    expect(result._timing).toBeUndefined();
-  });
   mockDb.saveMessage.mockResolvedValue(1);
   mockDb.getConversationHistory.mockResolvedValue([]);
   mockDb.getSession.mockResolvedValue(null);
@@ -112,113 +80,14 @@ describe('chatbot.js — handleUserMessage', () => {
   beforeAll(() => {
     process.env.GEMINI_API_KEY = 'test_api_key_for_jest';
   });
-  // ── F1: timing instrumentation ─────────────────────────────────────────────
-
-  test('RAG message attaches _timing with stage durations and model metadata', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result._timing).toBeDefined();
-    expect(typeof result._timing.rag).toBe('number');
-    expect(typeof result._timing.pass1).toBe('number');
-    expect(typeof result._timing.pass2).toBe('number');
-    expect(result._timing.cache_hit).toBe(false);
-    // Pass-1 + Pass-2, mỗi pass mock thành công ngay model đầu tiên
-    expect(result._timing.models_tried).toBe(2);
-    expect(result._timing.model_used).toBe('gemini-2.5-flash-lite');
-  });
-
-  test('cache hit sets cache_hit=true and zero pass durations', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-    mockDb.getCachedResponse.mockResolvedValue('[Chatbot Auto] Trả lời từ cache.');
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result.text).toBe('[Chatbot Auto] Trả lời từ cache.');
-    expect(result._timing.cache_hit).toBe(true);
-    expect(result._timing.pass1).toBe(0);
-    expect(result._timing.pass2).toBe(0);
-  });
-
-  test('menu/static path returns no _timing', async () => {
-    const result = await handleUserMessage(userId, null, 'MENU_CU_TRU');
-    expect(result._timing).toBeUndefined();
-  });
 
   afterAll(() => {
     delete process.env.GEMINI_API_KEY;
-  });
-  // ── F1: timing instrumentation ─────────────────────────────────────────────
-
-  test('RAG message attaches _timing with stage durations and model metadata', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result._timing).toBeDefined();
-    expect(typeof result._timing.rag).toBe('number');
-    expect(typeof result._timing.pass1).toBe('number');
-    expect(typeof result._timing.pass2).toBe('number');
-    expect(result._timing.cache_hit).toBe(false);
-    // Pass-1 + Pass-2, mỗi pass mock thành công ngay model đầu tiên
-    expect(result._timing.models_tried).toBe(2);
-    expect(result._timing.model_used).toBe('gemini-2.5-flash-lite');
-  });
-
-  test('cache hit sets cache_hit=true and zero pass durations', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-    mockDb.getCachedResponse.mockResolvedValue('[Chatbot Auto] Trả lời từ cache.');
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result.text).toBe('[Chatbot Auto] Trả lời từ cache.');
-    expect(result._timing.cache_hit).toBe(true);
-    expect(result._timing.pass1).toBe(0);
-    expect(result._timing.pass2).toBe(0);
-  });
-
-  test('menu/static path returns no _timing', async () => {
-    const result = await handleUserMessage(userId, null, 'MENU_CU_TRU');
-    expect(result._timing).toBeUndefined();
   });
 
   beforeEach(() => {
     jest.clearAllMocks();
     resetDbMocks();
-  });
-  // ── F1: timing instrumentation ─────────────────────────────────────────────
-
-  test('RAG message attaches _timing with stage durations and model metadata', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result._timing).toBeDefined();
-    expect(typeof result._timing.rag).toBe('number');
-    expect(typeof result._timing.pass1).toBe('number');
-    expect(typeof result._timing.pass2).toBe('number');
-    expect(result._timing.cache_hit).toBe(false);
-    // Pass-1 + Pass-2, mỗi pass mock thành công ngay model đầu tiên
-    expect(result._timing.models_tried).toBe(2);
-    expect(result._timing.model_used).toBe('gemini-2.5-flash-lite');
-  });
-
-  test('cache hit sets cache_hit=true and zero pass durations', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-    mockDb.getCachedResponse.mockResolvedValue('[Chatbot Auto] Trả lời từ cache.');
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result.text).toBe('[Chatbot Auto] Trả lời từ cache.');
-    expect(result._timing.cache_hit).toBe(true);
-    expect(result._timing.pass1).toBe(0);
-    expect(result._timing.pass2).toBe(0);
-  });
-
-  test('menu/static path returns no _timing', async () => {
-    const result = await handleUserMessage(userId, null, 'MENU_CU_TRU');
-    expect(result._timing).toBeUndefined();
   });
 
   // ── "menu" triggers greeting/reset branch ──────────────────────────────────
@@ -227,39 +96,6 @@ describe('chatbot.js — handleUserMessage', () => {
     const result = await handleUserMessage(userId, 'menu', null);
     expect(result.showMenu).toBe(true);
     expect(result.text).toBeTruthy();
-  });
-  // ── F1: timing instrumentation ─────────────────────────────────────────────
-
-  test('RAG message attaches _timing with stage durations and model metadata', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result._timing).toBeDefined();
-    expect(typeof result._timing.rag).toBe('number');
-    expect(typeof result._timing.pass1).toBe('number');
-    expect(typeof result._timing.pass2).toBe('number');
-    expect(result._timing.cache_hit).toBe(false);
-    // Pass-1 + Pass-2, mỗi pass mock thành công ngay model đầu tiên
-    expect(result._timing.models_tried).toBe(2);
-    expect(result._timing.model_used).toBe('gemini-2.5-flash-lite');
-  });
-
-  test('cache hit sets cache_hit=true and zero pass durations', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-    mockDb.getCachedResponse.mockResolvedValue('[Chatbot Auto] Trả lời từ cache.');
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result.text).toBe('[Chatbot Auto] Trả lời từ cache.');
-    expect(result._timing.cache_hit).toBe(true);
-    expect(result._timing.pass1).toBe(0);
-    expect(result._timing.pass2).toBe(0);
-  });
-
-  test('menu/static path returns no _timing', async () => {
-    const result = await handleUserMessage(userId, null, 'MENU_CU_TRU');
-    expect(result._timing).toBeUndefined();
   });
 
   // ── Button payload → sub-menu quick replies ────────────────────────────────
@@ -272,78 +108,12 @@ describe('chatbot.js — handleUserMessage', () => {
     // Payload-based menu selections return quickReplies, not showMenu
     expect(result.quickReplies).toBeDefined();
   });
-  // ── F1: timing instrumentation ─────────────────────────────────────────────
-
-  test('RAG message attaches _timing with stage durations and model metadata', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result._timing).toBeDefined();
-    expect(typeof result._timing.rag).toBe('number');
-    expect(typeof result._timing.pass1).toBe('number');
-    expect(typeof result._timing.pass2).toBe('number');
-    expect(result._timing.cache_hit).toBe(false);
-    // Pass-1 + Pass-2, mỗi pass mock thành công ngay model đầu tiên
-    expect(result._timing.models_tried).toBe(2);
-    expect(result._timing.model_used).toBe('gemini-2.5-flash-lite');
-  });
-
-  test('cache hit sets cache_hit=true and zero pass durations', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-    mockDb.getCachedResponse.mockResolvedValue('[Chatbot Auto] Trả lời từ cache.');
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result.text).toBe('[Chatbot Auto] Trả lời từ cache.');
-    expect(result._timing.cache_hit).toBe(true);
-    expect(result._timing.pass1).toBe(0);
-    expect(result._timing.pass2).toBe(0);
-  });
-
-  test('menu/static path returns no _timing', async () => {
-    const result = await handleUserMessage(userId, null, 'MENU_CU_TRU');
-    expect(result._timing).toBeUndefined();
-  });
 
   // ── No session + greeting → main menu ─────────────────────────────────────
 
   test('greeting "Chào" with no prior session shows main menu', async () => {
     const result = await handleUserMessage(userId, 'Chào', null);
     expect(result.showMenu).toBe(true);
-  });
-  // ── F1: timing instrumentation ─────────────────────────────────────────────
-
-  test('RAG message attaches _timing with stage durations and model metadata', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result._timing).toBeDefined();
-    expect(typeof result._timing.rag).toBe('number');
-    expect(typeof result._timing.pass1).toBe('number');
-    expect(typeof result._timing.pass2).toBe('number');
-    expect(result._timing.cache_hit).toBe(false);
-    // Pass-1 + Pass-2, mỗi pass mock thành công ngay model đầu tiên
-    expect(result._timing.models_tried).toBe(2);
-    expect(result._timing.model_used).toBe('gemini-2.5-flash-lite');
-  });
-
-  test('cache hit sets cache_hit=true and zero pass durations', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-    mockDb.getCachedResponse.mockResolvedValue('[Chatbot Auto] Trả lời từ cache.');
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result.text).toBe('[Chatbot Auto] Trả lời từ cache.');
-    expect(result._timing.cache_hit).toBe(true);
-    expect(result._timing.pass1).toBe(0);
-    expect(result._timing.pass2).toBe(0);
-  });
-
-  test('menu/static path returns no _timing', async () => {
-    const result = await handleUserMessage(userId, null, 'MENU_CU_TRU');
-    expect(result._timing).toBeUndefined();
   });
 
   // ── Keyword routing with long text → answer ────────────────────────────────
@@ -356,267 +126,37 @@ describe('chatbot.js — handleUserMessage', () => {
     expect(result.showMenu).toBe(false);
     expect(result.text).toContain('[Chatbot Auto]');
   });
-  // ── F1: timing instrumentation ─────────────────────────────────────────────
-
-  test('RAG message attaches _timing with stage durations and model metadata', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result._timing).toBeDefined();
-    expect(typeof result._timing.rag).toBe('number');
-    expect(typeof result._timing.pass1).toBe('number');
-    expect(typeof result._timing.pass2).toBe('number');
-    expect(result._timing.cache_hit).toBe(false);
-    // Pass-1 + Pass-2, mỗi pass mock thành công ngay model đầu tiên
-    expect(result._timing.models_tried).toBe(2);
-    expect(result._timing.model_used).toBe('gemini-2.5-flash-lite');
-  });
-
-  test('cache hit sets cache_hit=true and zero pass durations', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-    mockDb.getCachedResponse.mockResolvedValue('[Chatbot Auto] Trả lời từ cache.');
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result.text).toBe('[Chatbot Auto] Trả lời từ cache.');
-    expect(result._timing.cache_hit).toBe(true);
-    expect(result._timing.pass1).toBe(0);
-    expect(result._timing.pass2).toBe(0);
-  });
-
-  test('menu/static path returns no _timing', async () => {
-    const result = await handleUserMessage(userId, null, 'MENU_CU_TRU');
-    expect(result._timing).toBeUndefined();
-  });
 
   // ── Existing agent state → Gemini answer ──────────────────────────────────
 
   test('message with existing AGENT_CU_TRU state returns text answer', async () => {
     mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-  // ── F1: timing instrumentation ─────────────────────────────────────────────
-
-  test('RAG message attaches _timing with stage durations and model metadata', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result._timing).toBeDefined();
-    expect(typeof result._timing.rag).toBe('number');
-    expect(typeof result._timing.pass1).toBe('number');
-    expect(typeof result._timing.pass2).toBe('number');
-    expect(result._timing.cache_hit).toBe(false);
-    // Pass-1 + Pass-2, mỗi pass mock thành công ngay model đầu tiên
-    expect(result._timing.models_tried).toBe(2);
-    expect(result._timing.model_used).toBe('gemini-2.5-flash-lite');
-  });
-
-  test('cache hit sets cache_hit=true and zero pass durations', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-    mockDb.getCachedResponse.mockResolvedValue('[Chatbot Auto] Trả lời từ cache.');
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result.text).toBe('[Chatbot Auto] Trả lời từ cache.');
-    expect(result._timing.cache_hit).toBe(true);
-    expect(result._timing.pass1).toBe(0);
-    expect(result._timing.pass2).toBe(0);
-  });
-
-  test('menu/static path returns no _timing', async () => {
-    const result = await handleUserMessage(userId, null, 'MENU_CU_TRU');
-    expect(result._timing).toBeUndefined();
-  });
 
     const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú', null);
 
     expect(result.showMenu).toBe(false);
     expect(result.text).toContain('[Chatbot Auto]');
   });
-  // ── F1: timing instrumentation ─────────────────────────────────────────────
-
-  test('RAG message attaches _timing with stage durations and model metadata', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result._timing).toBeDefined();
-    expect(typeof result._timing.rag).toBe('number');
-    expect(typeof result._timing.pass1).toBe('number');
-    expect(typeof result._timing.pass2).toBe('number');
-    expect(result._timing.cache_hit).toBe(false);
-    // Pass-1 + Pass-2, mỗi pass mock thành công ngay model đầu tiên
-    expect(result._timing.models_tried).toBe(2);
-    expect(result._timing.model_used).toBe('gemini-2.5-flash-lite');
-  });
-
-  test('cache hit sets cache_hit=true and zero pass durations', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-    mockDb.getCachedResponse.mockResolvedValue('[Chatbot Auto] Trả lời từ cache.');
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result.text).toBe('[Chatbot Auto] Trả lời từ cache.');
-    expect(result._timing.cache_hit).toBe(true);
-    expect(result._timing.pass1).toBe(0);
-    expect(result._timing.pass2).toBe(0);
-  });
-
-  test('menu/static path returns no _timing', async () => {
-    const result = await handleUserMessage(userId, null, 'MENU_CU_TRU');
-    expect(result._timing).toBeUndefined();
-  });
 
   // ── MAIN_MENU state (non-greeting text) ────────────────────────────────────
 
   test('state MAIN_MENU with non-greeting text returns showMenu: true', async () => {
     mockDb.getSession.mockResolvedValue({ agent_state: 'MAIN_MENU' });
-  // ── F1: timing instrumentation ─────────────────────────────────────────────
 
-  test('RAG message attaches _timing with stage durations and model metadata', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result._timing).toBeDefined();
-    expect(typeof result._timing.rag).toBe('number');
-    expect(typeof result._timing.pass1).toBe('number');
-    expect(typeof result._timing.pass2).toBe('number');
-    expect(result._timing.cache_hit).toBe(false);
-    // Pass-1 + Pass-2, mỗi pass mock thành công ngay model đầu tiên
-    expect(result._timing.models_tried).toBe(2);
-    expect(result._timing.model_used).toBe('gemini-2.5-flash-lite');
-  });
-
-  test('cache hit sets cache_hit=true and zero pass durations', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-    mockDb.getCachedResponse.mockResolvedValue('[Chatbot Auto] Trả lời từ cache.');
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result.text).toBe('[Chatbot Auto] Trả lời từ cache.');
-    expect(result._timing.cache_hit).toBe(true);
-    expect(result._timing.pass1).toBe(0);
-    expect(result._timing.pass2).toBe(0);
-  });
-
-  test('menu/static path returns no _timing', async () => {
-    const result = await handleUserMessage(userId, null, 'MENU_CU_TRU');
-    expect(result._timing).toBeUndefined();
-  });
     // 'thông tin' is NOT in the greetings list, so it exercises the MAIN_MENU branch
     const result = await handleUserMessage(userId, 'thông tin', null);
     expect(result.showMenu).toBe(true);
-  });
-  // ── F1: timing instrumentation ─────────────────────────────────────────────
-
-  test('RAG message attaches _timing with stage durations and model metadata', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result._timing).toBeDefined();
-    expect(typeof result._timing.rag).toBe('number');
-    expect(typeof result._timing.pass1).toBe('number');
-    expect(typeof result._timing.pass2).toBe('number');
-    expect(result._timing.cache_hit).toBe(false);
-    // Pass-1 + Pass-2, mỗi pass mock thành công ngay model đầu tiên
-    expect(result._timing.models_tried).toBe(2);
-    expect(result._timing.model_used).toBe('gemini-2.5-flash-lite');
-  });
-
-  test('cache hit sets cache_hit=true and zero pass durations', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-    mockDb.getCachedResponse.mockResolvedValue('[Chatbot Auto] Trả lời từ cache.');
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result.text).toBe('[Chatbot Auto] Trả lời từ cache.');
-    expect(result._timing.cache_hit).toBe(true);
-    expect(result._timing.pass1).toBe(0);
-    expect(result._timing.pass2).toBe(0);
-  });
-
-  test('menu/static path returns no _timing', async () => {
-    const result = await handleUserMessage(userId, null, 'MENU_CU_TRU');
-    expect(result._timing).toBeUndefined();
   });
 
   // ── Unknown / invalid state → reset to MAIN_MENU ──────────────────────────
 
   test('unknown agent state resets to MAIN_MENU and returns showMenu: true', async () => {
     mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_INVALID_STATE' });
-  // ── F1: timing instrumentation ─────────────────────────────────────────────
-
-  test('RAG message attaches _timing with stage durations and model metadata', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result._timing).toBeDefined();
-    expect(typeof result._timing.rag).toBe('number');
-    expect(typeof result._timing.pass1).toBe('number');
-    expect(typeof result._timing.pass2).toBe('number');
-    expect(result._timing.cache_hit).toBe(false);
-    // Pass-1 + Pass-2, mỗi pass mock thành công ngay model đầu tiên
-    expect(result._timing.models_tried).toBe(2);
-    expect(result._timing.model_used).toBe('gemini-2.5-flash-lite');
-  });
-
-  test('cache hit sets cache_hit=true and zero pass durations', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-    mockDb.getCachedResponse.mockResolvedValue('[Chatbot Auto] Trả lời từ cache.');
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result.text).toBe('[Chatbot Auto] Trả lời từ cache.');
-    expect(result._timing.cache_hit).toBe(true);
-    expect(result._timing.pass1).toBe(0);
-    expect(result._timing.pass2).toBe(0);
-  });
-
-  test('menu/static path returns no _timing', async () => {
-    const result = await handleUserMessage(userId, null, 'MENU_CU_TRU');
-    expect(result._timing).toBeUndefined();
-  });
 
     const result = await handleUserMessage(userId, 'câu hỏi ngẫu nhiên', null);
 
     expect(result.showMenu).toBe(true);
     expect(mockDb.setSession).toHaveBeenCalledWith(userId, 'MAIN_MENU');
-  });
-  // ── F1: timing instrumentation ─────────────────────────────────────────────
-
-  test('RAG message attaches _timing with stage durations and model metadata', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result._timing).toBeDefined();
-    expect(typeof result._timing.rag).toBe('number');
-    expect(typeof result._timing.pass1).toBe('number');
-    expect(typeof result._timing.pass2).toBe('number');
-    expect(result._timing.cache_hit).toBe(false);
-    // Pass-1 + Pass-2, mỗi pass mock thành công ngay model đầu tiên
-    expect(result._timing.models_tried).toBe(2);
-    expect(result._timing.model_used).toBe('gemini-2.5-flash-lite');
-  });
-
-  test('cache hit sets cache_hit=true and zero pass durations', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-    mockDb.getCachedResponse.mockResolvedValue('[Chatbot Auto] Trả lời từ cache.');
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result.text).toBe('[Chatbot Auto] Trả lời từ cache.');
-    expect(result._timing.cache_hit).toBe(true);
-    expect(result._timing.pass1).toBe(0);
-    expect(result._timing.pass2).toBe(0);
-  });
-
-  test('menu/static path returns no _timing', async () => {
-    const result = await handleUserMessage(userId, null, 'MENU_CU_TRU');
-    expect(result._timing).toBeUndefined();
   });
 
   // ── getMockEmbedding path: empty GEMINI_API_KEY ───────────────────────────
@@ -625,39 +165,6 @@ describe('chatbot.js — handleUserMessage', () => {
     const saved = process.env.GEMINI_API_KEY;
     process.env.GEMINI_API_KEY = '';
     mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-  // ── F1: timing instrumentation ─────────────────────────────────────────────
-
-  test('RAG message attaches _timing with stage durations and model metadata', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result._timing).toBeDefined();
-    expect(typeof result._timing.rag).toBe('number');
-    expect(typeof result._timing.pass1).toBe('number');
-    expect(typeof result._timing.pass2).toBe('number');
-    expect(result._timing.cache_hit).toBe(false);
-    // Pass-1 + Pass-2, mỗi pass mock thành công ngay model đầu tiên
-    expect(result._timing.models_tried).toBe(2);
-    expect(result._timing.model_used).toBe('gemini-2.5-flash-lite');
-  });
-
-  test('cache hit sets cache_hit=true and zero pass durations', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-    mockDb.getCachedResponse.mockResolvedValue('[Chatbot Auto] Trả lời từ cache.');
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result.text).toBe('[Chatbot Auto] Trả lời từ cache.');
-    expect(result._timing.cache_hit).toBe(true);
-    expect(result._timing.pass1).toBe(0);
-    expect(result._timing.pass2).toBe(0);
-  });
-
-  test('menu/static path returns no _timing', async () => {
-    const result = await handleUserMessage(userId, null, 'MENU_CU_TRU');
-    expect(result._timing).toBeUndefined();
-  });
 
     const result = await handleUserMessage(userId, 'câu hỏi dùng mock embedding', null);
 
@@ -665,39 +172,6 @@ describe('chatbot.js — handleUserMessage', () => {
     // Both embedding and Gemini use their fallback (placeholder) paths
     expect(result.text).toContain('[Chatbot Auto]');
     expect(result.showMenu).toBe(false);
-  });
-  // ── F1: timing instrumentation ─────────────────────────────────────────────
-
-  test('RAG message attaches _timing with stage durations and model metadata', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result._timing).toBeDefined();
-    expect(typeof result._timing.rag).toBe('number');
-    expect(typeof result._timing.pass1).toBe('number');
-    expect(typeof result._timing.pass2).toBe('number');
-    expect(result._timing.cache_hit).toBe(false);
-    // Pass-1 + Pass-2, mỗi pass mock thành công ngay model đầu tiên
-    expect(result._timing.models_tried).toBe(2);
-    expect(result._timing.model_used).toBe('gemini-2.5-flash-lite');
-  });
-
-  test('cache hit sets cache_hit=true and zero pass durations', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-    mockDb.getCachedResponse.mockResolvedValue('[Chatbot Auto] Trả lời từ cache.');
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result.text).toBe('[Chatbot Auto] Trả lời từ cache.');
-    expect(result._timing.cache_hit).toBe(true);
-    expect(result._timing.pass1).toBe(0);
-    expect(result._timing.pass2).toBe(0);
-  });
-
-  test('menu/static path returns no _timing', async () => {
-    const result = await handleUserMessage(userId, null, 'MENU_CU_TRU');
-    expect(result._timing).toBeUndefined();
   });
 
   // ── callGeminiWithBackoff 400-error fallback ───────────────────────────────
@@ -722,44 +196,14 @@ describe('chatbot.js — handleUserMessage', () => {
       }));
 
     mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-  // ── F1: timing instrumentation ─────────────────────────────────────────────
 
-  test('RAG message attaches _timing with stage durations and model metadata', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result._timing).toBeDefined();
-    expect(typeof result._timing.rag).toBe('number');
-    expect(typeof result._timing.pass1).toBe('number');
-    expect(typeof result._timing.pass2).toBe('number');
-    expect(result._timing.cache_hit).toBe(false);
-    // Pass-1 + Pass-2, mỗi pass mock thành công ngay model đầu tiên
-    expect(result._timing.models_tried).toBe(2);
-    expect(result._timing.model_used).toBe('gemini-2.5-flash-lite');
-  });
-
-  test('cache hit sets cache_hit=true and zero pass durations', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-    mockDb.getCachedResponse.mockResolvedValue('[Chatbot Auto] Trả lời từ cache.');
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result.text).toBe('[Chatbot Auto] Trả lời từ cache.');
-    expect(result._timing.cache_hit).toBe(true);
-    expect(result._timing.pass1).toBe(0);
-    expect(result._timing.pass2).toBe(0);
-  });
-
-  test('menu/static path returns no _timing', async () => {
-    const result = await handleUserMessage(userId, null, 'MENU_CU_TRU');
-    expect(result._timing).toBeUndefined();
-  });
     const result = await handleUserMessage(userId, 'câu hỏi với 400 error', null);
 
     expect(result.showMenu).toBe(false);
     expect(result.text).toContain('[Chatbot Auto]');
   });
+
+
   // ── F1: timing instrumentation ─────────────────────────────────────────────
 
   test('RAG message attaches _timing with stage durations and model metadata', async () => {
@@ -794,36 +238,3 @@ describe('chatbot.js — handleUserMessage', () => {
     expect(result._timing).toBeUndefined();
   });
 });
-  // ── F1: timing instrumentation ─────────────────────────────────────────────
-
-  test('RAG message attaches _timing with stage durations and model metadata', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result._timing).toBeDefined();
-    expect(typeof result._timing.rag).toBe('number');
-    expect(typeof result._timing.pass1).toBe('number');
-    expect(typeof result._timing.pass2).toBe('number');
-    expect(result._timing.cache_hit).toBe(false);
-    // Pass-1 + Pass-2, mỗi pass mock thành công ngay model đầu tiên
-    expect(result._timing.models_tried).toBe(2);
-    expect(result._timing.model_used).toBe('gemini-2.5-flash-lite');
-  });
-
-  test('cache hit sets cache_hit=true and zero pass durations', async () => {
-    mockDb.getSession.mockResolvedValue({ agent_state: 'AGENT_CU_TRU' });
-    mockDb.getCachedResponse.mockResolvedValue('[Chatbot Auto] Trả lời từ cache.');
-
-    const result = await handleUserMessage(userId, 'Thủ tục đăng ký tạm trú cần giấy tờ gì', null);
-
-    expect(result.text).toBe('[Chatbot Auto] Trả lời từ cache.');
-    expect(result._timing.cache_hit).toBe(true);
-    expect(result._timing.pass1).toBe(0);
-    expect(result._timing.pass2).toBe(0);
-  });
-
-  test('menu/static path returns no _timing', async () => {
-    const result = await handleUserMessage(userId, null, 'MENU_CU_TRU');
-    expect(result._timing).toBeUndefined();
-  });

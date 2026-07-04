@@ -587,6 +587,10 @@ Cán bộ trả lời:`;
       }
     }
     
+    // F1: đo thời gian từng giai đoạn của luồng RAG (retrieval / pass1 / pass2)
+    const timing = { rag: 0, pass1: 0, pass2: 0, cache_hit: false, models_tried: 0, model_used: null };
+    const tRag = Date.now();
+
     try {
       const collectionPromise = client.getCollection({
         name: matchedConfig.db,
@@ -625,6 +629,7 @@ ${historyLines}
     } catch (parallelErr) {
       console.error("Error in parallel fetch:", parallelErr);
     }
+    timing.rag = Date.now() - tRag;
 
     // 5. Formulate Pass 1 and Pass 2 Prompts and call Gemini
     const pass1Prompt = `Bạn là chuyên gia phân tích pháp lý. Hãy đọc TÀI LIỆU PHÁP LUẬT và trích xuất đầy đủ các quy định liên quan để trả lời câu hỏi.

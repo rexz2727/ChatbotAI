@@ -543,6 +543,30 @@ async function sendZaloResponse(recipientId, result) {
   }
 }
 
+// Homepage (also serves Facebook domain verification meta tag)
+app.get('/', (req, res) => {
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.send(`<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="facebook-domain-verification" content="97yu0chhve9hc9cyy06esdzhbnrd7l" />
+<title>Chatbot hỗ trợ thủ tục hành chính – Công an Phường</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 800px; margin: 60px auto; padding: 0 20px; color: #333; line-height: 1.7; text-align: center; }
+  h1 { color: #003087; }
+  a { color: #003087; }
+</style>
+</head>
+<body>
+<h1>Chatbot hỗ trợ thủ tục hành chính</h1>
+<p>Dịch vụ chatbot hỗ trợ người dân tra cứu thủ tục hành chính qua Facebook Messenger.</p>
+<p><a href="/privacy">Chính sách quyền riêng tư</a></p>
+</body>
+</html>`);
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: Date.now() });
